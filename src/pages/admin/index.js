@@ -6,7 +6,7 @@ class AdminRoot extends Component {
     render () {
         return (
             <React.Fragment>
-                <Route exact path="/" component={Home} />
+                <Route path="/" component={Home} />
             </React.Fragment>
         )
     }

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
 import './App.css';
-import { simpleAction } from './actions/SimpleAction'
+import { checkLoginAction } from './actions/CheckLoginAction'
 
 import NoUser from './pages/nouser/'
 import Admin from './pages/admin/'
@@ -13,12 +12,15 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction())
+  checkLoginAction: () => dispatch(checkLoginAction())
 })
 
 class App extends Component {
-  simpleAction = (event) => {
-    this.props.simpleAction();
+  checkLoginAction = () => {
+    this.props.checkLoginAction();
+  }
+  componentWillMount = () => {
+    this.checkLoginAction();
   }
   render() {
     return (
