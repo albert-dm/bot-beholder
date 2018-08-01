@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import { simpleAction } from './actions/SimpleAction'
+
+import NoUser from './pages/nouser/'
+import Admin from './pages/admin/'
 
 const mapStateToProps = state => ({
   ...state
@@ -14,23 +18,22 @@ const mapDispatchToProps = dispatch => ({
 
 class App extends Component {
   simpleAction = (event) => {
-    console.log("called");
     this.props.simpleAction();
-   }
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <pre>
- {
-  JSON.stringify(this.props)
- }
-</pre>
-    <button onClick={this.simpleAction}>Test redux action</button>
-      </div>
+      <Router>
+        {
+          (() => {
+            switch(this.props.loginReducer.UserRole){
+              case 'Admin':
+                return (<Route path="/" component={Admin} />)
+              default:
+                return (<Route path="/" component={NoUser} />)
+            }
+          })()
+        }
+      </Router>
     );
   }
 }
