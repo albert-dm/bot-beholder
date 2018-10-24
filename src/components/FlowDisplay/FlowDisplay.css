@@ -1,0 +1,62 @@
+.FlowDisplay{
+    height: 100%;
+    width: 40%;
+    border: var(--primary-dark) solid 1px;
+    overflow: auto;
+    padding: 10px;
+    padding-bottom: 100px;
+}
+
+.FlowDisplay h2 input{
+    border: none;
+    text-align: center;
+    font-size: 20px;
+}
+
+.ToolbarBtns{
+  list-style-type: none;
+  position: fixed;
+  margin-top: 50px;
+  z-index: 1000;
+}
+
+.ToolbarBtns li{
+  margin-bottom: 3px;
+}
+
+.ToolbarBtns li .label{
+  float: right;
+  position: relative;
+  padding: 10px 10px 9px 30px;
+  left: -35px;
+  background-color: white;
+  border: solid 2px var(--primary);
+  border-radius: 0 25px 25px 0;
+  z-index: 0;
+  display: none;
+}
+
+.ToolbarBtns li:hover .label{
+  display: block;
+}
+
+.ToolbarBtns button, .btn {
+  z-index: 5;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,.5);
+  border-radius: 100px;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  font-weight: 100;
+}
+
+.ToolbarBtns .fa-upload {
+  width: 25px;
+  height: 25px;
+}
+
+.ToolbarBtns label {
+  cursor: pointer;
+}

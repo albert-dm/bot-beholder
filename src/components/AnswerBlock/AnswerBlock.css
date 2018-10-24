@@ -1,0 +1,36 @@
+.AnswerBlock{
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+.AnswerBlock .icon-btn{
+    margin-left: 5px;
+    display: none;
+}
+
+.AnswerBlock:hover .icon-btn{
+    display: block;
+}
+
+.textLabel {
+    margin-right: 5px;
+    display: inline-block;
+    width: 50px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 13px 13px 13px 13px;
+    box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.1);    
+    width: fit-content;
+    padding-bottom: 3px;
+    overflow: hidden;
+}
+
+.card.bubble {
+    border-radius: 13px 13px 13px 2px;
+}
+
+.bubble .wrap, .card .wrap{
+    padding: 13px;
+}

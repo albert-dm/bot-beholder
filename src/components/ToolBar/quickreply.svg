@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="24px" viewBox="0 0 44 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Quick Reply</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="20" height="10" rx="5"></rect>
+        <rect id="path-2" x="22" y="0" width="20" height="10" rx="5"></rect>
+    </defs>
+    <g id="Builder-/-Setup---2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Quick-Reply">
+            <g id="Group-3" transform="translate(1.000000, 7.000000)">
+                <g id="Rectangle-13">
+                    <use fill="#B0F6F8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <rect stroke="#0CC8CC" stroke-width="1" x="0.5" y="0.5" width="19" height="9" rx="4.5"></rect>
+                </g>
+                <g id="Rectangle-13-Copy">
+                    <use fill="#B0F6F8" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    <rect stroke="#0CC8CC" stroke-width="1" x="22.5" y="0.5" width="19" height="9" rx="4.5"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

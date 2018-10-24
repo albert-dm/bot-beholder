@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
-import Home from './Home/'
+import Tracing from './Tracing/'
+import Testing from './Testing/'
 import Icon from '../../static/img/Dark_Beholder.png'
 
 const grid = {
@@ -55,7 +56,7 @@ class AdminRoot extends Component {
         return (
             <div style={grid}>
                 <header className="bp-bg-desk" style={header}>
-                    <img src={Icon} style={icon}></img>
+                    <img src={Icon} alt="Bot Beholder" style={icon}></img>
                     <h1 className="bp-c-offwhite" style={title} >
                         Bot Beholder
                     </h1>
@@ -64,7 +65,8 @@ class AdminRoot extends Component {
                     Tools
                 </div>
                 <div className="bp-bg-offwhite" style={main}>
-                    <Route path="/" component={Home} />
+                    <Route path="/" component={Tracing} />
+                    <Route path="/testing" component={Testing} />
                 </div>
                 <div className="bp-bg-breeze" style={footer}>
                     footer

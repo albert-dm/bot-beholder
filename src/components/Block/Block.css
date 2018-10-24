@@ -1,0 +1,30 @@
+.Block{
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+    cursor: pointer;
+    transition: transform .5s ease;
+}
+
+.Block.selected{
+    transform: scale(1.06);
+}
+
+.Block:not(:last-child):after{
+    content: '';
+    position: relative;
+    left: 0px;
+    top: 42px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid var(--primary-dark);
+    clear: both;
+}
+
+.Block:not(:last-child){
+    margin-bottom: 20px;
+    padding-bottom: 0px;
+}

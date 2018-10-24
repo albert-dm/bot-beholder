@@ -1,0 +1,12 @@
+.ToolBar{
+    display: inline-block;
+    width: calc(100% - 50px);
+    background-color: var(--primary);
+    color: white;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.ToolBar span{
+    padding: 10px;
+}

@@ -1,0 +1,8 @@
+.InputFile{
+    display: inline-block;
+    margin: 10px 0 5px 0;
+}
+
+.InputFile input{
+    display: none !important;
+}

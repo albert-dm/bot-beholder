@@ -1,0 +1,25 @@
+.Modal.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1000;
+    overflow: auto;
+}
+
+.Modal .content{
+    z-index: 1100;
+    position: absolute;
+    width: 40%;
+    top: 20%;
+    margin-left: 30%;
+    margin-bottom: 200px;
+    padding: 20px;
+    animation: .5s enter ease;
+}
+
+.Modal .content h1{
+    text-align: center;
+}
