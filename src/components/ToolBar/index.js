@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './ToolBar.css'
+import './ToolBar.scss'
 import AnswerModels from '../../models/AnswerModels'
 
 import textImg from './text.svg'

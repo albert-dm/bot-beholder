@@ -1,3 +1,5 @@
+@import "../../globals";
+
 .Block{
     text-align: center;
     margin-right: auto;
@@ -20,7 +22,7 @@
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
-    border-top: 20px solid var(--primary-dark);
+    border-top: 20px solid $primary-dark;
     clear: both;
 }
 

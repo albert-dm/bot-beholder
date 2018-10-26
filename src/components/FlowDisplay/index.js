@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './FlowDisplay.css'
+import './FlowDisplay.scss'
 import InputFile from '../InputFile/'
 import SweetAlert from 'sweetalert2-react'
 
@@ -34,7 +34,7 @@ class FlowDisplay extends Component {
 
     render() {
         return (
-            <div className="FlowDisplay">
+            <div className="FlowDisplay" style={this.props.style}>
                 <ul className="ToolbarBtns">
                     <li>
                         <button title="Novo Bloco" onClick={() => this.props.addBlock(newBlock())}>

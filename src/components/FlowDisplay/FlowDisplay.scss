@@ -1,10 +1,14 @@
+@import "../../globals";
+
 .FlowDisplay{
     height: 100%;
-    width: 40%;
-    border: var(--primary-dark) solid 1px;
     overflow: auto;
     padding: 10px;
     padding-bottom: 100px;
+}
+
+.FlowDisplay .block-container{
+  width: 100%;
 }
 
 .FlowDisplay h2 input{
@@ -30,7 +34,7 @@
   padding: 10px 10px 9px 30px;
   left: -35px;
   background-color: white;
-  border: solid 2px var(--primary);
+  border: solid 2px #2cc3d5;
   border-radius: 0 25px 25px 0;
   z-index: 0;
   display: none;
@@ -41,6 +45,7 @@
 }
 
 .ToolbarBtns button, .btn {
+  background-color: #2cc3d5;
   z-index: 5;
   position: relative;
   text-align: center;

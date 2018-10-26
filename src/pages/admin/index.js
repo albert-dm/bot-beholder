@@ -65,8 +65,8 @@ class AdminRoot extends Component {
                     Tools
                 </div>
                 <div className="bp-bg-offwhite" style={main}>
-                    <Route path="/" component={Tracing} />
-                    <Route path="/testing" component={Testing} />
+                    <Route exact path="/" component={Tracing} />
+                    <Route exact path="/testing" component={Testing} />
                 </div>
                 <div className="bp-bg-breeze" style={footer}>
                     footer

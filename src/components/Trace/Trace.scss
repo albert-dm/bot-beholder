@@ -1,0 +1,99 @@
+@import "../../globals";
+
+.Trace {
+  @extend %elevate;
+  background-color: white;
+  padding: 5px 15px 15px 15px;
+  margin-bottom: 50px;
+  margin-right: 20px;
+  display: block;
+  width: 80vw;
+  overflow: hidden;
+
+  &:hover{
+      @extend %elevateHover;
+  }
+
+  h1 {
+    font-size: 1.3em;
+    &.error{
+      color: $warning;
+    }
+  }
+
+  .date {
+    display: block;
+    text-align: right;
+    font-size: 0.6rem;
+  }
+
+  .states {
+    display: block;
+    white-space: nowrap;
+    overflow-x: auto;
+    .State {
+      vertical-align: middle;
+      white-space: pre-wrap;
+      width: 300px;
+      display: inline-block;
+      &.error{
+          border-color: $warning;
+          border-width: thick;
+      }
+      .actions {
+        visibility: hidden;
+        background-color: black;
+        color: #fff;
+        padding: 0;
+        border-radius: 6px;
+
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        margin-bottom: -30%;
+        z-index: 1;
+
+        ul{
+            list-style: none;
+            padding-right: 10px;
+            p{
+                position: relative;
+                left: -20px;
+            }
+            li{
+                position: relative;
+                left: -5px;
+                border-left: solid white;
+                padding-left: 5px;
+                &.error{
+                  color: $warning;
+                  border-color: $warning;
+                }
+            }
+        }
+      }
+      .elapsedTime {
+        display: block;
+        &:hover ~ .actions {
+          visibility: visible;
+        }
+      }
+      &:not(:last-child) {
+        margin-right: 20px;
+        &:after {
+          content: "";
+          position: relative;
+          left: calc(100% + 11px);
+          bottom: 50px;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 15px 0 15px 20px;
+          border-color: transparent transparent transparent $primary-dark;
+        }
+      }
+      &:last-child {
+        padding-bottom: 30px;
+      }
+    }
+  }
+}

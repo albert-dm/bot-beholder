@@ -15,6 +15,21 @@ const guid = () => {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
+const grid = {
+    display: 'grid',
+    gridTemplateColumns: '50% auto',
+    gridTemplateAreas:
+        `"flow properties"`
+}
+
+const flow = {
+    gridArea: "flow"
+}
+
+const properties = {
+    gridArea: "properties"
+}
+
 class Testing extends Component {
     constructor() {
         super();
@@ -171,8 +186,8 @@ class Testing extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <FlowDisplay flowTitle={this.state.flowTitle} setTitle={this.setTitle.bind(this)} addBlock={this.addBlock} download={this.downloadJson} uploadJson={this.uploadJson} clearFlow={this.clearFlow} openConfig={this.toggleConfigurations}>
+            <div style={grid}>
+                <FlowDisplay style={flow} flowTitle={this.state.flowTitle} setTitle={this.setTitle.bind(this)} addBlock={this.addBlock} download={this.downloadJson} uploadJson={this.uploadJson} clearFlow={this.clearFlow} openConfig={this.toggleConfigurations}>
                     <ReactCSSTransitionGroup
                         transitionName="blocks"
                         transitionEnterTimeout={200}
@@ -184,11 +199,11 @@ class Testing extends Component {
                         }
                     </ReactCSSTransitionGroup>
                 </FlowDisplay>
-                <Properties {...this.state.blocks[this.state.selected]} setBlock={this.setBlock} selected={this.state.selected} intents={this.state.intents} entities={this.state.entities} />
+                <Properties style={properties} {...this.state.blocks[this.state.selected]} setBlock={this.setBlock} selected={this.state.selected} intents={this.state.intents} entities={this.state.entities} />
                 <Config show={this.state.showModal} close={this.toggleConfigurations} setConfig={this.setConfig} parameters={this.state}>
                 </Config>
                 <Modal show={this.state.error} close={() => { this.setState({ error: "" }) }} title={this.state.error} />
-            </React.Fragment>
+            </div >
         );
     }
 }

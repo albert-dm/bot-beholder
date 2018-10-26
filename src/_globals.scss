@@ -1,0 +1,33 @@
+$primary: #2cc3d5;
+$primary-light: #0cc8cc;
+$primary-dark: #15afb2;
+
+$warning: #f76556;
+$warning-light: #fbeaea;
+$warning-yellow: #ffcf33;
+$delete: #fb7a6d;
+$true: #4dcb7b;
+
+$onix: #242b36;
+$suit: #3d4554;
+$city: #52636c;
+$desk: #607b99;
+$rooftop: #738192;
+$cloud: #8ca0b3;
+$silver: #94a3ab;
+$time: #a8bfc4;
+$breeze: #c9dfe4;
+$sky: #daf2f4;
+$offwhite: #eaeeee;
+
+%elevate {
+  -webkit-box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.05);
+}
+
+%elevateHover {
+  -webkit-box-shadow: 5px 32px 20px 5px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 5px 32px 20px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 5px 32px 20px 5px rgba(0, 0, 0, 0.05);
+}

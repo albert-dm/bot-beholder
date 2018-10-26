@@ -55,7 +55,7 @@ class Properties extends Component {
 
     render() {
         return (
-            <div className="Properties" ref={this.div}>
+            <div className="Properties" ref={this.div} style={this.props.style}>
                 <h2>Propriedades</h2>
                 {
                      this.props.selected!=="" ?
