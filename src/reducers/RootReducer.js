@@ -3,6 +3,6 @@ import userReducer from './UserReducer';
 import commonReducer from './CommonReducer';
 
 export default combineReducers({
-    userReducer,
-    commonReducer
+    user: userReducer,
+    common: commonReducer
 });

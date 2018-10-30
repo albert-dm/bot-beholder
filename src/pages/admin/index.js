@@ -4,6 +4,8 @@ import Tracing from './Tracing';
 import Testing from './Testing';
 import Icon from '../../static/img/Dark_Beholder.png';
 
+import BotSideBar from "../../components/BotSideBar/"
+
 const grid = {
     display: 'grid',
     gridTemplateColumns: '200px auto',
@@ -59,7 +61,7 @@ class AdminRoot extends Component {
                     </h1>
                 </header>
                 <div className="bp-bg-offwhite" style={tools}>
-                    Tools
+                    <BotSideBar />
                 </div>
                 <div className="bp-bg-offwhite" style={main}>
                     <Route exact path="/" component={Tracing} />

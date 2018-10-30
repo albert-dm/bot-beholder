@@ -21,7 +21,7 @@ class Tracing extends Component {
         this.state = {
             traces: [],
         };
-        const socket = socketIOClient(`https://3bcc731c.ngrok.io?botid=${props.botId}`);
+        const socket = socketIOClient(`http://localhost:4001?botid=${props.botId}`);
         socket.on(props.botId, trace => {
             trace.id = id++;
             this.setState(state => ({ traces: [trace, ...state.traces] }));

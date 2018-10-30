@@ -28,7 +28,7 @@ class App extends Component {
         return (
             <Router>
                 {(() => {
-                    switch (this.props.userReducer.role) {
+                    switch (this.props.user.role) {
                         case 'Admin':
                             return <Route path="/" component={Admin} />;
                         default:
