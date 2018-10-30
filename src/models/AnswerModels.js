@@ -1,53 +1,53 @@
-var models = {
+const models = {
     text: {
-        "type": "text",
-        "text": "Eu sou uma mensagem de texto"
+        type: 'text',
+        text: 'Eu sou uma mensagem de texto',
     },
     json: {
-        "type": "json",
-        "text": "*"
+        type: 'json',
+        text: '*',
     },
     menu: {
-        "type": "menu",
-        "text": "Eu sou o corpo do menu",
-        "items": []
+        type: 'menu',
+        text: 'Eu sou o corpo do menu',
+        items: [],
     },
     quickReply: {
-        "type": "quickreply",
-        "text": "Eu sou o corpo da quick reply",
-        "items": []
+        type: 'quickreply',
+        text: 'Eu sou o corpo da quick reply',
+        items: [],
     },
     carousel: {
-        "type": "carousel",
-        "items": [
+        type: 'carousel',
+        items: [
             {
-                "title": "Título da imagem",
-                "subtitle": "",
-                "url": "",
-                'buttons': []
-            }
-        ]
+                title: 'Título da imagem',
+                subtitle: '',
+                url: '',
+                buttons: [],
+            },
+        ],
     },
     image: {
-        "type": "image",
-        "items": [
+        type: 'image',
+        items: [
             {
-                "title": "Título da imagem",
-                "subtitle": "",
-                "url": ""
-            }
-        ]
+                title: 'Título da imagem',
+                subtitle: '',
+                url: '',
+            },
+        ],
     },
     ai: {
-        "type": "ai",
-        "intent": "",
-        "entities": []
+        type: 'ai',
+        intent: '',
+        entities: [],
     },
     track: {
-        "type": "track",
-        "category": "",
-        "action": ""
-    }
-}
+        type: 'track',
+        category: '',
+        action: '',
+    },
+};
 
-export default models
+export default models;
