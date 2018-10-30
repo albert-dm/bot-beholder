@@ -5,8 +5,8 @@ import socketIOClient from 'socket.io-client';
 import Trace from '../../../components/Trace';
 
 const mapStateToProps = state => ({
-    // botId: 'gshowreceitashmg',
-    botId: 'gshowmalhacaobeta',
+    botId: 'gshowreceitasbeta',
+    //botId: 'gshowmalhacaobeta',
     ...state,
 });
 

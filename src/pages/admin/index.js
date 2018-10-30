@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Tracing from './Tracing';
 import Testing from './Testing';
 import Icon from '../../static/img/Dark_Beholder.png';
 
+import { logoutAction } from '../../actions/UserActions'
+
 import BotSideBar from "../../components/BotSideBar/"
+
+const mapStateToProps = state => ({
+    ...state,
+});
+
+const mapDispatchToProps = dispatch => ({
+    logoutAction: () => dispatch(logoutAction()),
+});
 
 const grid = {
     display: 'grid',
@@ -37,6 +48,12 @@ const title = {
     alignSelf: 'center',
 };
 
+const nav = {
+    gridArea: 'nav',
+    justifySelf: 'end',
+    paddingRight: '15px'
+};
+
 const tools = {
     gridArea: 'tools',
 };
@@ -52,6 +69,7 @@ const footer = {
 
 class AdminRoot extends Component {
     render() {
+        let { logoutAction } = this.props;
         return (
             <div style={grid}>
                 <header className="bp-bg-onix" style={header}>
@@ -59,6 +77,9 @@ class AdminRoot extends Component {
                     <h1 className="bp-c-offwhite" style={title}>
                         Bot Beholder
                     </h1>
+                    <div style={nav} className="bp-c-offwhite">
+                        Olá Usuário (<a onClick={logoutAction}>Sair</a>)
+                    </div>
                 </header>
                 <div className="bp-bg-offwhite" style={tools}>
                     <BotSideBar />
@@ -75,4 +96,7 @@ class AdminRoot extends Component {
     }
 }
 
-export default AdminRoot;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(AdminRoot);

@@ -10,7 +10,7 @@ class State extends Component {
     }
 
     onHover = e => {
-      let left = `${e.clientX + 20 }px`;
+        let left = `${e.clientX + 20}px`;
         var top = `${e.target.offsetTop + 20}px`;
         this.setState({ mouseX: left, mouseY: top });
     };
@@ -26,7 +26,7 @@ class State extends Component {
         } = this.props.data;
         const { mouseX, mouseY } = this.state;
         return (
-        <div className={`State block ${ error ? 'error' : ''}`}>
+            <div className={`State block ${error ? 'error' : ''}`}>
                 <span className="date">{new Date(timestamp).toLocaleString()}</span>
                 <h1>{extensionData.name}</h1>
                 <p className="elapsedTime" onMouseOver={this.onHover}>
@@ -34,32 +34,34 @@ class State extends Component {
                     ms
               </p>
                 <div className="actions" style={{ left: mouseX, top: mouseY }}>
-                {inputActions &&
+                    {
+                        inputActions &&
                         inputActions.length > 0 && (
                             <ul>
                                 <p>Entrada (bloco seguinte)</p>
-                          {inputActions.map((action, idx) => (
+                                {inputActions.map((action, idx) => (
                                     <li key={idx} className={action.error ? 'error' : ''}>
-                                    action.type
-                                  } - ${action.elapsedMilliseconds}ms`}
-                                  </li>
+                                        {`${action.type} - ${action.elapsedMilliseconds}ms`}
+                                    </li>
                                 ))}
-                        </ul>
-                  )}
-                {outputActions &&
+                            </ul>
+                        )
+                    }
+                    {
+                        outputActions &&
                         outputActions.length > 0 && (
                             <ul>
                                 <p>Saída</p>
-                          {outputActions.map((action, idx) => (
+                                {outputActions.map((action, idx) => (
                                     <li key={idx} className={action.error ? 'error' : ''}>
-                                    action.type
-                                  } - ${action.elapsedMilliseconds}ms`}
-                                  </li>
+                                        {`${action.type} - ${action.elapsedMilliseconds}ms`}
+                                    </li>
                                 ))}
-                        </ul>
-                  )}
-              </div>
-          </div>
+                            </ul>
+                        )
+                    }
+                </div>
+            </div>
         );
     }
 }

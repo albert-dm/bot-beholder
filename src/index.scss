@@ -20,11 +20,17 @@ p{
   white-space: pre-line;
 }
 
+a{
+  color: $primary-light;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 textarea{
   width: 100%;
 }
 
-input[type='text'], input[type='number']{
+input[type='text'], input[type='number'], input[type='password'], input[type='email']{
   all: unset;
   border-bottom: grey solid 1px;
   transition: border .0s linear;
