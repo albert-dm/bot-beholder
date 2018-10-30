@@ -113,162 +113,162 @@ class Config extends Component {
     render() {
         return (
             <Modal title="Configurações" show={this.props.show} close={this.close}>
-            <div>
+                <div>
                     <label>
                         <b>Bot Identity: *</b>
-                  </label>
-                <input
+                    </label>
+                    <input
                         onChange={this.handleChange}
-                    type="text"
+                        type="text"
                         name="botIdentity"
                         value={this.props.parameters.botIdentity}
-                    required
-                  />
+                        required
+                    />
                     {this.state.botIdentity && (
                         <span className="error">
-                      {' '}
+                            {' '}
                             <br /> Campo obrigatório{' '}
-                    </span>
-                  )}
-              </div>
+                        </span>
+                    )}
+                </div>
                 <br />
-            <div>
+                <div>
                     <label>
                         <b>Bot Key: *</b>
-                  </label>
+                    </label>
                     <input
-                    onChange={this.handleChange}
+                        onChange={this.handleChange}
                         type="text"
-                    name="botKey"
+                        name="botKey"
                         value={this.props.parameters.botKey}
-                    required
-                  />
-                {this.state.botKey && (
+                        required
+                    />
+                    {this.state.botKey && (
                         <span className="error">
-                      {' '}
+                            {' '}
                             <br /> Campo obrigatório{' '}
-                    </span>
-                  )}
-              </div>
-            <br />
+                        </span>
+                    )}
+                </div>
+                <br />
                 <div>
-                <label>
+                    <label>
                         <b>Set up:</b>
-                  </label>{' '}
-                <br />
+                    </label>{' '}
+                    <br />
                     <textarea
-                    onChange={this.handleChange}
+                        onChange={this.handleChange}
                         type="text"
-                    name="setUp"
+                        name="setUp"
                         value={this.props.parameters.setUp}
-                    rows="5"
-                  />
-              </div>
+                        rows="5"
+                    />
+                </div>
                 <br />
-            <div>
+                <div>
                     <b>User Variables: </b>
-                <br />
+                    <br />
                     <div className="block">
                         {Object.keys(this.props.parameters.userVariables).map((key, index) => (
-                        <div key={index}>
-                            <b>{key}:</b>
-                            <input
-                                type="text"
+                            <div key={index}>
+                                <b>{key}:</b>
+                                <input
+                                    type="text"
                                     className="inputProperty"
                                     onChange={this.handleUserVariableChange}
-                                name={key}
-                                value={this.props.parameters.userVariables[key]}
-                              />
-                            <i
+                                    name={key}
+                                    value={this.props.parameters.userVariables[key]}
+                                />
+                                <i
                                     className="far fa-trash-alt icon-btn delete"
-                                onClick={() => {
-                                    this.deleteUserVariable(key);
-                                  }}
-                              />
-                          </div>
-                      ))}
-                    <form onSubmit={this.addUserVariable}>
-                        <div>
+                                    onClick={() => {
+                                        this.deleteUserVariable(key);
+                                    }}
+                                />
+                            </div>
+                        ))}
+                        <form onSubmit={this.addUserVariable}>
+                            <div>
                                 <input
                                     ref={this.keyField}
-                                type="text"
+                                    type="text"
                                     onChange={this.handlePropertyChange}
-                                placeholder="key"
+                                    placeholder="key"
                                     name="key"
-                                className="inputProperty"
+                                    className="inputProperty"
                                     value={this.state.newProperty.key}
                                     required
-                              />
+                                />
                                 :
                             <input
                                     type="text"
                                     onChange={this.handlePropertyChange}
-                                placeholder="value"
-                                name="value"
+                                    placeholder="value"
+                                    name="value"
                                     className="inputProperty"
                                     value={this.state.newProperty.value}
                                     required
-                              />
-                            <button title="Adicionar">
+                                />
+                                <button title="Adicionar">
                                     <i className="fas fa-plus" />
-                              </button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-            {this.props.parameters.botKey && (
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {this.props.parameters.botKey && (
                     <button className="right" onClick={this.loadAi}>
                         Carregar IA
                 </button>
-              )}
+                )}
                 <div>
-                <b>IA: </b>
-                <br />
+                    <b>IA: </b>
+                    <br />
                     <div className="block">
                         Score:{' '}
                         <input
-                        onChange={this.handleChange}
+                            onChange={this.handleChange}
                             type="number"
-                        min="0"
+                            min="0"
                             max="100"
-                        name="aiScore"
+                            name="aiScore"
                             value={this.props.parameters.aiScore}
-                      />
-                    {this.props.parameters.intents.length > 0 && (
+                        />
+                        {this.props.parameters.intents.length > 0 && (
                             <ul>
                                 <b>Intenções:</b>
-                          {this.props.parameters.intents.map((intent, index) => (
+                                {this.props.parameters.intents.map((intent, index) => (
                                     <li key={index}>{intent.name}</li>
                                 ))}
-                        </ul>
-                      )}
-                    {this.props.parameters.entities.length > 0 && (
+                            </ul>
+                        )}
+                        {this.props.parameters.entities.length > 0 && (
                             <ul>
                                 <b>Entidades: </b>
-                          {this.props.parameters.entities.map((entity, index) => (
+                                {this.props.parameters.entities.map((entity, index) => (
                                     <li key={index}>
                                         {entity.name}:{' '}
                                         {entity.values
-                                        .reduce((acc, value) => {
+                                            .reduce((acc, value) => {
                                                 acc.push(value.name);
                                                 return acc;
-                                        }, [])
+                                            }, [])
                                             .join(', ')}{' '}
-                                  </li>
+                                    </li>
                                 ))}
-                        </ul>
-                      )}
-                    {this.props.parameters.intents.length === 0 &&
+                            </ul>
+                        )}
+                        {this.props.parameters.intents.length === 0 &&
                             this.props.parameters.entities.length === 0 &&
                             this.props.parameters.botKey && (
                                 <p>
                                     Clique em "Carregar IA" para carregar as intenções e entidades
                                     existentes no bot
                             </p>
-                      )}
-                  </div>
-              </div>
-          </Modal>
+                            )}
+                    </div>
+                </div>
+            </Modal>
         );
     }
 }

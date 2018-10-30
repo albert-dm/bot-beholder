@@ -9,7 +9,7 @@ import BotSideBar from "../../components/BotSideBar/"
 const grid = {
     display: 'grid',
     gridTemplateColumns: '200px auto',
-    gridTemplateRows: '125px minmax(calc(100vh - 225px), auto) 100px',
+    gridTemplateRows: '125px minmax(calc(100vh - 175px), auto) 50px',
     gridTemplateAreas: `"header header header header"
         "tools main main main"
         "footer footer footer footer"`,
@@ -54,7 +54,7 @@ class AdminRoot extends Component {
     render() {
         return (
             <div style={grid}>
-                <header className="bp-bg-desk" style={header}>
+                <header className="bp-bg-onix" style={header}>
                     <img src={Icon} alt="Bot Beholder" style={icon} />
                     <h1 className="bp-c-offwhite" style={title}>
                         Bot Beholder
