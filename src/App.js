@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
-import { checkLoginAction } from './actions/CheckLoginAction';
+import { checkLoginAction } from './actions/UserActions';
 
 import NoUser from './pages/nouser';
 import Admin from './pages/admin';
@@ -28,7 +28,7 @@ class App extends Component {
         return (
             <Router>
                 {(() => {
-                    switch (this.props.loginReducer.UserRole) {
+                    switch (this.props.userReducer.role) {
                         case 'Admin':
                             return <Route path="/" component={Admin} />;
                         default:

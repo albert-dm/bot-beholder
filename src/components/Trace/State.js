@@ -34,7 +34,7 @@ class State extends Component {
                     ms
               </p>
                 <div className="actions" style={{ left: mouseX, top: mouseY }}>
-                {inputActions
+                {inputActions &&
                         inputActions.length > 0 && (
                             <ul>
                                 <p>Entrada (bloco seguinte)</p>
@@ -46,7 +46,7 @@ class State extends Component {
                                 ))}
                         </ul>
                   )}
-                {outputActions
+                {outputActions &&
                         outputActions.length > 0 && (
                             <ul>
                                 <p>Saída</p>

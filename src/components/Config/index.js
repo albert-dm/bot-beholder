@@ -258,7 +258,7 @@ class Config extends Component {
                                 ))}
                         </ul>
                       )}
-                    {this.props.parameters.intents.length === 0
+                    {this.props.parameters.intents.length === 0 &&
                             this.props.parameters.entities.length === 0 &&
                             this.props.parameters.botKey && (
                                 <p>

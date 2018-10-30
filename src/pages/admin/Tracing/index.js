@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
-import { loginAction } from '../../../actions/LoginAction';
 
 import Trace from '../../../components/Trace';
 
@@ -12,7 +11,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    loginAction: role => dispatch(loginAction(role)),
 });
 
 let id = 0;
