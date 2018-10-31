@@ -5,6 +5,8 @@ import Tracing from './Tracing';
 import Testing from './Testing';
 import Icon from '../../static/img/Dark_Beholder.png';
 
+import './Restricted.scss'
+
 import { logoutAction } from '../../actions/UserActions'
 import { loadList } from '../../actions/BotActions'
 
@@ -70,7 +72,7 @@ const footer = {
     borderTop: 'solid 2px #8ca0b3',
 };
 
-class AdminRoot extends Component {
+class Restricted extends Component {
     componentWillMount = () => {
         let { loadBots } = this.props;
         loadBots();
@@ -88,7 +90,7 @@ class AdminRoot extends Component {
                         Olá {user.data.name} (<a onClick={logoutAction}>Sair</a>)
                     </div>
                 </header>
-                <div className="bp-bg-offwhite" style={tools}>
+                <div className="bp-bg-suit" style={tools}>
                     <BotSideBar bot={bot} />
                 </div>
                 <div className="bp-bg-offwhite" style={main}>
@@ -106,4 +108,4 @@ class AdminRoot extends Component {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(AdminRoot);
+)(Restricted);

@@ -2,7 +2,9 @@
 
 .BotSideBar {
   background-color: $suit;
-  height: 100%;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
   & > a {
     display: block;
     padding: 12px;
@@ -11,7 +13,7 @@
     color: $offwhite;
     cursor: pointer;
     i {
-        float: right;
+      float: right;
     }
   }
   & > a:hover {
@@ -38,7 +40,7 @@
       font-size: 20px;
       color: $primary-dark;
       width: 150px;
-      white-space: nowrap; 
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -78,7 +80,7 @@
       display: block;
       padding: 12px;
       text-decoration: none;
-      color: $offwhite;      
+      color: $offwhite;
       cursor: pointer;
     }
     a:hover {

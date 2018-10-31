@@ -5,7 +5,7 @@ import './App.css';
 import { checkLoginAction } from './actions/UserActions';
 
 import NoUser from './pages/nouser';
-import Admin from './pages/admin';
+import Restricted from './pages/restricted';
 
 const mapStateToProps = state => ({
     ...state,
@@ -30,7 +30,7 @@ class App extends Component {
             <Router>
                 {
                     user.logged ?
-                    <Route path="/" component={Admin} />
+                    <Route path="/" component={Restricted} />
                     :
                     <Route path="/" component={NoUser} />
                 }

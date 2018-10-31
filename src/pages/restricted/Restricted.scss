@@ -1,0 +1,56 @@
+@import '../../globals';
+
+.grid{
+    display: grid;
+    grid-template-columns: 250px auto;
+    grid-template-rows: 125px minmax(calc(100vh - 175px), auto) 50px;
+    grid-template-areas: "header header header header
+        tools main main main
+        footer footer footer footer",
+};
+
+.header{
+    background-color: $onix;
+    grid-area: 'header';
+    text-align: center;
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: 100px 25px;
+    grid-template-areas: "icon title
+        icon nav";
+};
+.icon{
+    padding: 5px;
+    grid-area: 'icon';
+    display: block;
+    justify-self: center;
+    align-self: center;
+};
+.title{
+    grid-area: 'title';
+    justify-self: center;
+    align-self: center;
+};
+
+.nav{
+    grid-area: 'nav';
+    justify-self: end;
+    padding-right: 15px;
+    color: $offwhite;
+};
+
+.tools{
+    grid-area: 'tools';
+    background-color: $suit;
+};
+
+.main{
+    grid-area: 'main';
+    padding: 20px;
+    background-color: $offwhite;
+};
+
+.footer{
+    grid-area: 'footer';
+    border-top: solid 2px #8ca0b3;
+};

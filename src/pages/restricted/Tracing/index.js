@@ -7,7 +7,6 @@ import Trace from '../../../components/Trace';
 var socket;
 
 const mapStateToProps = state => ({
-    //botId: 'gshowreceitasbeta',
     ...state,
 });
 
