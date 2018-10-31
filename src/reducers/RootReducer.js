@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import userReducer from './UserReducer';
-import commonReducer from './CommonReducer';
+import UserReducer from './UserReducer';
+import CommonReducer from './CommonReducer';
+import BotReducer from './BotReducer';
 
 export default combineReducers({
-    user: userReducer,
-    common: commonReducer
+    user: UserReducer,
+    common: CommonReducer,
+    bot: BotReducer
 });

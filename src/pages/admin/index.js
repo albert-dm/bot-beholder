@@ -6,6 +6,7 @@ import Testing from './Testing';
 import Icon from '../../static/img/Dark_Beholder.png';
 
 import { logoutAction } from '../../actions/UserActions'
+import { loadList } from '../../actions/BotActions'
 
 import BotSideBar from "../../components/BotSideBar/"
 
@@ -15,11 +16,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     logoutAction: () => dispatch(logoutAction()),
+    loadBots: () => dispatch(loadList())
 });
 
 const grid = {
     display: 'grid',
-    gridTemplateColumns: '200px auto',
+    gridTemplateColumns: '250px auto',
     gridTemplateRows: '125px minmax(calc(100vh - 175px), auto) 50px',
     gridTemplateAreas: `"header header header header"
         "tools main main main"
@@ -68,8 +70,12 @@ const footer = {
 };
 
 class AdminRoot extends Component {
+    componentWillMount = () => {
+        let { loadBots } = this.props;
+        loadBots();
+    }
     render() {
-        let { logoutAction, user } = this.props;
+        let { logoutAction, user, bot } = this.props;
         return (
             <div style={grid}>
                 <header className="bp-bg-onix" style={header}>
@@ -82,7 +88,7 @@ class AdminRoot extends Component {
                     </div>
                 </header>
                 <div className="bp-bg-offwhite" style={tools}>
-                    <BotSideBar />
+                    <BotSideBar bot={bot} />
                 </div>
                 <div className="bp-bg-offwhite" style={main}>
                     <Route exact path="/" component={Tracing} />

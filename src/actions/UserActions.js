@@ -18,7 +18,6 @@ export const checkLoginAction = () => dispatch => {
 export const loginAction = (username, pass) => dispatch => {
     dispatch(fetchingData());
     let token = btoa(`${username}:${pass}`); 
-    console.log('chegou aqui')
     getInfo(token)
     .then(data => {
         data.name = data.fullName.split(' ')[0];

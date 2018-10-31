@@ -11,10 +11,10 @@ export const fetchingDataFinished = () => dispatch => {
     })
 }
 
-export const alert = (text) => dispatch => {
+export const alert = (text, level) => dispatch => {
     dispatch({
         type: "ALERT",
-        alert: {text}
+        alert: {text, level}
     })
 
 }

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './BotSideBar.scss'
+import { selectBot } from '../../actions/BotActions'
 
 const mapStateToProps = state => ({
     ...state,
 });
 
 const mapDispatchToProps = dispatch => ({
+    selectBot: (bot) => dispatch(selectBot(bot))
 });
 
 class BotSideBar extends Component {
@@ -18,18 +20,24 @@ class BotSideBar extends Component {
         }
     }
     render() {
-        let { showNewBot, showCases } = this.state;
+        let {  showCases } = this.state;
+        let { bot, selectBot } = this.props;
         return (
             <div className="BotSideBar bp-ff-nunito" style={{ padding: '5px' }}>
                 <header>
-                    <div class="avatar"></div>
-                    <h1>Bot</h1>
+                    <div class="avatar">
+                        {
+                            bot.selected &&
+                            bot.selected.imageUri &&
+                            <img src={bot.selected.imageUri} width="40px" height="40px" />
+                        }
+                    </div>
+                    <h1 title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
                     <i className="BotSelect fas fa-angle-down"></i>
                     <div class="Bots">
-                        <a>Bot 1</a>
-                        <a>Bot 2</a>
-                        <a>Bot 3</a>
-                        <a>Bot 4</a>
+                        {
+                            bot.list.map(bot => <a key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</a>)
+                        }
                     </div>
                 </header>
                 <Link to="">Tracing</Link>
