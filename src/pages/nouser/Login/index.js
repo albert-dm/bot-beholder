@@ -20,7 +20,8 @@ class LoginPage extends Component {
         }
     }
 
-    loginAction = () => {
+    loginAction = e => {
+        e.preventDefault();
         let { user, pass } = this.state;
         this.props.loginAction(user, pass);
     };
@@ -37,9 +38,7 @@ class LoginPage extends Component {
         return (
             <div className="Login">
                 <h1>Acessar Bot Beholder</h1>
-                <form onSubmit={() => {
-                    this.loginAction();
-                }}>
+                <form onSubmit={this.loginAction}>
                     <div>
                         <label>
                             <b>E-mail:</b>

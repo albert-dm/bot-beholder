@@ -69,7 +69,7 @@ const footer = {
 
 class AdminRoot extends Component {
     render() {
-        let { logoutAction } = this.props;
+        let { logoutAction, user } = this.props;
         return (
             <div style={grid}>
                 <header className="bp-bg-onix" style={header}>
@@ -78,7 +78,7 @@ class AdminRoot extends Component {
                         Bot Beholder
                     </h1>
                     <div style={nav} className="bp-c-offwhite">
-                        Olá Usuário (<a onClick={logoutAction}>Sair</a>)
+                        Olá {user.data.name} (<a onClick={logoutAction}>Sair</a>)
                     </div>
                 </header>
                 <div className="bp-bg-offwhite" style={tools}>

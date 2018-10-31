@@ -2,18 +2,18 @@ export default (state = {role: "Admin"}, action) => {
   switch (action.type) {
     case 'LOGIN_ACTION':
       return {
-        role: action.role,
-        data: action.data
+        data: action.data,
+        logged: action.logged
       }
     case 'CHECK_LOGIN_ACTION':
       return {
-        role: action.role,
-        data: action.data
+        data: action.data,
+        logged: action.logged
       }
     case 'LOGOUT_ACTION':
       return {
-        role: 'NoUser',
-        data: ''
+        data: '',
+        logged: false
       }
     default:
       return state

@@ -25,16 +25,15 @@ class App extends Component {
     };
 
     render() {
+        let { user } = this.props;
         return (
             <Router>
-                {(() => {
-                    switch (this.props.user.role) {
-                        case 'Admin':
-                            return <Route path="/" component={Admin} />;
-                        default:
-                            return <Route path="/" component={NoUser} />;
-                    }
-                })()}
+                {
+                    user.logged ?
+                    <Route path="/" component={Admin} />
+                    :
+                    <Route path="/" component={NoUser} />
+                }
             </Router>
         );
     }
