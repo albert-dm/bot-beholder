@@ -41,8 +41,8 @@ const icon = {
     padding: '5px',
     gridArea: 'icon',
     display: 'block',
-    justifySelf: 'stretch',
-    alignSelf: 'stretch',
+    justifySelf: 'center',
+    alignSelf: 'center',
 };
 const title = {
     gridArea: 'title',
@@ -62,6 +62,7 @@ const tools = {
 
 const main = {
     gridArea: 'main',
+    padding: '20px'
 };
 
 const footer = {
@@ -79,7 +80,7 @@ class AdminRoot extends Component {
         return (
             <div style={grid}>
                 <header className="bp-bg-onix" style={header}>
-                    <img src={Icon} alt="Bot Beholder" style={icon} />
+                    <img src={Icon} width="80px" height="80px" alt="Bot Beholder" style={icon} />
                     <h1 className="bp-c-offwhite" style={title}>
                         Bot Beholder
                     </h1>

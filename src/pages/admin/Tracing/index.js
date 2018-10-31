@@ -4,9 +4,10 @@ import socketIOClient from 'socket.io-client';
 
 import Trace from '../../../components/Trace';
 
+var socket;
+
 const mapStateToProps = state => ({
-    botId: 'gshowreceitasbeta',
-    //botId: 'gshowmalhacaobeta',
+    //botId: 'gshowreceitasbeta',
     ...state,
 });
 
@@ -21,21 +22,41 @@ class Tracing extends Component {
         this.state = {
             traces: [],
         };
-        const socket = socketIOClient(`http://localhost:4001?botid=${props.botId}`);
-        socket.on(props.botId, trace => {
-            trace.id = id++;
-            this.setState(state => ({ traces: [trace, ...state.traces] }));
-        });
-        socket.on(`${props.botId}Start`, traces => {
-            this.setState(() => ({ traces: [...traces] }));
-        });
+        if (props.bot.selected) {
+            socket = socketIOClient(`http://localhost:4001?botid=${props.bot.selected.shortName}`);
+            socket.on("tracing", trace => {
+                trace.id = id++;
+                this.setState(state => ({ traces: [trace, ...state.traces] }));
+            });
+            socket.on("start", traces => {
+                this.setState(() => ({ traces: [...traces] }));
+            });
+        }
+    }
+
+    componentWillReceiveProps = (newProps) => {
+        console.log(newProps);
+        if (newProps.bot.selected) {
+            let currentShortName = this.props.bot.selected ? this.props.bot.selected.shortName : "";
+            if (newProps.bot.selected.shortName != currentShortName) {
+                if(socket) socket.close();
+                socket = socketIOClient(`http://localhost:4001?botid=${newProps.bot.selected.shortName}`);
+                socket.on("tracing", trace => {
+                    trace.id = id++;
+                    this.setState(state => ({ traces: [trace, ...state.traces] }));
+                });
+                socket.on("start", traces => {
+                    this.setState(() => ({ traces: [...traces] }));
+                });
+            }
+        }
     }
 
     render() {
         const { traces } = this.state;
         return (
             <div className="bp-ff-nunito" style={{ padding: '5px' }}>
-                <h1 className="bp-fs-2">Tracing: {this.props.botId}</h1>
+                <h1 className="bp-fs-2">Tracing</h1>
                 {traces && traces.map(trace => <Trace key={trace.id} data={trace} />)}
             </div>
         );
