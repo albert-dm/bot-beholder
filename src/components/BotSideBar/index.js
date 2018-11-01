@@ -20,7 +20,7 @@ class BotSideBar extends Component {
         }
     }
     render() {
-        let {  showCases } = this.state;
+        let { showCases } = this.state;
         let { bot, selectBot } = this.props;
         return (
             <div className="BotSideBar bp-ff-nunito" style={{ padding: '5px' }}>
@@ -34,19 +34,22 @@ class BotSideBar extends Component {
                     </div>
                     <h1 title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
                     <i className="BotSelect fas fa-angle-down"></i>
-                    <div class="Bots">
-                        {
-                            bot.list.map(bot => <a key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</a>)
-                        }
-                    </div>
+                    {
+                        bot.list &&
+                        <div class="Bots">
+                            {
+                                bot.list.map(bot => <a key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</a>)
+                            }
+                        </div>
+                    }
                 </header>
                 <Link to="">Tracing</Link>
                 <a onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
                     Casos de uso
                     {showCases ?
-                    <i className="BotSelect fas fa-angle-up"></i>
-                    :
-                    <i className="BotSelect fas fa-angle-down"></i>
+                        <i className="BotSelect fas fa-angle-up"></i>
+                        :
+                        <i className="BotSelect fas fa-angle-down"></i>
                     }
                 </a>
                 {

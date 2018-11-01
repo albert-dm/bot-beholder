@@ -73,12 +73,12 @@ const footer = {
 };
 
 class Restricted extends Component {
-    componentWillMount = () => {
+    componentDidMount = () => {
         let { loadBots } = this.props;
         loadBots();
     }
     render() {
-        let { logoutAction, user, bot } = this.props;
+        let { logoutAction, user } = this.props;
         return (
             <div style={grid}>
                 <header className="bp-bg-onix" style={header}>
@@ -91,7 +91,7 @@ class Restricted extends Component {
                     </div>
                 </header>
                 <div className="bp-bg-suit" style={tools}>
-                    <BotSideBar bot={bot} />
+                    <BotSideBar />
                 </div>
                 <div className="bp-bg-offwhite" style={main}>
                     <Route exact path="/" component={Tracing} />

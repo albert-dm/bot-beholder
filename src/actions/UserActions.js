@@ -21,13 +21,13 @@ export const loginAction = (username, pass) => dispatch => {
     getInfo(token)
     .then(data => {
         data.name = data.fullName.split(' ')[0];
+        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("user", JSON.stringify(data));
         dispatch({
             type: 'LOGIN_ACTION',
             data, 
             logged: true
         });
-        localStorage.setItem("token", JSON.stringify(token));
-        localStorage.setItem("user", JSON.stringify(data));
         dispatch(fetchingDataFinished());
     })
     .catch(err => {

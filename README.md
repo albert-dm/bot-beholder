@@ -1,7 +1,20 @@
-The objective of this project is to create template for complex React applications.
+#Bot Beholder
 
-It comes with Redux and Router configured in the right way for developing multi-role applications, where the whole visual of the app changes depending on the user role. 
+This is the app to behold your bot.
 
-Besides all of this, it also provides integration with ReactMD (Material Design) and Semantic UI, each one with a specific branch. 
+##Blip bot
 
-More information will be added during the development. This is a project in progress.
+Bot Beholder is developed based on the ChatBot developing platflorm BLiP (blip.ai). It integrates with your BLiP account to allow you to observe everything that happens with your bot and give you the tools to test its behavior. 
+
+The app is still in development.
+
+##Tracing
+
+The tracing tool is connected in realtime to BLiP and feeds you with very usefull information about what is happening in the Chat, highlighting errors and important events.
+
+##Testing
+
+The testing tool is capable of creating Use Cases for your ChatBot, that can be used to run tests and make sure that everything works as you planned. 
+
+The use of the Use Cases is also something that could be used in TDD (Test Driven Development)
+
