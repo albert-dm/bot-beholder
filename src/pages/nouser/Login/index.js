@@ -27,7 +27,7 @@ class LoginPage extends Component {
     };
 
     handleChange = e => {
-        const { name, value, required } = e.target;
+        const { name, value } = e.target;
         this.setState({
             [name]: value,
         });

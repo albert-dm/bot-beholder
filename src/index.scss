@@ -20,7 +20,8 @@ p{
   white-space: pre-line;
 }
 
-a{
+a, .link{
+  display: inline-block;
   color: $primary-light;
   text-decoration: none;
   cursor: pointer;

@@ -37,7 +37,7 @@ class Tracing extends Component {
         console.log(newProps);
         if (newProps.bot.selected) {
             let currentShortName = this.props.bot.selected ? this.props.bot.selected.shortName : "";
-            if (newProps.bot.selected.shortName != currentShortName) {
+            if (newProps.bot.selected.shortName !== currentShortName) {
                 if(socket) socket.close();
                 socket = socketIOClient(`http://localhost:4001?botid=${newProps.bot.selected.shortName}`);
                 socket.on("tracing", trace => {

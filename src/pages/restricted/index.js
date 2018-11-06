@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Home from './Home';
 import Tracing from './Tracing';
 import Testing from './Testing';
 import Icon from '../../static/img/Dark_Beholder.png';
@@ -84,17 +85,18 @@ class Restricted extends Component {
                 <header className="bp-bg-onix" style={header}>
                     <img src={Icon} width="80px" height="80px" alt="Bot Beholder" style={icon} />
                     <h1 className="bp-c-offwhite" style={title}>
-                        Bot Beholder
+                        <Link to="/">Bot Beholder</Link>
                     </h1>
                     <div style={nav} className="bp-c-offwhite">
-                        Olá {user.data.name} (<a onClick={logoutAction}>Sair</a>)
+                        Olá {user.data.name} (<div className="link" onClick={logoutAction}>Sair</div>)
                     </div>
                 </header>
                 <div className="bp-bg-suit" style={tools}>
                     <BotSideBar />
                 </div>
                 <div className="bp-bg-offwhite" style={main}>
-                    <Route exact path="/" component={Tracing} />
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/tracing" component={Tracing} />
                     <Route exact path="/testing" component={Testing} />
                 </div>
                 <div className="bp-bg-breeze" style={footer}>

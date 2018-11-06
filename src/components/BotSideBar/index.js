@@ -29,7 +29,7 @@ class BotSideBar extends Component {
                         {
                             bot.selected &&
                             bot.selected.imageUri &&
-                            <img src={bot.selected.imageUri} width="40px" height="40px" />
+                            <img alt="Bot Beholder" src={bot.selected.imageUri} width="40px" height="40px" />
                         }
                     </div>
                     <h1 title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
@@ -38,20 +38,20 @@ class BotSideBar extends Component {
                         bot.list &&
                         <div class="Bots">
                             {
-                                bot.list.map(bot => <a key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</a>)
+                                bot.list.map(bot => <div className="navItem" key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</div>)
                             }
                         </div>
                     }
                 </header>
-                <Link to="">Tracing</Link>
-                <a onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
+                <Link to="/tracing">Tracing</Link>
+                <div className="navItem" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
                     Casos de uso
                     {showCases ?
                         <i className="BotSelect fas fa-angle-up"></i>
                         :
                         <i className="BotSelect fas fa-angle-down"></i>
                     }
-                </a>
+                </div>
                 {
                     showCases &&
                     <div className="UseCases">
@@ -59,7 +59,7 @@ class BotSideBar extends Component {
                         <Link to="">Case 2</Link>
                         <Link to="">Case 3</Link>
                         <Link to="">Case 4</Link>
-                        <a><i class="fas fa-plus-circle"></i> Novo</a>
+                        <div className="navItem" ><i class="fas fa-plus-circle"></i> Novo</div>
                     </div>
                 }
             </div>
