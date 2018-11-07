@@ -11,7 +11,8 @@ export function getIntents(botKey) {
             uri: '/intentions',
             id: Math.random().toFixed(5) * 100000,
         }),
-    });
+    })
+    .then(response => response.json());
 }
 
 export function getEntities(botKey) {
@@ -27,5 +28,6 @@ export function getEntities(botKey) {
             uri: '/entities',
             id: Math.random().toFixed(5) * 100000,
         }),
-    });
+    })
+    .then(response => response.json());
 }
