@@ -30,11 +30,15 @@ export const selectBot = (bot) => dispatch => {
                 (data) => {
                     if(data.status === "success"){
                         bot.entities = data.resource.items;
+                    } else {
+                        bot.entities = [];
                     }
                     getIntents(bot.authorization).then(
                         (data) => {
                             if(data.status === "success"){
                                 bot.intents = data.resource.items;
+                            } else {
+                                bot.intents = [];
                             }
                             dispatch({
                                 type: 'SELECT_BOT',

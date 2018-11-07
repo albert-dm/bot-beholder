@@ -42,15 +42,11 @@ class Testing extends Component {
         super();
         this.state = {
             flowTitle: 'Novo Fluxo',
-            botIdentity: '',
-            botKey: '',
             setUp: '[]',
             userVariables: {},
             blocks: [],
             selected: '',
             showModal: true,
-            intents: [],
-            entities: [],
             aiScore: 6,
             error: '',
         };
@@ -78,15 +74,11 @@ class Testing extends Component {
         if (window.confirm('Tem certeza que deseja limpar o fluxo?')) {
             this.setState({
                 flowTitle: 'Novo Fluxo',
-                botIdentity: '',
-                botKey: '',
                 setUp: '[]',
                 userVariables: {},
                 blocks: [],
                 selected: '',
                 showModal: true,
-                intents: [],
-                entities: [],
                 aiScore: 6,
             });
         }
@@ -129,8 +121,8 @@ class Testing extends Component {
 
     downloadJson = () => {
         let json = {
-            botIdentity: this.state.botIdentity,
-            botKey: this.state.botKey,
+            botIdentity: this.props.bot.shortName,
+            botKey: this.props.bot.authorization,
             setUp: JSON.stringify(JSON.parse(this.state.setUp)),
             userVariables: this.state.userVariables,
             testCases: JSON.stringify(this.state.blocks),
@@ -168,15 +160,11 @@ class Testing extends Component {
     uploadJson = (json, title) => {
         try {
             this.setState({
-                botIdentity: json.botIdentity,
-                botKey: json.botKey,
                 setUp: json.setUp,
                 userVariables: json.userVariables,
                 blocks: JSON.parse(json.testCases),
                 aiScore: JSON.parse(json.aiScore),
-                flowTitle: title,
-                intents: [],
-                entities: [],
+                flowTitle: title
             });
         } catch (error) {
             this.setState({
@@ -187,7 +175,9 @@ class Testing extends Component {
 
     componentDidMount() {
         let { test } = this.props;
-        //this.setState(test.selectedCase);
+        if(test.selectedCase){
+            this.setState(test.selectedCase);
+        }
     }
 
     /* componentDidUpdate(prevState) {
@@ -217,6 +207,7 @@ class Testing extends Component {
     };
 
     render() {
+        let { bot } = this.props;
         return (
             <div style={grid}>
             {
@@ -256,8 +247,8 @@ class Testing extends Component {
                     {...this.state.blocks[this.state.selected]}
                     setBlock={this.setBlock}
                     selected={this.state.selected}
-                    intents={this.state.intents}
-                    entities={this.state.entities}
+                    intents={bot.selected.intents}
+                    entities={bot.selected.entities}
                 />
                 <Config
                     show={this.state.showModal}
