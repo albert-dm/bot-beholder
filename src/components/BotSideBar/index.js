@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './BotSideBar.scss'
 import { selectBot } from '../../actions/BotActions'
+import { selectCase } from '../../actions/TestActions'
 
 const mapStateToProps = state => ({
     ...state,
 });
 
 const mapDispatchToProps = dispatch => ({
-    selectBot: (bot) => dispatch(selectBot(bot))
+    selectBot: (bot) => dispatch(selectBot(bot)),
+    selectCase: (slug) => dispatch(selectCase(slug))
 });
 
 class BotSideBar extends Component {
@@ -21,7 +23,7 @@ class BotSideBar extends Component {
     }
     render() {
         let { showCases } = this.state;
-        let { bot, selectBot } = this.props;
+        let { bot, test, selectBot, selectCase } = this.props;
         return (
             <div className="BotSideBar bp-ff-nunito" style={{ padding: '5px' }}>
                 <header>
@@ -55,10 +57,9 @@ class BotSideBar extends Component {
                 {
                     showCases &&
                     <div className="UseCases">
-                        <Link to="">Case 1</Link>
-                        <Link to="">Case 2</Link>
-                        <Link to="">Case 3</Link>
-                        <Link to="">Case 4</Link>
+                        {
+                            Object.keys(test.cases).map((slug) => <Link to="/testing" key={slug} onClick={() => selectCase(slug)}>{test.cases[slug]}</Link>)
+                        }
                         <div className="navItem" ><i class="fas fa-plus-circle"></i> Novo</div>
                     </div>
                 }

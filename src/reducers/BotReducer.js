@@ -1,3 +1,12 @@
+/*
+
+bot: {
+  selected: Bot,
+  list: [Bot]
+}
+
+*/
+
 export default (state = { }, action) => {
   switch (action.type) {
     case 'LOAD_LIST':

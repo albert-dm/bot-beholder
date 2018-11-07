@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import FlowDisplay from '../../../components/FlowDisplay';
 import Properties from '../../../components/Properties';
 import Block from '../../../components/Block';
 import Config from '../../../components/Config';
 import Modal from '../../../components/Modal';
+
+const mapStateToProps = state => ({
+    ...state,
+});
+
+const mapDispatchToProps = dispatch => ({
+});
 
 const guid = () => {
     function s4() {
@@ -178,16 +186,21 @@ class Testing extends Component {
     };
 
     componentDidMount() {
-        const cachedState = localStorage.getItem('state');
-        if (cachedState) {
-            this.setState(JSON.parse(cachedState));
-        }
+        let { test } = this.props;
+        //this.setState(test.selectedCase);
     }
 
-    componentDidUpdate(prevState) {
+    /* componentDidUpdate(prevState) {
         // Typical usage (don't forget to compare props):
         if (this.state !== prevState) {
             localStorage.setItem('state', JSON.stringify(this.state));
+        }
+    } */
+
+    componentWillReceiveProps(newProps) {
+        let { test } = this.props;
+        if (newProps.test.selectedSlug !== test.selectedSlug){
+            this.setState(newProps.test.selectedCase);
         }
     }
 
@@ -206,6 +219,9 @@ class Testing extends Component {
     render() {
         return (
             <div style={grid}>
+            {
+                this.props.test.selectedSlug ?
+            <React.Fragment>
                 <FlowDisplay
                     style={flow}
                     flowTitle={this.state.flowTitle}
@@ -256,9 +272,17 @@ class Testing extends Component {
                     }}
                     title={this.state.error}
                 />
+            </React.Fragment>
+            :
+            <p>Selecione um caso de uso</p>
+            
+                }
             </div>
         );
     }
 }
 
-export default Testing;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Testing);

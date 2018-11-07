@@ -10,6 +10,7 @@ import './Restricted.scss'
 
 import { logoutAction } from '../../actions/UserActions'
 import { loadList } from '../../actions/BotActions'
+import { loadCaseList } from '../../actions/TestActions'
 
 import BotSideBar from "../../components/BotSideBar/"
 
@@ -19,7 +20,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     logoutAction: () => dispatch(logoutAction()),
-    loadBots: () => dispatch(loadList())
+    loadBots: () => dispatch(loadList()),
+    loadCases: () => dispatch(loadCaseList())
 });
 
 const grid = {
@@ -75,8 +77,9 @@ const footer = {
 
 class Restricted extends Component {
     componentDidMount = () => {
-        let { loadBots } = this.props;
+        let { loadBots, loadCases } = this.props;
         loadBots();
+        loadCases();
     }
     render() {
         let { logoutAction, user } = this.props;

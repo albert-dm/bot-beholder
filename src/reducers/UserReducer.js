@@ -1,3 +1,12 @@
+/*
+
+user: {
+  data: User,
+  logged: Bool
+}
+
+*/
+
 export default (state = {}, action) => {
   switch (action.type) {
     case 'LOGIN_ACTION':
