@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './BotSideBar.scss'
 import { selectBot } from '../../actions/BotActions'
-import { selectCase } from '../../actions/TestActions'
+import { selectCase, newCase } from '../../actions/TestActions'
 
 const mapStateToProps = state => ({
     ...state,
@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     selectBot: (bot) => dispatch(selectBot(bot)),
-    selectCase: (slug) => dispatch(selectCase(slug))
+    selectCase: (slug) => dispatch(selectCase(slug)),
+    newCase: (cases) => dispatch(newCase(cases))
 });
 
 class BotSideBar extends Component {
@@ -23,11 +24,11 @@ class BotSideBar extends Component {
     }
     render() {
         let { showCases } = this.state;
-        let { bot, test, selectBot, selectCase } = this.props;
+        let { bot, test, selectBot, selectCase, newCase } = this.props;
         return (
             <div className="BotSideBar bp-ff-nunito" style={{ padding: '5px' }}>
                 <header>
-                    <div class="avatar">
+                    <div className="avatar">
                         {
                             bot.selected &&
                             bot.selected.imageUri &&
@@ -38,7 +39,7 @@ class BotSideBar extends Component {
                     <i className="BotSelect fas fa-angle-down"></i>
                     {
                         bot.list &&
-                        <div class="Bots">
+                        <div className="Bots">
                             {
                                 bot.list.map(bot => <div className="navItem" key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</div>)
                             }
@@ -46,23 +47,29 @@ class BotSideBar extends Component {
                     }
                 </header>
                 <Link to="/tracing">Tracing</Link>
-                <div className="navItem" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
-                    Casos de uso
-                    {showCases ?
-                        <i className="BotSelect fas fa-angle-up"></i>
-                        :
-                        <i className="BotSelect fas fa-angle-down"></i>
-                    }
-                </div>
                 {
-                    showCases &&
-                    <div className="UseCases">
+                    test.cases &&
+                    <React.Fragment>
+                        <div className="navItem" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
+                            Casos de uso
+                    {showCases ?
+                                <i className="BotSelect fas fa-angle-up"></i>
+                                :
+                                <i className="BotSelect fas fa-angle-down"></i>
+                            }
+                        </div>
                         {
-                            Object.keys(test.cases).map((slug) => <Link to="/testing" key={slug} onClick={() => selectCase(slug)}>{test.cases[slug]}</Link>)
+                            showCases &&
+                            <div className="UseCases">
+                                {
+                                    Object.keys(test.cases).map((useCaseId) => <Link to="/testing" key={useCaseId} onClick={() => selectCase(useCaseId)}>{test.cases[useCaseId]}</Link>)
+                                }
+                                <div className="navItem" onClick={() => newCase(test.cases)} ><i className="fas fa-plus-circle"></i> Novo</div>
+                            </div>
                         }
-                        <div className="navItem" ><i class="fas fa-plus-circle"></i> Novo</div>
-                    </div>
+                    </React.Fragment>
                 }
+
             </div>
         );
     }

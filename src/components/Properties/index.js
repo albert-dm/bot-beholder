@@ -45,7 +45,6 @@ class Properties extends Component {
     };
 
     scrollBottom = () => {
-        console.log(this.div.current.scrollHeight);
         this.div.current.scrollTop = this.div.current.scrollHeight;
     };
 
@@ -101,8 +100,8 @@ class Properties extends Component {
                         />
                     </React.Fragment>
                 ) : (
-                    <p>Selecione um bloco</p>
-                )}
+                        <p>Selecione um bloco</p>
+                    )}
             </div>
         );
     }

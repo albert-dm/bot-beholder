@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Modal from '../Modal';
-import { getIntents, getEntities } from '../../services/AiService';
 
 class Config extends Component {
     constructor() {

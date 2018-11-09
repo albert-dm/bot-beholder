@@ -7,15 +7,16 @@ common: {
 
 */
 
-export default (state = {isLoading: false, alert: []}, action) => {
+export default (state = {isLoading: false, alerts: []}, action) => {
     switch (action.type) {
       case 'LOADING_ACTION':
         return {
+          ...state,
           isLoading: action.isLoading
         }
       case 'ALERT':
         return {
-          alerts: [...alert, action.alert]
+          alerts: [...state.alerts, action.alert]
         }
       default:
         return state

@@ -15,7 +15,6 @@ class AiAnswer extends Component {
     handleEntityChange = values => {
         const newAnswer = { ...this.props.answer };
         newAnswer.entities = values.map(value => value.label);
-        console.log(newAnswer);
         this.props.setAnswer(newAnswer, this.props.index);
     };
 

@@ -6,12 +6,16 @@ import Properties from '../../../components/Properties';
 import Block from '../../../components/Block';
 import Config from '../../../components/Config';
 import Modal from '../../../components/Modal';
+import { saveCase } from '../../../actions/TestActions'
+
+import { debounceCall } from '../../../helpers/commonHelper';
 
 const mapStateToProps = state => ({
     ...state,
 });
 
 const mapDispatchToProps = dispatch => ({
+    saveCase: (useCase, cases) => dispatch(saveCase(useCase, cases)),
 });
 
 const guid = () => {
@@ -49,6 +53,7 @@ class Testing extends Component {
             showModal: true,
             aiScore: 6,
             error: '',
+            id: ''
         };
         this.addBlock.bind(this);
         this.deleteBlock.bind(this);
@@ -175,21 +180,20 @@ class Testing extends Component {
 
     componentDidMount() {
         let { test } = this.props;
-        if(test.selectedCase){
+        if (test.selectedCase) {
             this.setState(test.selectedCase);
         }
     }
 
-    /* componentDidUpdate(prevState) {
-        // Typical usage (don't forget to compare props):
-        if (this.state !== prevState) {
-            localStorage.setItem('state', JSON.stringify(this.state));
+    componentWillUpdate(nextProps, nextState) {
+        if (this.state.id && nextState !== this.state && nextState.id === this.state.id) {
+            debounceCall(this.props.saveCase(nextState, this.props.test.cases), 250);
         }
-    } */
+    }
 
     componentWillReceiveProps(newProps) {
         let { test } = this.props;
-        if (newProps.test.selectedSlug !== test.selectedSlug){
+        if (newProps.test.selectedId !== test.selectedId) {
             this.setState(newProps.test.selectedCase);
         }
     }
@@ -210,63 +214,63 @@ class Testing extends Component {
         let { bot } = this.props;
         return (
             <div style={grid}>
-            {
-                this.props.test.selectedSlug ?
-            <React.Fragment>
-                <FlowDisplay
-                    style={flow}
-                    flowTitle={this.state.flowTitle}
-                    setTitle={this.setTitle.bind(this)}
-                    addBlock={this.addBlock}
-                    download={this.downloadJson}
-                    uploadJson={this.uploadJson}
-                    clearFlow={this.clearFlow}
-                    openConfig={this.toggleConfigurations}
-                >
-                    <ReactCSSTransitionGroup
-                        transitionName="blocks"
-                        transitionEnterTimeout={200}
-                        transitionLeaveTimeout={200}
-                    >
-                        {this.state.blocks.map((block, index) => (
-                            <Block
-                                selected={index === this.state.selected}
-                                block={block}
-                                onClick={() => this.selectBlock(index)}
-                                key={block.id}
-                                deleteBlock={e => {
-                                    e.stopPropagation();
-                                    this.deleteBlock(index);
-                                }}
+                {
+                    this.props.test.selectedId ?
+                        <React.Fragment>
+                            <FlowDisplay
+                                style={flow}
+                                flowTitle={this.state.flowTitle}
+                                setTitle={this.setTitle.bind(this)}
+                                addBlock={this.addBlock}
+                                download={this.downloadJson}
+                                uploadJson={this.uploadJson}
+                                clearFlow={this.clearFlow}
+                                openConfig={this.toggleConfigurations}
+                            >
+                                <ReactCSSTransitionGroup
+                                    transitionName="blocks"
+                                    transitionEnterTimeout={200}
+                                    transitionLeaveTimeout={200}
+                                >
+                                    {this.state.blocks.map((block, index) => (
+                                        <Block
+                                            selected={index === this.state.selected}
+                                            block={block}
+                                            onClick={() => this.selectBlock(index)}
+                                            key={block.id}
+                                            deleteBlock={e => {
+                                                e.stopPropagation();
+                                                this.deleteBlock(index);
+                                            }}
+                                        />
+                                    ))}
+                                </ReactCSSTransitionGroup>
+                            </FlowDisplay>
+                            <Properties
+                                style={properties}
+                                {...this.state.blocks[this.state.selected]}
+                                setBlock={this.setBlock}
+                                selected={this.state.selected}
+                                intents={bot.selected.intents}
+                                entities={bot.selected.entities}
                             />
-                        ))}
-                    </ReactCSSTransitionGroup>
-                </FlowDisplay>
-                <Properties
-                    style={properties}
-                    {...this.state.blocks[this.state.selected]}
-                    setBlock={this.setBlock}
-                    selected={this.state.selected}
-                    intents={bot.selected.intents}
-                    entities={bot.selected.entities}
-                />
-                <Config
-                    show={this.state.showModal}
-                    close={this.toggleConfigurations}
-                    setConfig={this.setConfig}
-                    parameters={this.state}
-                />
-                <Modal
-                    show={this.state.error}
-                    close={() => {
-                        this.setState({ error: '' });
-                    }}
-                    title={this.state.error}
-                />
-            </React.Fragment>
-            :
-            <p>Selecione um caso de uso</p>
-            
+                            <Config
+                                show={this.state.showModal}
+                                close={this.toggleConfigurations}
+                                setConfig={this.setConfig}
+                                parameters={this.state}
+                            />
+                            <Modal
+                                show={this.state.error}
+                                close={() => {
+                                    this.setState({ error: '' });
+                                }}
+                                title={this.state.error}
+                            />
+                        </React.Fragment>
+                        :
+                        <p>Selecione um caso de uso</p>
+
                 }
             </div>
         );

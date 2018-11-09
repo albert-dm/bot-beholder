@@ -34,7 +34,6 @@ class Tracing extends Component {
     }
 
     componentWillReceiveProps = (newProps) => {
-        console.log(newProps);
         if (newProps.bot.selected) {
             let currentShortName = this.props.bot.selected ? this.props.bot.selected.shortName : "";
             if (newProps.bot.selected.shortName !== currentShortName) {

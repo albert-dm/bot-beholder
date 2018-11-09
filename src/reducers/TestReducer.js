@@ -30,8 +30,15 @@ export default (state = {}, action) => {
     case 'SELECT_CASE':
       return {
         ...state,
-        selectedSlug: action.slug,
+        selectedId: action.id,
         selectedCase: action.case
+      }
+    case 'NEW_CASE':
+      return {
+        ...state,
+        cases: action.cases,
+        selectedId: action.useCase.id,
+        selectedCase: action.useCase
       }
     default:
       return state
