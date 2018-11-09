@@ -28,7 +28,7 @@ const grid = {
     gridTemplateRows: '125px minmax(calc(100vh - 175px), auto) 50px',
     gridTemplateAreas: `"header header header header"
         "tools main main main"
-        "footer footer footer footer"`,
+        "tools footer footer footer"`,
 };
 
 const header = {

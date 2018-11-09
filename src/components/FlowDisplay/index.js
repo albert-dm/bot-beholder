@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './FlowDisplay.scss';
 import SweetAlert from 'sweetalert2-react';
 import InputFile from '../InputFile';
@@ -74,10 +75,12 @@ class FlowDisplay extends Component {
                         <div className="label">Configurações</div>
                     </li>
                     <li className="delete">
-                        <button title="Excluir" onClick={this.props.delete}>
-                            <i className="fas fa-trash-alt" />
-                        </button>
-                        <div className="label">Excluir</div>
+                        <Link to="">
+                            <button title="Excluir" onClick={this.props.delete}>
+                                <i className="fas fa-trash-alt" />
+                            </button>
+                            <div className="label">Excluir</div>
+                        </Link>
                     </li>
                 </ul>
                 <h2>
