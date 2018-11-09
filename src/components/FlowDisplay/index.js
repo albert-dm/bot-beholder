@@ -15,12 +15,12 @@ class FlowDisplay extends Component {
         const uploadJson = this.props.uploadJson;
         const file = e.target.files[0];
         const fileName = file.name.match(/([^/]+)(?=\.\w+$)/)[0];
-        reader.onload = function(event) {
+        reader.onload = function (event) {
             const newData = JSON.parse(event.target.result);
             uploadJson(newData, fileName);
         };
         e.target.value = '';
-        reader.onerror = function(event) {
+        reader.onerror = function (event) {
             console.error(`File could not be read! Code ${event.target.error.code}`);
         };
         reader.readAsText(file);
@@ -72,6 +72,12 @@ class FlowDisplay extends Component {
                             <i className="fas fa-cogs" />
                         </button>
                         <div className="label">Configurações</div>
+                    </li>
+                    <li className="delete">
+                        <button title="Excluir" onClick={this.props.delete}>
+                            <i className="fas fa-trash-alt" />
+                        </button>
+                        <div className="label">Excluir</div>
                     </li>
                 </ul>
                 <h2>

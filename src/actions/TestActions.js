@@ -1,5 +1,5 @@
 import { fetchingData, fetchingDataFinished, alert } from './CommonActions';
-import { loadCases, loadUseCase, setCases, setUseCase } from '../services/TestService';
+import { loadCases, loadUseCase, setCases, setUseCase, deleteUseCase } from '../services/TestService';
 
 export const loadCaseList = () => async dispatch => {
     dispatch(fetchingData());
@@ -89,6 +89,30 @@ export const saveCase = (useCase, cases) => async dispatch => {
             await setCases(botKey, cases);
         }
         await setUseCase(botKey, useCase);
+    }
+    catch (e) {
+        alert('Falha ao salvar caso de uso', 'error');
+    }
+    finally {
+        dispatch(fetchingDataFinished());
+    }
+}
+
+export const deleteCase = (useCaseId, cases) => async dispatch => {
+    dispatch(fetchingData());
+    try {
+        let botKey = localStorage.getItem('botKey');
+        let data = await deleteUseCase(botKey, useCaseId);
+        if (data.status === 'success') {
+            delete cases[useCaseId];
+            await setCases(botKey, cases);
+            /* dispatch({
+                type: 'RESET_ALL'
+            }); */
+        }
+        else {
+            alert('Falha ao excluir caso de uso', 'error');
+        }
     }
     catch (e) {
         alert('Falha ao salvar caso de uso', 'error');

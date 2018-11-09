@@ -67,3 +67,20 @@ export function loadUseCase(botKey, useCaseId) {
     })
         .then(response => response.json());
 }
+
+export function deleteUseCase(botKey, useCaseId) {
+    return fetch('https://msging.net/commands', {
+        method: 'post',
+        mode: "cors",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Key ${botKey}`
+        },
+        body: JSON.stringify({
+            id: new Date().getTime(),
+            method: "delete",
+            uri: "/buckets/" + useCaseId
+        }),
+    })
+        .then(response => response.json());
+}

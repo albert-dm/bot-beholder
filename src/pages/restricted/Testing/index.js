@@ -6,7 +6,7 @@ import Properties from '../../../components/Properties';
 import Block from '../../../components/Block';
 import Config from '../../../components/Config';
 import Modal from '../../../components/Modal';
-import { saveCase } from '../../../actions/TestActions'
+import { saveCase, deleteCase } from '../../../actions/TestActions'
 
 import { debounceCall } from '../../../helpers/commonHelper';
 
@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     saveCase: (useCase, cases) => dispatch(saveCase(useCase, cases)),
+    deleteCase: (useCaseId, cases) => dispatch(deleteCase(useCaseId, cases)),
 });
 
 const guid = () => {
@@ -211,7 +212,7 @@ class Testing extends Component {
     };
 
     render() {
-        let { bot } = this.props;
+        let { bot, deleteCase, test } = this.props;
         return (
             <div style={grid}>
                 {
@@ -226,6 +227,7 @@ class Testing extends Component {
                                 uploadJson={this.uploadJson}
                                 clearFlow={this.clearFlow}
                                 openConfig={this.toggleConfigurations}
+                                delete={() => window.confirm('Tem certeza que deseja excluir esse caso de uso?') && deleteCase(test.selectedId, test.cases)}
                             >
                                 <ReactCSSTransitionGroup
                                     transitionName="blocks"
