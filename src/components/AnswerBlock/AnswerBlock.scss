@@ -1,36 +1,39 @@
-.AnswerBlock{
-    width: fit-content;
-    margin-bottom: 10px;
-}
+@import "../../globals";
 
-.AnswerBlock .icon-btn{
+.AnswerBlock {
+  width: fit-content;
+  margin-bottom: 10px;
+  .icon-btn {
     margin-left: 5px;
     display: none;
-}
-
-.AnswerBlock:hover .icon-btn{
+  }
+  &:hover .icon-btn {
     display: block;
-}
-
-.textLabel {
+    &.delete {
+      background-color: $delete;
+    }
+  }
+  .textLabel {
     margin-right: 5px;
     display: inline-block;
     width: 50px;
-}
+  }
 
-.card {
+  .card {
     background-color: white;
     border-radius: 13px 13px 13px 13px;
-    box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.1);    
+    box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.1);
     width: fit-content;
     padding-bottom: 3px;
     overflow: hidden;
-}
+  }
 
-.card.bubble {
+  .card.bubble {
     border-radius: 13px 13px 13px 2px;
-}
+  }
 
-.bubble .wrap, .card .wrap{
+  .bubble .wrap,
+  .card .wrap {
     padding: 13px;
+  }
 }

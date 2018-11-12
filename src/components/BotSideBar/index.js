@@ -19,27 +19,31 @@ class BotSideBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showCases: false
+            showCases: false,
+            showBots: false
         }
     }
     render() {
-        let { showCases } = this.state;
+        let { showCases, showBots } = this.state;
         let { bot, test, selectBot, selectCase, newCase } = this.props;
         return (
             <div className="BotSideBar bp-ff-nunito" style={{ padding: '5px' }}>
                 <header>
-                    <div className="avatar">
-                        {
-                            bot.selected &&
-                            bot.selected.imageUri &&
-                            <img alt="Bot Beholder" src={bot.selected.imageUri} width="40px" height="40px" />
-                        }
-                    </div>
-                    <h1 title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
-                    <i className="BotSelect fas fa-angle-down"></i>
+                    <Link to="">
+                        <div className="avatar">
+                            {
+                                bot.selected &&
+                                bot.selected.imageUri &&
+                                <img alt="Bot Beholder" src={bot.selected.imageUri} width="40px" height="40px" />
+                            }
+                        </div>
+                        <h1 title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
+                    </Link>
+
+                    <i className="BotSelect fas fa-sync" onClick={() => this.setState((prevState) => ({ showBots: !prevState.showBots }))}></i>
                     {
-                        bot.list &&
-                        <div className="Bots">
+                        showBots &&
+                        <div className="Bots" onClick={() => this.setState({ showBots: false })}>
                             {
                                 bot.list.map(bot => <div className="navItem" key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</div>)
                             }

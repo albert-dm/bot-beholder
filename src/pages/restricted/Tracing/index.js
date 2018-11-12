@@ -4,6 +4,8 @@ import socketIOClient from 'socket.io-client';
 
 import Trace from '../../../components/Trace';
 
+const server = "https://bot-beholder-serve.herokuapp.com/"
+
 var socket;
 
 const mapStateToProps = state => ({
@@ -22,7 +24,7 @@ class Tracing extends Component {
             traces: [],
         };
         if (props.bot.selected) {
-            socket = socketIOClient(`http://localhost:4001?botid=${props.bot.selected.shortName}`);
+            socket = socketIOClient(`${server}?botid=${props.bot.selected.shortName}`);
             socket.on("tracing", trace => {
                 trace.id = id++;
                 this.setState(state => ({ traces: [trace, ...state.traces] }));
@@ -37,8 +39,8 @@ class Tracing extends Component {
         if (newProps.bot.selected) {
             let currentShortName = this.props.bot.selected ? this.props.bot.selected.shortName : "";
             if (newProps.bot.selected.shortName !== currentShortName) {
-                if(socket) socket.close();
-                socket = socketIOClient(`http://localhost:4001?botid=${newProps.bot.selected.shortName}`);
+                if (socket) socket.close();
+                socket = socketIOClient(`${server}?botid=${newProps.bot.selected.shortName}`);
                 socket.on("tracing", trace => {
                     trace.id = id++;
                     this.setState(state => ({ traces: [trace, ...state.traces] }));

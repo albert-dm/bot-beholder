@@ -6,7 +6,7 @@ import ImageAnswer from './ImageAnswer';
 import CarouselAnswer from './CarouselAnswer';
 import TrackAnswer from './TrackAnswer';
 import JsonAnswer from './JsonAnswer';
-import './AnswerBlock.css';
+import './AnswerBlock.scss';
 import AiAnswer from './AiAnswer';
 
 class AnswerBlock extends Component {
