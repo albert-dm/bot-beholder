@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import QuickReplyItem from './QuickReplyItem';
-import './QuickReplyAnswer.css';
+import './QuickReplyAnswer.scss';
 
 class QuickReplyAnswer extends Component {
     constructor() {

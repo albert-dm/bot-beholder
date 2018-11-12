@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './MenuAnswer.css';
+import './MenuAnswer.scss';
 
 class MenuAnswer extends Component {
     handleChange = e => {

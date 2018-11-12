@@ -1,0 +1,9 @@
+@import "../../globals";
+
+.Properties {
+  height: 100%;
+  display: inline-block;
+  border-left: solid $primary-dark;
+  padding: 10px 10px 25px 10px;
+  overflow: auto;
+}

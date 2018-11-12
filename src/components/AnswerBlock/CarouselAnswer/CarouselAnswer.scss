@@ -1,31 +1,38 @@
-.CarouselAnswer .carousel-container{
+@import "../../../globals";
+
+.CarouselAnswer {
+  .delete {
+    cursor: pointer;
+    color: $delete;
+  }
+  .carousel-container {
     display: block;
     padding-top: 15px;
     padding-bottom: 15px;
     max-width: 50vw;
     overflow-x: auto;
     white-space: nowrap;
-}
-
-.CarouselAnswer .carousel{
+  }
+  .carousel {
     white-space: pre-wrap;
     margin: 4px;
     width: 200px;
     min-height: 300px;
     display: inline-block;
     vertical-align: top;
-}
-
-.CarouselAnswer .carousel img, .img-placeholder{
+  }
+  .carousel img,
+  .img-placeholder {
     width: 100%;
     height: 150px;
-}
-.CarouselAnswer .carousel.carousel-placeholder{
-    border: solid var(--primary-dark) 1px;
+  }
+  .carousel.carousel-placeholder {
+    border: solid $primary-dark 1px;
     border-radius: 13px;
     font-size: 25px;
-    color: var(--primary-dark);
+    color: $primary-dark;
     padding-top: 125px;
     cursor: pointer;
     text-align: center;
+  }
 }

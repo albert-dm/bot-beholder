@@ -50,29 +50,36 @@ class BotSideBar extends Component {
                         </div>
                     }
                 </header>
-                <Link to="/tracing">Tracing</Link>
                 {
-                    test.cases &&
+                    bot.selected &&
                     <React.Fragment>
-                        <div className="navItem" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
-                            Casos de uso
-                    {showCases ?
-                                <i className="BotSelect fas fa-angle-up"></i>
-                                :
-                                <i className="BotSelect fas fa-angle-down"></i>
-                            }
-                        </div>
+                        <Link to="/tracing">Tracing</Link>
                         {
-                            showCases &&
-                            <div className="UseCases">
+                            test.cases &&
+                            <React.Fragment>
+                                <div className="navItem" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
+                                    Casos de uso
+                    {showCases ?
+                                        <i className="BotSelect fas fa-angle-up"></i>
+                                        :
+                                        <i className="BotSelect fas fa-angle-down"></i>
+                                    }
+                                </div>
                                 {
-                                    Object.keys(test.cases).map((useCaseId) => <Link to="/testing" key={useCaseId} onClick={() => selectCase(useCaseId)}>{test.cases[useCaseId]}</Link>)
+                                    showCases &&
+                                    <div className="UseCases">
+                                        {
+                                            Object.keys(test.cases).map((useCaseId) => <Link to="/testing" key={useCaseId} onClick={() => selectCase(useCaseId)}>{test.cases[useCaseId]}</Link>)
+                                        }
+                                        <div className="navItem" onClick={() => newCase(test.cases)} ><i className="fas fa-plus-circle"></i> Novo</div>
+                                    </div>
                                 }
-                                <div className="navItem" onClick={() => newCase(test.cases)} ><i className="fas fa-plus-circle"></i> Novo</div>
-                            </div>
+                            </React.Fragment>
                         }
                     </React.Fragment>
                 }
+
+
 
             </div>
         );

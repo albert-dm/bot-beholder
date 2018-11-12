@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import './AiAnswer.css';
+import './AiAnswer.scss';
 
 class AiAnswer extends Component {
     constructor(props) {

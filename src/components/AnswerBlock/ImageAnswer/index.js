@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './ImageAnswer.css';
+import './ImageAnswer.scss';
 
 class ImageAnswer extends Component {
     handleItemChange = e => {

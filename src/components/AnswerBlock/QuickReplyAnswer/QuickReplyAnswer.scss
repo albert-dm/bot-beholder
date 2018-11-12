@@ -1,0 +1,24 @@
+@import "../../../globals";
+
+.QuickReplyAnswer .chips-container {
+  overflow-x: auto;
+  width: fit-content;
+  max-width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.QuickReplyAnswer .chip {
+  border: solid $primary-dark 1px;
+  color: $primary-dark;
+  background-color: $sky;
+  padding: 10px;
+  border-radius: 20px;
+  display: inline-block;
+  font-weight: bold;
+  margin: 4px;
+  button {
+    background-color: $offwhite;
+    color: $primary;
+  }
+}

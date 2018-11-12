@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Properties.css';
+import './Properties.scss';
 import ToolBar from '../ToolBar';
 import AnswerBlock from '../AnswerBlock';
 
