@@ -58,11 +58,12 @@ class BotSideBar extends Component {
                             test.cases &&
                             <React.Fragment>
                                 <div className="navItem" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
-                                    Casos de uso
-                    {showCases ?
-                                        <i className="BotSelect fas fa-angle-up"></i>
-                                        :
-                                        <i className="BotSelect fas fa-angle-down"></i>
+                                    Testes
+                                    {
+                                        showCases ?
+                                            <i className="BotSelect fas fa-angle-up"></i>
+                                            :
+                                            <i className="BotSelect fas fa-angle-down"></i>
                                     }
                                 </div>
                                 {

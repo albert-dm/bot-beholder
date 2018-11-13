@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './FlowDisplay.scss';
 import SweetAlert from 'sweetalert2-react';
 import InputFile from '../InputFile';
+import crisPretiImg from '../../static/img/crispret.png'
 
 const newBlock = () => ({
     input: 'Nome do Input',
@@ -90,7 +91,10 @@ class FlowDisplay extends Component {
                         value={this.props.flowTitle}
                     />
                 </h2>
-                <div className="block-container">{this.props.children}</div>
+                <div className="block-container">
+                    <img alt="Cris Pret" src={crisPretiImg} width="80px" height="80px" />
+                    {this.props.children}
+                </div>
             </div>
         );
     }

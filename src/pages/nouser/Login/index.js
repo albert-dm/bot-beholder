@@ -38,6 +38,7 @@ class LoginPage extends Component {
         return (
             <div className="Login">
                 <h1>Acessar Bot Beholder</h1>
+                <small>Use suas credenciais do BLiP</small>
                 <form onSubmit={this.loginAction}>
                     <div>
                         <label>

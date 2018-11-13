@@ -70,7 +70,7 @@ const main = {
 
 const footer = {
     gridArea: 'footer',
-    borderTop: 'solid 2px #8ca0b3',
+    borderTop: 'solid 2px #8ca0b3'
 };
 
 class Restricted extends Component {
@@ -99,8 +99,8 @@ class Restricted extends Component {
                     <Route exact path="/tracing" component={Tracing} />
                     <Route exact path="/testing" component={Testing} />
                 </div>
-                <div className="bp-bg-breeze" style={footer}>
-                    footer
+                <div className="bp-bg-offwhite" style={footer}>
+                    <p style={{ textAlign: 'center' }}>Bot Beholder 2018</p>
                 </div>
             </div>
         );
