@@ -1,0 +1,33 @@
+@import "../../globals";
+
+.Modal.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  overflow: auto;
+}
+
+.Modal .content {
+  z-index: 1100;
+  position: absolute;
+  width: 40%;
+  top: 20%;
+  margin-left: 30%;
+  margin-bottom: 200px;
+  padding: 25px;
+  animation: 0.5s enter ease;
+  background-color: white;
+  border-radius: 25px;
+  i {
+    color: $primary-dark;
+    font-size: 15px;
+  }
+}
+
+.Modal .content h1 {
+  text-align: center;
+}

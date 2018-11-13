@@ -14,6 +14,6 @@ const config = process.env.NODE_ENV === 'production'
 
 export default {
   // Add common config values here
-  MAX_ATTACHMENT_SIZE: 5000000,
+  tracingUrl: "https://bot-beholder-serve.herokuapp.com/",
   ...config
 };

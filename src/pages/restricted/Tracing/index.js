@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
+import config from '../../../config';
+
+import './Tracing.scss';
 
 import Trace from '../../../components/Trace';
 
-const server = "https://bot-beholder-serve.herokuapp.com/"
+const server = config.tracingUrl;
 
 var socket;
 
@@ -54,10 +57,21 @@ class Tracing extends Component {
 
     render() {
         const { traces } = this.state;
+        const { bot } = this.props;
         return (
-            <div className="bp-ff-nunito" style={{ padding: '5px' }}>
+            <div className="bp-ff-nunito Tracing" style={{ padding: '5px' }}>
                 <h1 className="bp-fs-2">Tracing</h1>
-                {traces && traces.map(trace => <Trace key={trace.id} data={trace} />)}
+                {
+                    bot.selected
+                        ?
+                        <React.Fragment>
+                            <small> ({`${server}?botid=${bot.selected.shortName}`})</small>
+                            {traces && traces.map(trace => <Trace key={trace.timestamp} data={trace} />)}
+                        </React.Fragment>
+                        :
+                        <p>Selecione um bot</p>
+                }
+
             </div>
         );
     }
