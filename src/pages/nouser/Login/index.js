@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginAction } from '../../../actions/UserActions';
+import { popAlert } from '../../../actions/CommonActions';
+import { debounceCall } from '../../../helpers/commonHelper';
 import './Login.scss';
 
 const mapStateToProps = state => ({
@@ -9,6 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     loginAction: (user, pass) => dispatch(loginAction(user, pass)),
+    popAlert: () => dispatch(popAlert())
 });
 
 class LoginPage extends Component {
@@ -33,8 +36,16 @@ class LoginPage extends Component {
         });
     };
 
+    componentWillReceiveProps = newProps => {
+        let { common, popAlert } = newProps;
+        if (common.alerts.length > 0) {
+            debounceCall(popAlert(), 10000);
+        }
+    }
+
     render() {
         let { user, pass } = this.state;
+        let { common } = this.props;
         return (
             <div className="Login">
                 <h1>Acessar Bot Beholder</h1>
@@ -66,10 +77,14 @@ class LoginPage extends Component {
                         />
                     </div>
                     <br />
-                    <button                >
+                    <button>
                         Entrar
-                </button>
+                    </button>
                 </form>
+                {
+                    common.alert &&
+                    <small className={common.alert.level}>{common.alert.text}</small>
+                }
 
             </div>
         );

@@ -1,4 +1,4 @@
-import { fetchingData, fetchingDataFinished } from './CommonActions'
+import { fetchingData, fetchingDataFinished, alert } from './CommonActions'
 import { getInfo } from '../services/UserService'
 
 export const checkLoginAction = () => dispatch => {
@@ -17,22 +17,23 @@ export const checkLoginAction = () => dispatch => {
 
 export const loginAction = (username, pass) => dispatch => {
     dispatch(fetchingData());
-    let token = btoa(`${username}:${pass}`); 
+    let token = btoa(`${username}:${pass}`);
     getInfo(token)
-    .then(data => {
-        data.name = data.fullName.split(' ')[0];
-        localStorage.setItem("token", JSON.stringify(token));
-        localStorage.setItem("user", JSON.stringify(data));
-        dispatch({
-            type: 'LOGIN_ACTION',
-            data, 
-            logged: true
+        .then(data => {
+            data.name = data.fullName.split(' ')[0];
+            localStorage.setItem("token", JSON.stringify(token));
+            localStorage.setItem("user", JSON.stringify(data));
+            dispatch({
+                type: 'LOGIN_ACTION',
+                data,
+                logged: true
+            });
+            dispatch(fetchingDataFinished());
+        })
+        .catch(err => {
+            dispatch(fetchingDataFinished());
+            dispatch(alert('Falha ao realizar login', 'error'));
         });
-        dispatch(fetchingDataFinished());
-    })
-    .catch(err => {
-        dispatch(fetchingDataFinished());
-    });
 }
 
 export const logoutAction = () => dispatch => {

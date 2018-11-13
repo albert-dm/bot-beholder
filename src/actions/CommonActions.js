@@ -4,7 +4,7 @@ export const fetchingData = () => dispatch => {
         isLoading: true
     })
 }
-export const fetchingDataFinished = () => dispatch => {    
+export const fetchingDataFinished = () => dispatch => {
     dispatch({
         type: 'LOADING_ACTION',
         isLoading: false
@@ -14,7 +14,14 @@ export const fetchingDataFinished = () => dispatch => {
 export const alert = (text, level) => dispatch => {
     dispatch({
         type: "ALERT",
-        alert: {text, level}
+        alert: { text, level }
+    })
+
+}
+
+export const popAlert = () => dispatch => {
+    dispatch({
+        type: "POP_ALERT"
     })
 
 }
