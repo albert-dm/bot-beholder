@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Properties.scss';
 import ToolBar from '../ToolBar';
 import AnswerBlock from '../AnswerBlock';
+import ReactDragList from 'react-drag-list'
 
 class Properties extends Component {
     constructor() {
@@ -53,6 +54,7 @@ class Properties extends Component {
     };
 
     render() {
+        let { expected } = this.props;
         return (
             <div className="Properties" ref={this.div} style={this.props.style}>
                 <h2>Propriedades</h2>
@@ -80,19 +82,25 @@ class Properties extends Component {
                             <br />
                         </form>
                         <h3>Mensagens do bloco:</h3>
-                        {this.props.expected.map((answer, index) => (
-                            <AnswerBlock
-                                key={index}
-                                answer={answer}
-                                index={index}
-                                deleteAnswer={() => {
-                                    this.deleteAnswer(index);
-                                }}
-                                setAnswer={this.setAnswer.bind(this)}
-                                intents={this.props.intents}
-                                entities={this.props.entities}
+                        {
+                            <ReactDragList
+                                handles={false}
+                                dataSource={expected}
+                                row={(answer, index) => (
+                                    <AnswerBlock
+                                        key={index}
+                                        answer={answer}
+                                        index={index}
+                                        deleteAnswer={() => {
+                                            this.deleteAnswer(index);
+                                        }}
+                                        setAnswer={this.setAnswer.bind(this)}
+                                        intents={this.props.intents}
+                                        entities={this.props.entities}
+                                    />
+                                )}
                             />
-                        ))}
+                        }
                         <br />
                         <ToolBar
                             addAnswer={this.addAnswer.bind(this)}

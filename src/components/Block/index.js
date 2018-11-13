@@ -3,14 +3,15 @@ import './Block.scss';
 
 class Block extends Component {
     render() {
+        let { block, deleteBlock, selected, ...otherProps } = this.props;
         return (
             <div
-                className={`Block block${this.props.selected ? ' selected' : ''}`}
-                onClick={this.props.onClick}
+                className={`Block block${selected ? ' selected' : ''}`}
+                {...otherProps}
             >
-                <i onClick={this.props.deleteBlock} className="far fa-trash-alt right delete" />
-                <p>{this.props.block.blockName ? this.props.block.blockName : 'Bloco sem nome'}</p>
-                <p>Mensagens: {this.props.block.expected.length}</p>
+                <i onClick={deleteBlock} className="far fa-trash-alt right delete" />
+                <p>{block.blockName ? block.blockName : 'Bloco sem nome'}</p>
+                <p>Mensagens: {block.expected.length}</p>
             </div>
         );
     }

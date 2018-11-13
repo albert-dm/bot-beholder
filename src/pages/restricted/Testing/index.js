@@ -8,6 +8,8 @@ import Config from '../../../components/Config';
 import Modal from '../../../components/Modal';
 import { saveCase, deleteCase } from '../../../actions/TestActions'
 
+import ReactDragList from 'react-drag-list'
+
 import { debounceCall } from '../../../helpers/commonHelper';
 
 const mapStateToProps = state => ({
@@ -212,6 +214,7 @@ class Testing extends Component {
     };
 
     render() {
+        let { blocks } = this.state;
         let { bot, deleteCase, test } = this.props;
         return (
             <div style={grid}>
@@ -234,8 +237,26 @@ class Testing extends Component {
                                     transitionEnterTimeout={200}
                                     transitionLeaveTimeout={200}
                                 >
-                                    {this.state.blocks.map((block, index) => (
+                                    <ReactDragList
+                                        className="Blocks"
+                                        rowClassName="BlockItem"
+                                        dragClass="dragging"
+                                        ghostClass="drop"
+                                        dataSource={blocks}
+                                        row={(block, index) => <Block
+                                            selected={index === this.state.selected}
+                                            block={block}
+                                            onClick={() => this.selectBlock(index)}
+                                            key={block.id}
+                                            deleteBlock={e => {
+                                                e.stopPropagation();
+                                                this.deleteBlock(index);
+                                            }}
+                                        />}
+                                    />
+                                    {/* this.state.blocks.map((block, index) => (
                                         <Block
+                                            draggable='true'
                                             selected={index === this.state.selected}
                                             block={block}
                                             onClick={() => this.selectBlock(index)}
@@ -245,7 +266,7 @@ class Testing extends Component {
                                                 this.deleteBlock(index);
                                             }}
                                         />
-                                    ))}
+                                    )) */}
                                 </ReactCSSTransitionGroup>
                             </FlowDisplay>
                             <Properties
