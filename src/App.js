@@ -22,7 +22,7 @@ class App extends Component {
     };
 
     componentWillMount = () => {
-        console.log(config.env);
+        console.log(process.env);
         this.checkLoginAction();
     };
 

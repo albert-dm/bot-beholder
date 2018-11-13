@@ -8,7 +8,7 @@ const prod = {
   basename: "/BotBeholder/"
 };
 
-const config = process.env.APP_ENV === 'prod'
+const config = process.env.NODE_ENV === 'production'
   ? prod
   : dev;
 
