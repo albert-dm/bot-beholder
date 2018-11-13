@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
 import { checkLoginAction } from './actions/UserActions';
+import config from './config';
 
 import NoUser from './pages/nouser';
 import Restricted from './pages/restricted';
@@ -21,18 +22,19 @@ class App extends Component {
     };
 
     componentWillMount = () => {
+        console.log(config.env);
         this.checkLoginAction();
     };
 
     render() {
         let { user } = this.props;
         return (
-            <Router>
+            <Router basename={config.basename}>
                 {
                     user.logged ?
-                    <Route path="/" component={Restricted} />
-                    :
-                    <Route path="/" component={NoUser} />
+                        <Route path="/" component={Restricted} />
+                        :
+                        <Route path="/" component={NoUser} />
                 }
             </Router>
         );

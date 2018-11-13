@@ -2,7 +2,7 @@
   "name": "react-boilerplate",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://hmg-az-infobots.take.net/BotBeholder/",
+  "homepage": "./",
   "dependencies": {
     "blip-toolkit": "^3.0.5",
     "react": "^16.4.1",
