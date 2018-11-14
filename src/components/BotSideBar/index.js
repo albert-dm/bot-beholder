@@ -20,11 +20,12 @@ class BotSideBar extends Component {
         super(props);
         this.state = {
             showCases: false,
-            showBots: false
+            showBots: false,
+            filter: ''
         }
     }
     render() {
-        let { showCases, showBots } = this.state;
+        let { showCases, showBots, filter } = this.state;
         let { bot, test, selectBot, selectCase, newCase } = this.props;
         return (
             <div className="BotSideBar bp-ff-nunito" style={{ padding: '5px' }}>
@@ -44,8 +45,21 @@ class BotSideBar extends Component {
                     {
                         showBots &&
                         <div className="Bots" onClick={() => this.setState({ showBots: false })}>
+                            <div className="navItem search" onClick={(e) => e.stopPropagation()}>
+                                <input
+                                    type="text"
+                                    placeholder="Filtro"
+                                    onChange={(e) => {
+                                        let value = e.target.value;
+                                        this.setState({ filter: value })
+                                    }}
+                                />
+                            </div>
                             {
-                                bot.list.map(bot => <div className="navItem" key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</div>)
+                                bot.list
+                                    .filter(bot => bot.name.includes(filter))
+                                    .sort((bot1, bot2) => (bot1.name > bot2.name) ? 1 : ((bot2.name > bot1.name) ? -1 : 0))
+                                    .map(bot => <div className="navItem" key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</div>)
                             }
                         </div>
                     }
