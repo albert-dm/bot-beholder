@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
+import ReactJson from 'react-json-view';
 import config from '../../../config';
 
 import './Tracing.scss';
 
 import Trace from '../../../components/Trace';
+import Modal from '../../../components/Modal'
 
 const server = config.tracingUrl;
 
@@ -25,6 +27,8 @@ class Tracing extends Component {
         super(props);
         this.state = {
             traces: [],
+            showDetails: false,
+            dataDetails: {}
         };
         if (props.bot.selected) {
             socket = socketIOClient(`${server}?botid=${props.bot.selected.shortName}`);
@@ -56,7 +60,7 @@ class Tracing extends Component {
     }
 
     render() {
-        const { traces } = this.state;
+        const { traces, showDetails, dataDetails } = this.state;
         const { bot } = this.props;
         return (
             <div className="bp-ff-nunito Tracing" style={{ padding: '5px' }}>
@@ -66,12 +70,25 @@ class Tracing extends Component {
                         ?
                         <React.Fragment>
                             <small> ({`${server}?botid=${bot.selected.shortName}`})</small>
-                            {traces && traces.map(trace => <Trace key={trace.timestamp} data={trace} />)}
+                            {
+                                traces &&
+                                traces.map(trace =>
+                                    <Trace
+                                        key={trace.timestamp}
+                                        data={trace}
+                                        showDetails={(data) => {
+                                            this.setState({ dataDetails: data, showDetails: true });
+                                        }}
+                                    />
+                                )
+                            }
                         </React.Fragment>
                         :
                         <p>Selecione um bot</p>
                 }
-
+                <Modal title="Detalhes" show={showDetails} close={() => this.setState({ showDetails: false })}>
+                    <ReactJson src={dataDetails} displayDataTypes={false} />
+                </Modal>
             </div>
         );
     }

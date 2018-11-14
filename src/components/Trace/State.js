@@ -25,14 +25,17 @@ class State extends Component {
             error,
         } = this.props.data;
         const { mouseX, mouseY } = this.state;
+        let { showDetails } = this.props;
         return (
             <div className={`State block ${error ? 'error' : ''}`}>
                 <span className="date">{new Date(timestamp).toLocaleString()}</span>
                 <h1>{extensionData.name}</h1>
+                <button className="no-style" onClick={showDetails}>
+                    <i className="fas fa-search-plus" />
+                </button>
                 <p className="elapsedTime" onMouseOver={this.onHover}>
-                    <i className="fas fa-stopwatch" /> {elapsedMilliseconds}
-                    ms
-              </p>
+                    <i className="fas fa-stopwatch" /> {elapsedMilliseconds}ms
+                </p>
                 <div className="actions" style={{ left: mouseX, top: mouseY }}>
                     {
                         inputActions &&

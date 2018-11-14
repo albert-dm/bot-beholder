@@ -6,7 +6,8 @@ import './Trace.scss';
 
 class Trace extends Component {
     render() {
-        const { input, timestamp, elapsedMilliseconds, states, error } = this.props.data;
+        const { input, timestamp, elapsedMilliseconds, states, error, user } = this.props.data;
+        let { showDetails } = this.props;
         return (
             <div className="Trace">
                 <span className="date">{new Date(timestamp).toLocaleString()}</span>
@@ -15,16 +16,18 @@ class Trace extends Component {
                         <i className="far fa-comment-dots" /> {input}
                     </h1>
                     <p>
-                        <i className="fas fa-stopwatch" /> {elapsedMilliseconds}
-                        ms
+                        <i className="fas fa-stopwatch" /> {elapsedMilliseconds}ms
+                    </p>
+                    <p>
+                        <i className="fas fa-user" /> {user}
                     </p>
                 </header>
                 <div className="states">
                     {states.map(state => (
-                        <State data={state} key={state.id} />
+                        <State data={state} key={state.id} showDetails={() => showDetails(state)} />
                     ))}
                 </div>
-                {<ReactJson src={this.props.data} collapsed displayDataTypes={false} />}
+                <ReactJson src={this.props.data} collapsed displayDataTypes={false} />
             </div>
         );
     }

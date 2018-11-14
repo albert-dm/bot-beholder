@@ -75,6 +75,12 @@ button,
   cursor: pointer;
   color: white;
   font-weight: bolder;
+
+  &.no-style {
+    color: black;
+    background-color: transparent;
+    border: none;
+  }
 }
 
 button:hover,
