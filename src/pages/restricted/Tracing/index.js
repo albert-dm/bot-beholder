@@ -69,7 +69,7 @@ class Tracing extends Component {
                     bot.selected
                         ?
                         <React.Fragment>
-                            <small> ({`${server}?botid=${bot.selected.shortName}`})</small>
+                            <small> ({`${server}tracing/${bot.selected.shortName}`})</small>
                             {
                                 traces &&
                                 traces.map(trace =>
