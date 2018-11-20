@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Home from './Home';
 import Tracing from './Tracing';
 import Testing from './Testing';
-import Icon from '../../static/img/Dark_Beholder.png';
+import Icon from '../../static/img/logo.png';
 
 import './Restricted.scss'
 
@@ -12,6 +12,7 @@ import { logoutAction } from '../../actions/UserActions'
 import { loadList } from '../../actions/BotActions'
 
 import BotSideBar from "../../components/BotSideBar/"
+import LoadingOverlay from "../../components/LoadingOverlay/"
 
 const mapStateToProps = state => ({
     ...state,
@@ -79,30 +80,37 @@ class Restricted extends Component {
         loadBots();
     }
     render() {
-        let { logoutAction, user } = this.props;
+        let { logoutAction, user, common } = this.props;
         return (
-            <div style={grid}>
-                <header className="bp-bg-onix" style={header}>
-                    <img src={Icon} width="80px" height="80px" alt="Bot Beholder" style={icon} />
-                    <h1 className="bp-c-offwhite" style={title}>
-                        <Link to="/">Bot Beholder</Link>
-                    </h1>
-                    <div style={nav} className="bp-c-offwhite">
-                        Olá {user.data.name} (<div className="link" onClick={logoutAction}>Sair</div>)
+            <React.Fragment>
+                <div style={grid}>
+                    <header className="bp-bg-onix" style={header}>
+                        <img src={Icon} width="80px" height="80px" alt="Bot Beholder" style={icon} />
+                        <h1 className="bp-c-offwhite" style={title}>
+                            <Link to="/">Bot Beholder</Link>
+                        </h1>
+                        <div style={nav} className="bp-c-offwhite">
+                            Olá {user.data.name} (<div className="link" onClick={logoutAction}>Sair</div>)
                     </div>
-                </header>
-                <div className="bp-bg-suit" style={tools}>
-                    <BotSideBar />
+                    </header>
+                    <div className="bp-bg-suit" style={tools}>
+                        <BotSideBar />
+                    </div>
+                    <div className="bp-bg-offwhite" style={main}>
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/tracing" component={Tracing} />
+                        <Route exact path="/testing" component={Testing} />
+                    </div>
+                    <div className="bp-bg-offwhite" style={footer}>
+                        <p style={{ textAlign: 'center' }}>Bot Beholder 2018</p>
+                    </div>
                 </div>
-                <div className="bp-bg-offwhite" style={main}>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/tracing" component={Tracing} />
-                    <Route exact path="/testing" component={Testing} />
-                </div>
-                <div className="bp-bg-offwhite" style={footer}>
-                    <p style={{ textAlign: 'center' }}>Bot Beholder 2018</p>
-                </div>
-            </div>
+                {
+                    common.isLoading &&
+                    <LoadingOverlay />
+                }
+            </React.Fragment>
+
         );
     }
 }

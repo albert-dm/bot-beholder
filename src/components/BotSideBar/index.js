@@ -41,7 +41,7 @@ class BotSideBar extends Component {
                         <h1 title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
                     </Link>
 
-                    <i className="BotSelect fas fa-sync" onClick={() => this.setState((prevState) => ({ showBots: !prevState.showBots }))}></i>
+                    <i className="BotSelect fas fa-sync" onClick={() => this.setState((prevState) => ({ showBots: !prevState.showBots, filter: '' }))}></i>
                     {
                         showBots &&
                         <div className="Bots" onClick={() => this.setState({ showBots: false })}>
@@ -57,7 +57,7 @@ class BotSideBar extends Component {
                             </div>
                             {
                                 bot.list
-                                    .filter(bot => bot.name.includes(filter))
+                                    .filter(bot => bot.name.toLowerCase().includes(filter.toLowerCase()))
                                     .sort((bot1, bot2) => (bot1.name > bot2.name) ? 1 : ((bot2.name > bot1.name) ? -1 : 0))
                                     .map(bot => <div className="navItem" key={bot.id} onClick={() => selectBot(bot)}>{bot.name}</div>)
                             }
