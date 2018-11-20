@@ -6,22 +6,23 @@ html {
 }
 
 .Login {
-  @extend %elevateHover;
   width: 40%;
   height: 40%;
-  margin-top: 15%;
+  margin-top: 5%;
   margin-left: 30%;
   text-align: center;
-  background-color: $offwhite;
-  padding: 20px;
-  border: solid $primary;
-  div {
-    text-align: left;
-    margin-left: 15%;
-    width: 70%;
-  }
+  & > div {
+    background-color: $offwhite;
+    padding: 20px;
+    border: solid $primary;
+    div {
+      text-align: left;
+      margin-left: 15%;
+      width: 70%;
+    }
 
-  .error {
-    color: $warning;
+    .error {
+      color: $warning;
+    }
   }
 }

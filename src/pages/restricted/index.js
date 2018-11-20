@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Home from './Home';
 import Tracing from './Tracing';
 import Testing from './Testing';
-import Icon from '../../static/img/logo.png';
+import Icon from '../../static/img/logo.svg';
 
 import './Restricted.scss'
 
@@ -36,7 +36,7 @@ const header = {
     gridArea: 'header',
     textAling: 'center',
     display: 'grid',
-    gridTemplateColumns: '150px auto',
+    gridTemplateColumns: '250px auto',
     gridTemplateRows: '100px 25px',
     gridTemplateAreas: `"icon title"
         "icon nav"`,
@@ -47,6 +47,7 @@ const icon = {
     display: 'block',
     justifySelf: 'center',
     alignSelf: 'center',
+    objectFit: 'cover'
 };
 const title = {
     gridArea: 'title',
@@ -85,7 +86,7 @@ class Restricted extends Component {
             <React.Fragment>
                 <div style={grid}>
                     <header className="bp-bg-onix" style={header}>
-                        <img src={Icon} width="80px" height="80px" alt="Bot Beholder" style={icon} />
+                        <img src={Icon} width="150px" height="150px" alt="Bot Beholder" style={icon} />
                         <h1 className="bp-c-offwhite" style={title}>
                             <Link to="/">Bot Beholder</Link>
                         </h1>

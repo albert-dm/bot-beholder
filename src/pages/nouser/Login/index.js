@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { loginAction } from '../../../actions/UserActions';
 import { popAlert } from '../../../actions/CommonActions';
 import { debounceCall } from '../../../helpers/commonHelper';
+import Icon from '../../../static/img/logo.svg';
 import './Login.scss';
 
 const mapStateToProps = state => ({
@@ -48,43 +49,46 @@ class LoginPage extends Component {
         let { common } = this.props;
         return (
             <div className="Login">
-                <h1>Acessar Bot Beholder</h1>
-                <small>Use suas credenciais do BLiP</small>
-                <form onSubmit={this.loginAction}>
-                    <div>
-                        <label>
-                            <b>E-mail:</b>
-                        </label>
-                        <input
-                            onChange={this.handleChange}
-                            type="email"
-                            name="user"
-                            value={user}
-                            required
-                        />
-                    </div>
-                    <br />
-                    <div>
-                        <label>
-                            <b>Senha:</b>
-                        </label>
-                        <input
-                            onChange={this.handleChange}
-                            type="password"
-                            name="pass"
-                            value={pass}
-                            required
-                        />
-                    </div>
-                    <br />
-                    <button>
-                        Entrar
+                <img src={Icon} width="300px" height="300px" alt="Bot Beholder" />
+                <div>
+                    <small>Use suas credenciais do BLiP</small>
+                    <form onSubmit={this.loginAction}>
+                        <div>
+                            <label>
+                                <b>E-mail:</b>
+                            </label>
+                            <input
+                                onChange={this.handleChange}
+                                type="email"
+                                name="user"
+                                value={user}
+                                required
+                            />
+                        </div>
+                        <br />
+                        <div>
+                            <label>
+                                <b>Senha:</b>
+                            </label>
+                            <input
+                                onChange={this.handleChange}
+                                type="password"
+                                name="pass"
+                                value={pass}
+                                required
+                            />
+                        </div>
+                        <br />
+                        <button>
+                            Entrar
                     </button>
-                </form>
-                {
-                    common.alert &&
-                    <small className={common.alert.level}>{common.alert.text}</small>
-                }
+                    </form>
+                    {
+                        common.alert &&
+                        <small className={common.alert.level}>{common.alert.text}</small>
+                    }
+                </div>
+
 
             </div>
         );
