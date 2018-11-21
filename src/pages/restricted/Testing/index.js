@@ -129,14 +129,17 @@ class Testing extends Component {
 
     downloadJson = () => {
         let json = {
-            botIdentity: this.props.bot.shortName,
-            botKey: this.props.bot.authorization,
+            botIdentity: this.props.bot.selected.shortName,
+            botKey: this.props.bot.selected.authorization,
             setUp: JSON.stringify(JSON.parse(this.state.setUp)),
             userVariables: this.state.userVariables,
             testCases: JSON.stringify(this.state.blocks),
             aiScore: Number(this.state.aiScore),
         };
-        const blob = new Blob([JSON.stringify(json)], { type: 'text/json' });
+
+        console.log(this.props);
+        console.log(json);
+        /* const blob = new Blob([JSON.stringify(json)], { type: 'text/json' });
 
         let e = document.createEvent('MouseEvents');
 
@@ -162,7 +165,7 @@ class Testing extends Component {
             0,
             null,
         );
-        a.dispatchEvent(e);
+        a.dispatchEvent(e); */
     };
 
     uploadJson = (json, title) => {
