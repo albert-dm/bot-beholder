@@ -137,9 +137,7 @@ class Testing extends Component {
             aiScore: Number(this.state.aiScore),
         };
 
-        console.log(this.props);
-        console.log(json);
-        /* const blob = new Blob([JSON.stringify(json)], { type: 'text/json' });
+        const blob = new Blob([JSON.stringify(json)], { type: 'text/json' });
 
         let e = document.createEvent('MouseEvents');
 
@@ -165,7 +163,7 @@ class Testing extends Component {
             0,
             null,
         );
-        a.dispatchEvent(e); */
+        a.dispatchEvent(e);
     };
 
     uploadJson = (json, title) => {
