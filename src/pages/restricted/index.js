@@ -13,6 +13,7 @@ import { loadList } from '../../actions/BotActions'
 
 import BotSideBar from "../../components/BotSideBar/"
 import LoadingOverlay from "../../components/LoadingOverlay/"
+import WANotifications from './WANotifications';
 
 const mapStateToProps = state => ({
     ...state,
@@ -101,6 +102,7 @@ class Restricted extends Component {
                         <Route exact path="/" component={Home} />
                         <Route exact path="/tracing" component={Tracing} />
                         <Route exact path="/testing" component={Testing} />
+                        <Route exact path="/wanotifications" component={WANotifications} />
                     </div>
                     <div className="bp-bg-offwhite" style={footer}>
                         <p style={{ textAlign: 'center' }}>Bot Beholder 2018</p>

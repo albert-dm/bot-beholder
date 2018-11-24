@@ -91,6 +91,7 @@ class BotSideBar extends Component {
                                 }
                             </React.Fragment>
                         }
+                        <Link to="/wanotifications">Notificações whatsapp</Link>
                     </React.Fragment>
                 }
 

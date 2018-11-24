@@ -1,6 +1,6 @@
 import { fetchingData, fetchingDataFinished, alert } from './CommonActions'
 import { loadCaseList } from './TestActions';
-import { loadBots, loadBotInfo } from '../services/BotService'
+import { loadBots, loadBotInfo, loadBotUsers } from '../services/BotService'
 import { getEntities, getIntents } from '../services/AiService'
 
 export const loadList = () => dispatch => {
@@ -39,6 +39,12 @@ export const selectBot = (bot) => async dispatch => {
             bot.intents = intents.resource.items;
         } else {
             bot.intents = [];
+        }
+        let users = await loadBotUsers(bot.authorization);
+        if (users.status === "success") {
+            bot.users = users.resource.items;
+        } else {
+            bot.users = [];
         }
         dispatch(loadCaseList(bot.authorization));
         dispatch({

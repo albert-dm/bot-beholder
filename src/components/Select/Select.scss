@@ -1,0 +1,42 @@
+@import '../../globals';
+
+.Select{
+    position: relative;
+    display: inline-block;
+    font-weight: bolder;
+    .items{
+        background-color: $sky;
+        border: solid $primary-dark thin;
+        color: $cloud;
+        position: absolute;
+        max-height: 40vh;
+        overflow: auto;
+        overflow-x: hidden;
+        &.left{
+            right: 0;
+        }
+        &.center{
+            left: -150px;
+        }
+
+        .item{
+            cursor: pointer;
+            width: 300px;
+            padding: 10px 5px;
+            &:hover{
+                background: white ;
+                color: $onix;
+            }
+            &.search{
+                background: white ;
+                color: $onix;
+                border-bottom: solid $primary-dark;
+                position: sticky;
+                top: 0;
+                i{
+                    float: right;
+                }
+            }
+        }
+    }
+}

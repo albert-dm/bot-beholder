@@ -19,3 +19,20 @@ export function loadBotInfo(token, identity) {
     })
     .then(response => response.json());
 }
+
+export function loadBotUsers(botKey) {
+    return fetch('https://msging.net/commands', {
+        method: 'post',
+        mode: "cors",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Key ${botKey}`
+        },
+        body: JSON.stringify({
+            id: new Date().getTime(),
+            method: "get",
+            uri: "/contacts/"
+        }),
+    })
+        .then(response => response.json());
+}
