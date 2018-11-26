@@ -52,7 +52,7 @@ class SelectMany extends Component {
                 }
                 <span>{selectedItems.length > 0 ? selectedItems.map((item, idx) => <Chip key={item[keyProperty]} remove={() => { this.removeItem(idx) }}  >{item[displayProperty]}</Chip>) : 'Selecione'}</span>
                 <div className="buttons">
-                    <button onClick={this.selectAll}>Todos</button> <button onClick={this.removeAll}>Nenhum</button>
+                    <button onClick={this.selectAll} type="button">Todos</button> <button type="button" onClick={this.removeAll}>Nenhum</button>
                 </div>
                 <Select
                     list={list}

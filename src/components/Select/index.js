@@ -18,13 +18,13 @@ class Select extends Component {
         let { showList, filter } = this.state;
         displayProperty = displayProperty || 'name';
         keyProperty = keyProperty || 'id';
-        iconClass = iconClass || 'fas fa-chevron-circle-down 3x';
+        iconClass = iconClass || 'fas fa-chevron-circle-down';
         if (selected) {
             list = list.filter(item => selected.indexOf(item) === -1);
         }
         return (
             <div className="Select">
-                <i className={iconClass} onClick={() => this.setState((prevState) => ({ showList: !prevState.showList, filter: '' }))}></i>
+                <i className={showList ? 'fas fa-times-circle 3x' : `${iconClass} 3x`} onClick={() => this.setState((prevState) => ({ showList: !prevState.showList, filter: '' }))}></i>
                 {
                     showList &&
                     <div className={`items ${position}`} onClick={() => this.setState({ showList: false })}>

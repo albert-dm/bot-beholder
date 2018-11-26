@@ -47,3 +47,33 @@ $offwhite: #eaeeee;
     transform: scale(1);
   }
 }
+
+.clicable {
+  cursor: pointer;
+}
+
+.textField {
+  position: relative;
+  background-color: white;
+  padding: 18px 10px 10px 10px;
+  border: solid $primary-dark thin;
+  border-radius: 15px;
+  margin: 15px 0 15px 0;
+  .label,
+  label {
+    position: absolute;
+    top: 2px;
+    left: 15px;
+    color: $primary-dark;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  i {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: $primary-dark;
+  }
+}

@@ -1,0 +1,44 @@
+@import "../../../globals";
+
+.WANotificartion {
+  .params {
+    position: relative;
+    background-color: white;
+    padding: 30px 10px 10px 10px;
+    border: solid $primary-dark thin;
+    border-radius: 15px;
+    margin: 15px 0 15px 0;
+    .label,
+    label {
+      position: absolute;
+      top: 2px;
+      left: 15px;
+      color: $primary-dark;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+  button[type="submit"] {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .progress {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    border: solid $primary-dark;
+    height: 20px;
+    .bar {
+      position: absolute;
+      background-color: $primary;
+      height: 100%;
+    }
+    .label {
+      position: absolute;
+      z-index: 2;
+    }
+  }
+}

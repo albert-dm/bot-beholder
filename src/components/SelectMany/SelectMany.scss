@@ -3,9 +3,10 @@
 .SelectMany {
   position: relative;
   background-color: white;
-  padding: 18px 10px 10px 10px;
+  padding: 18px 10px 30px 10px;
   border: solid $primary-dark thin;
   border-radius: 15px;
+  margin: 15px 0 15px 0;
   .label {
     position: absolute;
     top: 2px;
@@ -34,12 +35,18 @@
     }
   }
   .buttons {
-    display: none;
+    display: flex;
     position: absolute;
+    margin-left: 50%;
+    transform: translateX(-50%);
     bottom: 0;
-    width: 100%;
     text-align: center;
-    transform: translateY(100%);
+    z-index: 50;
+    button {
+      padding: 5px;
+      border-radius: 0;
+      background-color: $primary-dark;
+    }
   }
   .Select {
     position: absolute;
@@ -56,7 +63,7 @@
   }
   &:hover {
     .buttons {
-      display: block;
+      display: flex;
     }
   }
 }

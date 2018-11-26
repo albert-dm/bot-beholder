@@ -12,3 +12,7 @@ export const debounceCall = (func, wait, immediate) => {
         if (callNow) func.apply(context, args);
     };
 };
+
+export const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
