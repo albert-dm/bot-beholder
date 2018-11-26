@@ -1,0 +1,62 @@
+@import "../../globals";
+
+.SelectMany {
+  position: relative;
+  background-color: white;
+  padding: 18px 10px 10px 10px;
+  border: solid $primary-dark thin;
+  border-radius: 15px;
+  .label {
+    position: absolute;
+    top: 2px;
+    left: 15px;
+    color: $primary-dark;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .chip {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: $primary-dark;
+    padding: 8px 13px;
+    margin: 2px;
+    border-radius: 15px;
+    max-width: 200px;
+    position: relative;
+    padding-right: 10px;
+    overflow: hidden;
+    i {
+      position: absolute;
+      right: 0;
+      margin: 2px 4px;
+      cursor: pointer;
+    }
+  }
+  .buttons {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    transform: translateY(100%);
+  }
+  .Select {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    height: 100%;
+    width: 50px;
+    text-align: center;
+    i {
+      font-size: 20px;
+      color: $primary-dark;
+    }
+  }
+  &:hover {
+    .buttons {
+      display: block;
+    }
+  }
+}
