@@ -12,12 +12,12 @@
     transform: translateY(-50%);
   }
   .items {
+    @extend %elevate;
     position: absolute;
     top: 90%;
-    background-color: $sky;
-    border: solid $primary-dark thin;
-    border-radius: 25px;
-    color: $cloud;
+    background-color: white;
+    /* border: solid $primary-dark thin; */
+    color: $primary-dark;
     position: absolute;
     max-height: 40vh;
     overflow: auto;
@@ -34,14 +34,12 @@
       width: 300px;
       padding: 10px 5px;
       &:hover {
-        background: white;
-        color: $onix;
+        background: $offwhite;
       }
       &.search {
+        background-color: white;
         text-align: left;
-        background: white;
         color: $onix;
-        border-bottom: solid $primary-dark;
         position: sticky;
         top: 0;
         i {
