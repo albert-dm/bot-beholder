@@ -6,7 +6,10 @@ export const sendNotification = (notification, botKey) => {
             'Content-Type': 'application/json',
             Authorization: `Key ${botKey}`
         },
-        body: notification,
+        body: JSON.stringify(notification),
     })
-        .then(response => response.json());
+        .then(response => {
+            console.log(response);
+            return response.ok;
+        });
 }

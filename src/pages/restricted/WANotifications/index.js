@@ -62,7 +62,7 @@ class WANotifications extends Component {
                         <form onSubmit={this.sendNotifications}>
                             <SelectMany
                                 label="Usuários a serem notificados"
-                                list={bot.selected.users}
+                                list={bot.selected.users.filter(user => user.source === "WhatsApp")}
                                 onChange={selected => this.setState({ selectedUsers: selected })}
                                 displayProperty='identity'
                                 keyProperty='identity'

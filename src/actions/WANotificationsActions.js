@@ -9,7 +9,7 @@ export const sendNotifications = (notifications, botKey) => async dispatch => {
             current: i + 1,
             total: notifications.length
         });
-        await sendNotification(notifications[i]);
+        await sendNotification(notifications[i], botKey);
     }
     dispatch({
         type: 'SENDING_NOTIFICATION',
