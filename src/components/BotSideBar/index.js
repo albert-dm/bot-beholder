@@ -91,7 +91,10 @@ class BotSideBar extends Component {
                                 }
                             </React.Fragment>
                         }
-                        <Link to="/wanotifications">Notificações whatsapp</Link>
+                        {
+                            bot.selected.users.filter(user => user.source === "WhatsApp").length > 0 &&
+                            <Link to="/wanotifications">Notificações whatsapp</Link>
+                        }
                     </React.Fragment>
                 }
 
