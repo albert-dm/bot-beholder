@@ -17,6 +17,7 @@ class QuickReplyAnswer extends Component {
         const { name, value } = e.target;
         const newAnswer = { ...this.props.answer };
         newAnswer[name] = value;
+        console.log(newAnswer);
         this.updateAnswer(newAnswer);
     };
 

@@ -5,12 +5,23 @@ import AnswerBlock from '../AnswerBlock';
 import ReactDragList from 'react-drag-list'
 
 class Properties extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.div = React.createRef();
+        this.state = {
+            blockName: props.blockName,
+            input: props.input
+        }
     }
 
     handleChange = e => {
+        const { name, value } = e.target;
+        const newState = { ...this.state };
+        newState[name] = value;
+        this.setState(newState);
+    };
+
+    saveChange = e => {
         const { name, value } = e.target;
         const newBlock = { ...this.props };
         newBlock[name] = value;
@@ -28,6 +39,15 @@ class Properties extends Component {
         }
         this.props.setBlock(newBlock);
     };
+
+    swapAnswer = (e) => {
+        const newBlock = { ...this.props };
+        const expected = [...this.props.expected];
+        let { newIndex, oldIndex } = e;
+        expected[newIndex] = expected.splice(oldIndex, 1, expected[newIndex])[0];
+        newBlock.expected = expected;
+        this.props.setBlock(newBlock);
+    }
 
     deleteAnswer = index => {
         const newBlock = { ...this.props };
@@ -53,8 +73,18 @@ class Properties extends Component {
         this.scrollBottom();
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.blockName !== this.state.blockName) {
+            this.setState({ blockName: nextProps.blockName });
+        }
+        if (nextProps.input !== this.state.input) {
+            this.setState({ input: nextProps.input });
+        }
+    }
+
     render() {
         let { expected } = this.props;
+        let { blockName, input } = this.state
         return (
             <div className="Properties" ref={this.div} style={this.props.style}>
                 <h2>Propriedades</h2>
@@ -64,9 +94,10 @@ class Properties extends Component {
                             <b>Nome do bloco:</b>
                             <input
                                 onChange={this.handleChange}
+                                onBlur={this.saveChange}
                                 type="text"
                                 name="blockName"
-                                value={this.props.blockName}
+                                value={blockName}
                                 required
                             />
                             <br />
@@ -74,9 +105,10 @@ class Properties extends Component {
                             <b>Input que leva ao bloco:</b>
                             <input
                                 onChange={this.handleChange}
+                                onBlur={this.saveChange}
                                 type="text"
                                 name="input"
-                                value={this.props.input}
+                                value={input}
                                 required
                             />
                             <br />
@@ -86,9 +118,10 @@ class Properties extends Component {
                             <ReactDragList
                                 handles={false}
                                 dataSource={expected}
+                                onUpdate={this.swapAnswer}
                                 row={(answer, index) => (
                                     <AnswerBlock
-                                        key={index}
+                                        key={blockName + input}
                                         answer={answer}
                                         index={index}
                                         deleteAnswer={() => {

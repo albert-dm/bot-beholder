@@ -12,6 +12,12 @@ const newBlock = () => ({
 });
 
 class FlowDisplay extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: props.flowTitle
+        }
+    }
     fileSelected = e => {
         const reader = new FileReader();
         const uploadJson = this.props.uploadJson;
@@ -29,11 +35,18 @@ class FlowDisplay extends Component {
     };
 
     handleTitleChange = e => {
-        const newTitle = e.target.value;
-        this.props.setTitle(newTitle);
+        const title = e.target.value;
+        this.setState({ title });
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.flowTitle !== this.state.title) {
+            this.setState({ title: nextProps.flowTitle });
+        }
+    }
+
     render() {
+        let { title } = this.state;
         return (
             <div className="FlowDisplay" style={this.props.style}>
                 <ul className="ToolbarBtns">
@@ -87,8 +100,9 @@ class FlowDisplay extends Component {
                 <h2>
                     <input
                         onChange={this.handleTitleChange}
+                        onBlur={() => this.props.setTitle(title)}
                         type="text"
-                        value={this.props.flowTitle}
+                        value={title}
                     />
                 </h2>
                 <div className="block-container">

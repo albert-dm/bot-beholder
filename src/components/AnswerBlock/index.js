@@ -10,14 +10,26 @@ import './AnswerBlock.scss';
 import AiAnswer from './AiAnswer';
 
 class AnswerBlock extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             editing: false,
+            answer: props.answer
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.answer !== this.state.answer) {
+            this.setState({ answer: nextProps.answer, editing: false });
+        }
+    }
+
+    setAnswer = answer => {
+        this.setState({ answer });
+    }
+
     render() {
+        let { answer } = this.state;
         return (
             <div
                 className={`AnswerBlock${this.props.selected ? ' selected' : ''}`}
@@ -31,7 +43,7 @@ class AnswerBlock extends Component {
                     if (this.state.editing) {
                         return (
                             <i
-                                onClick={() => this.setState({ editing: false })}
+                                onClick={() => { this.setState({ editing: false }); this.props.setAnswer(answer, this.props.index); }}
                                 className="fas fa-check right icon-btn"
                             />
                         );
@@ -45,12 +57,12 @@ class AnswerBlock extends Component {
                 })()}
                 <br />
                 {(() => {
-                    switch (this.props.answer.type) {
+                    switch (answer.type) {
                         case 'text':
                             return (
                                 <TextAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                 />
@@ -58,8 +70,8 @@ class AnswerBlock extends Component {
                         case 'menu':
                             return (
                                 <MenuAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                 />
@@ -67,8 +79,8 @@ class AnswerBlock extends Component {
                         case 'quickreply':
                             return (
                                 <QuickReplyAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                 />
@@ -76,8 +88,8 @@ class AnswerBlock extends Component {
                         case 'carousel':
                             return (
                                 <CarouselAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                     delete={this.props.deleteAnswer}
@@ -86,8 +98,8 @@ class AnswerBlock extends Component {
                         case 'image':
                             return (
                                 <ImageAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                 />
@@ -95,8 +107,8 @@ class AnswerBlock extends Component {
                         case 'track':
                             return (
                                 <TrackAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                 />
@@ -104,8 +116,8 @@ class AnswerBlock extends Component {
                         case 'ai':
                             return (
                                 <AiAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                     intents={this.props.intents}
@@ -115,8 +127,8 @@ class AnswerBlock extends Component {
                         case 'json':
                             return (
                                 <JsonAnswer
-                                    answer={this.props.answer}
-                                    setAnswer={this.props.setAnswer}
+                                    answer={answer}
+                                    setAnswer={this.setAnswer}
                                     index={this.props.index}
                                     editing={this.state.editing}
                                 />
