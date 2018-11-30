@@ -41,7 +41,7 @@ class SelectMany extends Component {
     }
     render() {
         let { selectedItems } = this.state;
-        let { displayProperty, keyProperty, list, label } = this.props;
+        let { displayProperty, keyProperty, list, label, customButtons } = this.props;
         displayProperty = displayProperty || 'name';
         keyProperty = keyProperty || 'id';
         return (
@@ -52,7 +52,8 @@ class SelectMany extends Component {
                 }
                 <span>{selectedItems.length > 0 ? selectedItems.map((item, idx) => <Chip key={item[keyProperty]} remove={() => { this.removeItem(idx) }}  >{item[displayProperty]}</Chip>) : 'Selecione'}</span>
                 <div className="buttons">
-                    <button onClick={this.selectAll} type="button">Todos</button> <button type="button" onClick={this.removeAll}>Nenhum</button>
+                    <button key="all" onClick={this.selectAll} type="button">Todos</button> <button key="none" type="button" onClick={this.removeAll}>Nenhum</button>
+                    {customButtons}
                 </div>
                 <Select
                     list={list}

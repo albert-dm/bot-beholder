@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Modal.scss';
 
 class Modal extends Component {
@@ -23,6 +24,12 @@ class Modal extends Component {
             )
         );
     }
+}
+
+Modal.protoTypes = {
+    show: PropTypes.bool.isRequired,
+    close: PropTypes.array,
+    title: PropTypes.string
 }
 
 export default Modal;

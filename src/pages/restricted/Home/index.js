@@ -12,7 +12,14 @@ class Home extends Component {
             <div className="bp-ff-nunito" style={{ padding: '5px' }}>
                 <h1 className="bp-fs-2">Observador de bots</h1>
                 <h2 className="bp-fs-4">{bot.selected ? bot.selected.name : "Selecione um bot"}</h2>
-                <p>{bot.selected ? `Identificador: ${bot.selected.shortName}` : "Para visualizar informações de algum bot, selecione o bot escolhido na lista no menu à esquerda"}</p>
+                {bot.selected ?
+                    <div className="botinfo">
+                        <p>Identificador: {bot.selected.shortName} </p>
+                        <p>Authorization: {bot.selected.authorization} </p>
+                    </div>
+
+                    : "Para visualizar informações de algum bot, selecione o bot escolhido na lista no menu à esquerda"
+                }
             </div>
         );
     }

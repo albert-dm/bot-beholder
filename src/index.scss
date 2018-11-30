@@ -95,6 +95,11 @@ button,
   color: white;
   font-weight: bolder;
 
+  &:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+  }
+
   &.no-style {
     color: black;
     background-color: transparent;
@@ -105,6 +110,9 @@ button,
 button:hover,
 .btn:hover {
   transform: scale(1.06);
+  &:disabled {
+    transform: none;
+  }
 }
 
 .ButtonBar {

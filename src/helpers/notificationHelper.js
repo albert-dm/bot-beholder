@@ -5,7 +5,7 @@ export const buildWANotification = (user, template, params) => {
         for (let i = 0; i < matches.length; i++) {
             let property = matches[i].slice(2, -2).split('.');
             let value;
-            if (property.length == 1) {
+            if (property.length === 1) {
                 value = user[property[0]];
             }
             else {

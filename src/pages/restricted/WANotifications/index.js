@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SelectMany from '../../../components/SelectMany';
+import Modal from '../../../components/Modal';
 import { buildWANotification } from '../../../helpers/notificationHelper'
 import { sendNotifications } from '../../../actions/WANotificationsActions'
+import { getIdentifier } from '../../../services/WANotificationsService'
 
 import './WANotifications.scss'
 
@@ -18,6 +20,10 @@ class WANotifications extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showAddPhone: false,
+            phoneNumber: '',
+            foundIdentity: null,
+            outerNumbers: [],
             selectedUsers: [],
             template: '',
             params: []
@@ -51,8 +57,28 @@ class WANotifications extends Component {
             }
         )
     }
+
+    findIdentity = async (phone) => {
+        let response = await getIdentifier(phone, this.props.bot.selected.authorization);
+        if (response.status === "success") {
+            console.log(response);
+            this.setState({ foundIdentity: response.resource.alternativeAccount });
+        }
+        else {
+            alert('Não foi possível encontrar o número!');
+        }
+    }
+
+    addOuterUser = (identity) => {
+        let user = {
+            identity,
+            outer: true
+        }
+        console.log(user);
+        this.setState((prevState) => ({ outerNumbers: [...prevState.outerNumbers, user] }))
+    }
     render() {
-        let { template, params } = this.state;
+        let { template, params, showAddPhone, phoneNumber, foundIdentity, outerNumbers } = this.state;
         const { bot, WANotifications } = this.props;
         return (
             <div className="bp-ff-nunito WANotificartion" style={{ padding: '5px' }}>
@@ -62,8 +88,11 @@ class WANotifications extends Component {
                         <form onSubmit={this.sendNotifications}>
                             <SelectMany
                                 label="Usuários a serem notificados"
-                                list={bot.selected.users.filter(user => user.source === "WhatsApp")}
+                                list={bot.selected.users.filter(user => user.source === "WhatsApp").concat(outerNumbers)}
                                 onChange={selected => this.setState({ selectedUsers: selected })}
+                                customButtons={[
+                                    <button key="addOuterNumber" type="button" onClick={() => this.setState({ showAddPhone: true, foundIdentity: null })}><i className="fas fa-plus-circle" /> Telefone</button>
+                                ]}
                                 displayProperty='identity'
                                 keyProperty='identity'
                             />
@@ -117,6 +146,28 @@ class WANotifications extends Component {
                         :
                         <p>Selecione um bot</p>
                 }
+                <Modal title="Obter identificador do número" show={showAddPhone} close={() => this.setState({ showAddPhone: false })}>
+                    <div className="textField">
+                        <label>Telefone</label>
+                        <input
+                            type="text"
+                            placeholder="(XX) XXXXX-XXXX"
+                            onChange={(e) => this.setState({ phoneNumber: e.target.value })}
+                            value={phoneNumber}
+                            required />
+                    </div>
+                    {
+                        foundIdentity ?
+                            <React.Fragment>
+                                <h1>Identificador: {foundIdentity}</h1>
+                                <button type='button' onClick={() => { this.addOuterUser(foundIdentity) }}>Adicionar</button>
+                                <button type='button' onClick={() => { this.setState({ foundIdentity: null, phoneNumber: '' }) }}>Outro número</button>
+                            </React.Fragment>
+
+                            :
+                            <button type='button' onClick={() => this.findIdentity(phoneNumber)} disabled={phoneNumber === ''}>Obter identificador</button>
+                    }
+                </Modal>
             </div>
         );
     }
