@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Home from './Home';
 import Tracing from './Tracing';
 import Testing from './Testing';
+import EditTesting from './Testing/edit';
 import Icon from '../../static/img/logo.svg';
 
 import './Restricted.scss'
@@ -102,6 +103,7 @@ class Restricted extends Component {
                         <Route exact path="/" component={Home} />
                         <Route exact path="/tracing" component={Tracing} />
                         <Route exact path="/testing" component={Testing} />
+                        <Route exact path="/testing/edit" component={EditTesting} />
                         <Route exact path="/wanotifications" component={WANotifications} />
                     </div>
                     <div className="bp-bg-offwhite" style={footer}>

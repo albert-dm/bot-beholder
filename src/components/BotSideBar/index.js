@@ -68,31 +68,35 @@ class BotSideBar extends Component {
                     bot.selected &&
                     <React.Fragment>
                         <Link to="/tracing">Tracing</Link>
+
+
                         {
                             test.cases &&
                             <React.Fragment>
-                                <div className="navItem" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}>
-                                    Testes
+                                <div className="navItem">
+                                    <Link to="/testing" >Testes</Link>
                                     {
                                         showCases ?
-                                            <i className="BotSelect fas fa-angle-up"></i>
+                                            <i className="BotSelect fas fa-angle-up" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}></i>
                                             :
-                                            <i className="BotSelect fas fa-angle-down"></i>
+                                            <i className="BotSelect fas fa-angle-down" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}></i>
                                     }
                                 </div>
                                 {
                                     showCases &&
                                     <div className="UseCases">
                                         {
-                                            Object.keys(test.cases).map((useCaseId) => <Link to="/testing" key={useCaseId} onClick={() => selectCase(useCaseId)}>{test.cases[useCaseId]}</Link>)
+                                            Object.keys(test.cases).map((useCaseId) => <Link to="/testing/edit" key={useCaseId} onClick={() => selectCase(useCaseId)}>{test.cases[useCaseId]}</Link>)
                                         }
                                         <div className="navItem" onClick={() => newCase(test.cases)} ><i className="fas fa-plus-circle"></i> Novo</div>
                                     </div>
                                 }
                             </React.Fragment>
                         }
+
+
                         {
-                            bot.selected.users.filter(user => user.source === "WhatsApp").length > 0 &&
+                            /* bot.selected.users.filter(user => user.source === "WhatsApp").length > 0 && */
                             <Link to="/wanotifications">Notificações whatsapp</Link>
                         }
                     </React.Fragment>

@@ -1,0 +1,51 @@
+@import "../../../globals";
+
+.tests {
+  header {
+    position: sticky;
+    top: 10px;
+    z-index: 500;
+    background-color: $offwhite;
+    padding-bottom: 20px;
+    border-bottom: solid $primary-dark;
+    margin-bottom: 20px;
+    .testButtons {
+      display: flex;
+      justify-content: space-around;
+      padding: 0 10% 0 10%;
+    }
+  }
+
+  .testList {
+    padding: 0 10% 0 10%;
+    text-align: center;
+    .testItem {
+      @extend %elevate;
+      position: relative;
+      background-color: white;
+      padding: 15px 10px 10px 10px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      &:hover {
+        @extend %elevateTwo;
+      }
+      i.status {
+        position: absolute;
+        left: 20px;
+        font-size: 20px;
+        color: $warning-yellow;
+        &.success {
+          color: $true;
+        }
+        &.fail {
+          color: $warning;
+        }
+      }
+      i.more {
+        position: absolute;
+        right: 20px;
+        font-size: 20px;
+      }
+    }
+  }
+}

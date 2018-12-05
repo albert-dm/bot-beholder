@@ -169,6 +169,10 @@ button:hover,
   color: red;
 }
 
+.breakLines {
+  white-space: pre;
+}
+
 @keyframes enter {
   0% {
     transform: scale(0.5);

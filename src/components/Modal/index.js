@@ -28,7 +28,7 @@ class Modal extends Component {
 
 Modal.protoTypes = {
     show: PropTypes.bool.isRequired,
-    close: PropTypes.array,
+    close: PropTypes.func,
     title: PropTypes.string
 }
 

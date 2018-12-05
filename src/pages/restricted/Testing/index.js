@@ -1,251 +1,140 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import FlowDisplay from '../../../components/FlowDisplay';
-import Properties from '../../../components/Properties';
-import Block from '../../../components/Block';
-import Config from '../../../components/Config';
-import { saveCase, deleteCase } from '../../../actions/TestActions'
+import { toggleTestQueue, runTests, setQueue } from '../../../actions/TestActions';
+import Modal from '../../../components/Modal'
 
-import ReactDragList from 'react-drag-list'
+import './testList.scss'
 
 const mapStateToProps = state => ({
     ...state,
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveCase: (useCase, cases) => dispatch(saveCase(useCase, cases)),
-    deleteCase: (useCaseId, cases) => dispatch(deleteCase(useCaseId, cases)),
+    toggleTestQueue: (testCaseId, queue) => dispatch(toggleTestQueue(testCaseId, queue)),
+    runTests: (botKey, queue) => dispatch(runTests(botKey, queue)),
+    setQueue: (queue) => dispatch(setQueue(queue))
 });
 
-const guid = () => {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
+const getIconClass = (selected, log) => {
+    let iconClass;
+
+    if (selected) {
+        iconClass = "far fa-clock";
+    } else if (log) {
+        iconClass = log.status === 'success' ? 'success fas fa-check' : 'fail fas fa-times';
     }
-    return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-};
 
-const grid = {
-    display: 'grid',
-    gridTemplateColumns: '50% 50%',
-    gridTemplateAreas: '"flow properties"',
-};
+    return iconClass;
+}
 
-const flow = {
-    gridArea: 'flow',
-};
-
-const properties = {
-    gridArea: 'properties',
-};
+const TestCase = (props) => {
+    let { caseName, selected, onClick, log, showLog } = props;
+    return (
+        <div onClick={onClick} className="testItem">
+            <i className={'status ' + getIconClass(selected, log)}></i>
+            {caseName}
+            {
+                log &&
+                <i className="more fas fa-search-plus" onClick={(e) => { e.stopPropagation(); showLog({ title: caseName, value: log.value }) }} />
+            }
+        </div>
+    );
+}
 
 class Testing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showConfigurations: false
+            selectedLog: null
         }
     }
 
-    setTitle = newTitle => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        newCase.flowTitle = newTitle;
-        saveCase(newCase, test.cases)
-    };
-
-    setConfig = (configKey, configValue) => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        newCase[configKey] = configValue;
-        saveCase(newCase, test.cases)
-    };
-
-    clearFlow = () => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        if (window.confirm('Tem certeza que deseja limpar o fluxo?')) {
-            newCase = {
-                ...newCase,
-                flowTitle: 'Novo Fluxo',
-                setUp: '[]',
-                userVariables: {},
-                blocks: [],
-                selected: '',
-                showModal: true,
-                aiScore: 6,
-            };
-            saveCase(newCase, test.cases)
-        };
+    isSelected = (testCaseId) => {
+        const { test } = this.props;
+        return test.queue.indexOf(testCaseId) !== -1;
     }
 
-    addBlock = block => {
-        block.id = guid();
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        newCase.blocks = [...newCase.blocks, block];
-        saveCase(newCase, test.cases)
-    };
-
-    deleteBlock = index => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        if (index === this.state.selected) {
-            newCase.selected = '';
-        }
-        newCase.blocks.splice(index, 1);
-        saveCase(newCase, test.cases)
-    };
-
-    selectBlock = index => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        newCase.selected = index;
-        saveCase(newCase, test.cases)
-    };
-
-    setBlock = block => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        newCase.blocks[newCase.selected] = block;
-        saveCase(newCase, test.cases)
-    };
-
-    swapBlocks = (e) => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        let { newIndex, oldIndex } = e;
-        newCase.blocks[newIndex] = newCase.blocks.splice(oldIndex, 1, newCase.blocks[newIndex])[0];
-        saveCase(newCase, test.cases);
+    toggleSelect = (testCaseId) => {
+        const { test, toggleTestQueue } = this.props;
+        toggleTestQueue(testCaseId, test.queue);
     }
 
-    downloadJson = () => {
-        let { test } = this.props;
-        let newCase = test.selectedCase;
-        let json = {
-            botIdentity: this.props.bot.selected.shortName,
-            botKey: this.props.bot.selected.authorization,
-            setUp: JSON.stringify(JSON.parse(newCase.setUp)),
-            userVariables: newCase.userVariables,
-            testCases: JSON.stringify(newCase.blocks),
-            aiScore: Number(newCase.aiScore),
-        };
+    runTests = () => {
+        const { bot, test, runTests } = this.props;
+        runTests(bot.selected.authorization, [...test.queue]);
+    }
 
-        const blob = new Blob([JSON.stringify(json)], { type: 'text/json' });
+    selectAll = () => {
+        let { test, setQueue } = this.props;
+        let queue = Object.keys(test.cases).map((testCaseId) => testCaseId);
+        setQueue(queue);
+    }
 
-        let e = document.createEvent('MouseEvents');
-
-        const a = document.createElement('a');
-
-        a.download = `${newCase.flowTitle}.json`;
-        a.href = window.URL.createObjectURL(blob);
-        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-        e.initMouseEvent(
-            'click',
-            true,
-            false,
-            window,
-            0,
-            0,
-            0,
-            0,
-            0,
-            false,
-            false,
-            false,
-            false,
-            0,
-            null,
-        );
-        a.dispatchEvent(e);
-    };
-
-    uploadJson = (json, title) => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        try {
-            newCase = {
-                setUp: json.setUp,
-                userVariables: json.userVariables,
-                blocks: JSON.parse(json.testCases),
-                aiScore: JSON.parse(json.aiScore),
-                flowTitle: title
-            };
-        } catch (error) {
-            newCase.error = 'Arquivo JSON incompatível!';
-        }
-        saveCase(newCase, test.cases)
-    };
-
-    toggleConfigurations = () => {
-        this.setState(prevstate => ({ showConfigurations: !prevstate.showConfigurations }));
-    };
+    clearQueue = () => {
+        this.props.setQueue([]);
+    }
 
     render() {
-        let { bot, deleteCase, test } = this.props;
-        let { showConfigurations } = this.state;
+        const { bot, test, setQueue } = this.props;
+        let { selectedLog } = this.state;
         return (
-            <div style={grid}>
-                {
-                    test.selectedCase ?
-                        <React.Fragment>
-                            <FlowDisplay
-                                style={flow}
-                                flowTitle={test.selectedCase.flowTitle}
-                                setTitle={this.setTitle}
-                                addBlock={this.addBlock}
-                                download={this.downloadJson}
-                                uploadJson={this.uploadJson}
-                                clearFlow={this.clearFlow}
-                                openConfig={this.toggleConfigurations}
-                                delete={() => window.confirm('Tem certeza que deseja excluir esse caso de uso?') && deleteCase(test.selectedId, test.cases)}
+            <div className="tests bp-ff-nunito" style={{ padding: '5px' }}>
+                <header>
+                    <h1 className="bp-fs-2">Testes</h1>
+                    <h2 className="bp-fs-4">{bot.selected ? bot.selected.name : "Selecione um bot"}</h2>
+                    {
+                        bot.selected && test.cases &&
+                        <div className="testButtons">
+                            <button
+                                type="button"
+                                onClick={this.runTests}
+                                disabled={test.queue.length === 0 || test.testing}
                             >
-                                <ReactCSSTransitionGroup
-                                    transitionName="blocks"
-                                    transitionEnterTimeout={200}
-                                    transitionLeaveTimeout={200}
-                                >
-                                    <ReactDragList
-                                        className="Blocks"
-                                        rowClassName="BlockItem"
-                                        dragClass="dragging"
-                                        ghostClass="drop"
-                                        onUpdate={this.swapBlocks}
-                                        dataSource={test.selectedCase.blocks}
-                                        row={(block, index) => <Block
-                                            selected={index === test.selectedCase.selected}
-                                            block={block}
-                                            onClick={() => this.selectBlock(index)}
-                                            key={block.id}
-                                            deleteBlock={e => {
-                                                e.stopPropagation();
-                                                this.deleteBlock(index);
-                                            }}
-                                        />}
-                                    />
-                                </ReactCSSTransitionGroup>
-                            </FlowDisplay>
-                            <Properties
-                                style={properties}
-                                {...test.selectedCase.blocks[test.selectedCase.selected]}
-                                setBlock={this.setBlock}
-                                selected={test.selectedCase.selected}
-                                intents={bot.selected.intents}
-                                entities={bot.selected.entities}
-                            />
-                            <Config
-                                show={showConfigurations}
-                                close={this.toggleConfigurations}
-                                setConfig={this.setConfig}
-                                parameters={test.selectedCase}
-                            />
-                        </React.Fragment>
-                        :
-                        <p>Selecione um caso de teste</p>
+                                {test.testing ? 'Executando testes...' : 'Iniciar testes!'}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={this.selectAll}
+                            >
+                                Todos
+                            </button>
+                            <button
+                                type="button"
+                                onClick={this.clearQueue}
+                            >
+                                Nenhum
+                            </button>
+                        </div>
+                    }
+                </header>
 
+                {
+                    bot.selected && test.cases ?
+                        <div className="testList">
+                            {
+                                Object.keys(test.cases).map((testCaseId) =>
+                                    <TestCase
+                                        key={testCaseId}
+                                        selected={this.isSelected(testCaseId)}
+                                        log={test.log ? test.log[testCaseId] : null}
+                                        onClick={() => this.toggleSelect(testCaseId)} caseName={test.cases[testCaseId]}
+                                        showLog={(log) => this.setState({ selectedLog: log })}
+                                    />
+                                )
+                            }
+                        </div>
+
+                        : "É necessário selecionar um bot que teha casos de teste cadastrados"
                 }
+                {
+                    selectedLog &&
+                    <Modal title={selectedLog.title} close={() => this.setState({ selectedLog: null })} show={Boolean(selectedLog)}>
+                        <div className="breakLines">
+                            {selectedLog.value}
+                        </div>
+                    </Modal>
+                }
+
             </div>
         );
     }
@@ -253,5 +142,5 @@ class Testing extends Component {
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps,
+    mapDispatchToProps
 )(Testing);

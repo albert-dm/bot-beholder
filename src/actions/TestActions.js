@@ -1,5 +1,5 @@
 import { fetchingData, fetchingDataFinished, alert } from './CommonActions';
-import { loadCases, loadUseCase, setCases, setUseCase, deleteUseCase } from '../services/TestService';
+import { loadCases, loadUseCase, setCases, setUseCase, deleteUseCase, runTest } from '../services/TestService';
 
 export const loadCaseList = () => async dispatch => {
     dispatch(fetchingData());
@@ -120,4 +120,53 @@ export const deleteCase = (useCaseId, cases) => async dispatch => {
     finally {
         dispatch(fetchingDataFinished());
     }
+}
+
+export const toggleTestQueue = (testCaseId, queue) => async dispatch => {
+    let idx = queue.indexOf(testCaseId);
+    if (idx !== -1) {
+        dispatch({
+            type: 'REMOVE_FROM_QUEUE',
+            testCaseId
+        })
+    } else {
+        dispatch({
+            type: 'ADD_TO_QUEUE',
+            testCaseId
+        })
+    };
+}
+
+export const setQueue = (queue) => async dispatch => {
+    dispatch({
+        type: 'SET_QUEUE',
+        queue
+    })
+}
+
+export const runTests = (botKey, queue) => async dispatch => {
+    let log;
+    dispatch({
+        type: 'START_TESTING'
+    });
+    for (let i = 0; i < queue.length; i++) {
+        log = await runTest(botKey, queue[i]);
+        let regex = /FAILED/;
+        let testFailed = regex.test(log);
+        dispatch({
+            type: 'SET_LOG',
+            testCaseId: queue[i],
+            log: {
+                value: log,
+                status: testFailed ? 'fail' : 'success'
+            }
+        });
+        dispatch({
+            type: 'REMOVE_FROM_QUEUE',
+            testCaseId: queue[i]
+        })
+    }
+    dispatch({
+        type: 'STOP_TESTING'
+    });
 }
