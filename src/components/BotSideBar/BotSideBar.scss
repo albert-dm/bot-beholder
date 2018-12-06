@@ -70,6 +70,7 @@
       min-width: 170px;
       max-height: 60vh;
       overflow-y: auto;
+      z-index: 100;
       a,
       .navItem {
         display: block;
