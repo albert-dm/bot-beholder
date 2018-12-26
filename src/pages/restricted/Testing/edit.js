@@ -45,7 +45,8 @@ class Testing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showConfigurations: false
+            showConfigurations: false,
+            selected: ''
         }
     }
 
@@ -72,10 +73,10 @@ class Testing extends Component {
                 flowTitle: 'Novo Fluxo',
                 setUp: '[]',
                 userVariables: {},
-                blocks: [],
-                selected: '',
-                showModal: true,
+                testCases: [],
                 aiScore: 6,
+                botIdentity: this.props.bot.selected.shortName,
+                botKey: this.props.bot.selected.authorization
             };
             saveCase(newCase, test.cases)
         };
@@ -85,7 +86,7 @@ class Testing extends Component {
         block.id = guid();
         let { test, saveCase } = this.props;
         let newCase = test.selectedCase;
-        newCase.blocks = [...newCase.blocks, block];
+        newCase.testCases = [...newCase.testCases, block];
         saveCase(newCase, test.cases)
     };
 
@@ -95,21 +96,19 @@ class Testing extends Component {
         if (index === this.state.selected) {
             newCase.selected = '';
         }
-        newCase.blocks.splice(index, 1);
+        newCase.testCases.splice(index, 1);
         saveCase(newCase, test.cases)
     };
 
     selectBlock = index => {
-        let { test, saveCase } = this.props;
-        let newCase = test.selectedCase;
-        newCase.selected = index;
-        saveCase(newCase, test.cases)
+        this.setState({ selected: index });
     };
 
     setBlock = block => {
         let { test, saveCase } = this.props;
+        let { selected } = this.state;
         let newCase = test.selectedCase;
-        newCase.blocks[newCase.selected] = block;
+        newCase.testCases[selected] = block;
         saveCase(newCase, test.cases)
     };
 
@@ -117,19 +116,19 @@ class Testing extends Component {
         let { test, saveCase } = this.props;
         let newCase = test.selectedCase;
         let { newIndex, oldIndex } = e;
-        newCase.blocks[newIndex] = newCase.blocks.splice(oldIndex, 1, newCase.blocks[newIndex])[0];
+        newCase.testCases[newIndex] = newCase.testCases.splice(oldIndex, 1, newCase.testCases[newIndex])[0];
         saveCase(newCase, test.cases);
     }
 
     downloadJson = () => {
-        let { test } = this.props;
+        let { test, bot } = this.props;
         let newCase = test.selectedCase;
         let json = {
-            botIdentity: this.props.bot.selected.shortName,
-            botKey: this.props.bot.selected.authorization,
+            botIdentity: bot.selected.shortName,
+            botKey: bot.selected.authorization,
             setUp: JSON.stringify(JSON.parse(newCase.setUp)),
             userVariables: newCase.userVariables,
-            testCases: JSON.stringify(newCase.blocks),
+            testCases: JSON.stringify(newCase.testCases),
             aiScore: Number(newCase.aiScore),
         };
 
@@ -163,20 +162,27 @@ class Testing extends Component {
     };
 
     uploadJson = (json, title) => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
+        //console.log(json);
         try {
             newCase = {
+                ...newCase,
                 setUp: json.setUp,
                 userVariables: json.userVariables,
-                blocks: JSON.parse(json.testCases),
+                testCases: JSON.parse(json.testCases),
                 aiScore: JSON.parse(json.aiScore),
-                flowTitle: title
+                flowTitle: title,
+                botIdentity: bot.selected.shortName,
+                botKey: bot.selected.authorization
             };
+            console.log(newCase);
+            saveCase(newCase, test.cases);
         } catch (error) {
             newCase.error = 'Arquivo JSON incompatível!';
+        } finally {
+
         }
-        saveCase(newCase, test.cases)
     };
 
     toggleConfigurations = () => {
@@ -185,7 +191,7 @@ class Testing extends Component {
 
     render() {
         let { bot, deleteCase, test } = this.props;
-        let { showConfigurations } = this.state;
+        let { showConfigurations, selected } = this.state;
         return (
             <div style={grid}>
                 {
@@ -213,9 +219,9 @@ class Testing extends Component {
                                         dragClass="dragging"
                                         ghostClass="drop"
                                         onUpdate={this.swapBlocks}
-                                        dataSource={test.selectedCase.blocks}
+                                        dataSource={test.selectedCase.testCases}
                                         row={(block, index) => <Block
-                                            selected={index === test.selectedCase.selected}
+                                            selected={index === selected}
                                             block={block}
                                             onClick={() => this.selectBlock(index)}
                                             key={block.id}
@@ -229,9 +235,9 @@ class Testing extends Component {
                             </FlowDisplay>
                             <Properties
                                 style={properties}
-                                {...test.selectedCase.blocks[test.selectedCase.selected]}
+                                {...test.selectedCase.testCases[selected]}
                                 setBlock={this.setBlock}
-                                selected={test.selectedCase.selected}
+                                selected={selected}
                                 intents={bot.selected.intents}
                                 entities={bot.selected.entities}
                             />

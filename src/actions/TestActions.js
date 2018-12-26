@@ -46,7 +46,7 @@ export const selectCase = useCaseId => async dispatch => {
     }
 }
 
-export const newCase = (cases) => async dispatch => {
+export const newCase = (cases, bot) => async dispatch => {
     dispatch(fetchingData());
     try {
         let botKey = localStorage.getItem('botKey');
@@ -57,11 +57,11 @@ export const newCase = (cases) => async dispatch => {
             flowTitle: "Novo caso de uso",
             setUp: '[]',
             userVariables: {},
-            blocks: [],
-            selected: '',
-            showModal: true,
+            testCases: [],
             aiScore: 6,
             error: '',
+            botIdentity: bot.selected.shortName,
+            botKey: bot.selected.authorization,
         }
         await setCases(botKey, cases);
         await setUseCase(botKey, useCase);
