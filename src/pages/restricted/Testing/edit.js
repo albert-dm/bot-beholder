@@ -172,9 +172,7 @@ class Testing extends Component {
                 userVariables: json.userVariables,
                 testCases: JSON.parse(json.testCases),
                 aiScore: JSON.parse(json.aiScore),
-                flowTitle: title,
-                botIdentity: bot.selected.shortName,
-                botKey: bot.selected.authorization
+                flowTitle: title
             };
             console.log(newCase);
             saveCase(newCase, test.cases);
