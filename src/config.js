@@ -12,8 +12,11 @@ const config = process.env.NODE_ENV === 'production'
   ? prod
   : dev;
 
+
+
 export default {
   // Add common config values here
-  tracingUrl: "https://bot-beholder-serve.herokuapp.com/",
+  //tracingUrl: "https://bot-beholder-serve.herokuapp.com/",
+  tracingUrl: "https://bot-beholder.azurewebsites.net/",
   ...config
 };

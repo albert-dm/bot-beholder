@@ -34,6 +34,11 @@ export function setCases(botKey, cases) {
 }
 
 export function setUseCase(botKey, useCase) {
+    //useCase.testCases = JSON.stringify(useCase.testCases);
+    let parsedCase = {
+        ...useCase,
+        testCases: JSON.stringify(useCase.testCases)
+    }
     return fetch('https://msging.net/commands', {
         method: 'post',
         headers: {
@@ -43,9 +48,9 @@ export function setUseCase(botKey, useCase) {
         body: JSON.stringify({
             id: new Date().getTime(),
             method: "set",
-            uri: "/buckets/" + useCase.id,
+            uri: "/buckets/" + parsedCase.id,
             type: "application/json",
-            resource: useCase
+            resource: parsedCase
         }),
     })
         .then(response => response.json());

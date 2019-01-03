@@ -32,6 +32,8 @@ export const selectCase = useCaseId => async dispatch => {
         let botKey = localStorage.getItem('botKey');
         let data = await loadUseCase(botKey, useCaseId);
         let useCase = data.resource;
+        useCase.testCases = JSON.parse(useCase.testCases);
+        console.log(useCase);
         dispatch({
             type: 'SELECT_CASE',
             id: useCaseId,
@@ -88,6 +90,7 @@ export const saveCase = (useCase, cases) => async dispatch => {
             cases[botId] = useCase.flowTitle;
             await setCases(botKey, cases);
         }
+        console.log()
         await setUseCase(botKey, useCase);
     }
     catch (e) {

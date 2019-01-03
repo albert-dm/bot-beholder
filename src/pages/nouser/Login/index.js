@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loginAction } from '../../../actions/UserActions';
 import { popAlert } from '../../../actions/CommonActions';
-import { debounceCall } from '../../../helpers/commonHelper';
+import { debounce } from '../../../helpers/commonHelper';
 import Icon from '../../../static/img/logo.svg';
 import './Login.scss';
 
@@ -40,7 +40,7 @@ class LoginPage extends Component {
     componentWillReceiveProps = newProps => {
         let { common, popAlert } = newProps;
         if (common.alerts.length > 0) {
-            debounceCall(popAlert(), 10000);
+            debounce(popAlert(), 10000);
         }
     }
 
