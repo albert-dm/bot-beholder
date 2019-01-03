@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { toggleTestQueue, runTests, setQueue } from '../../../actions/TestActions';
-import Modal from '../../../components/Modal'
+import Modal from '../../../components/Modal';
+import config from '../../../config';
 
 import './testList.scss'
+
+var hubConnection;
+const server = config.pretUrl;
 
 const mapStateToProps = state => ({
     ...state,
@@ -46,6 +51,36 @@ class Testing extends Component {
         super(props);
         this.state = {
             selectedLog: null
+        }
+
+        if (props.bot.selected) {
+            hubConnection = new HubConnectionBuilder()
+                .withUrl(server)
+                .configureLogging(LogLevel.Information)
+                .build();
+
+            hubConnection
+                .start()
+                .then(() => console.log('Connection started!'))
+                .catch(err => console.log('Error while establishing connection :('));
+        }
+    }
+
+    componentWillReceiveProps = (newProps) => {
+        if (newProps.bot.selected) {
+            let currentShortName = this.props.bot.selected ? this.props.bot.selected.shortName : "";
+            if (newProps.bot.selected.shortName !== currentShortName) {
+                if (hubConnection) hubConnection.close();
+                hubConnection = new HubConnectionBuilder()
+                    .withUrl(server)
+                    .configureLogging(LogLevel.Information)
+                    .build();
+
+                hubConnection
+                    .start()
+                    .then(() => console.log('Connection started!'))
+                    .catch(err => console.log('Error while establishing connection :('));
+            }
         }
     }
 
