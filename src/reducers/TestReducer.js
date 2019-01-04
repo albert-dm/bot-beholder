@@ -19,6 +19,8 @@ export default (state = { queue: [], testing: false, log: {} }, action) => {
       cases[action.slug] = action.data;
       return {
         ...state,
+        selectedId: action.data.id,
+        selectedCase: action.data.case,
         cases
       }
     case 'DELETE_CASE':
@@ -48,8 +50,10 @@ export default (state = { queue: [], testing: false, log: {} }, action) => {
     case 'REMOVE_FROM_QUEUE':
       let idx = state.queue.indexOf(action.testCaseId);
       state.queue.splice(idx, 1);
+      let endOfQueue = state.queue.length === 0;
       return {
-        ...state
+        ...state,
+        testing: !endOfQueue
       }
     case 'SET_QUEUE':
       return {

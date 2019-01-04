@@ -93,8 +93,9 @@ class FlowDisplay extends Component {
                             <button title="Excluir" onClick={this.props.delete}>
                                 <i className="fas fa-trash-alt" />
                             </button>
-                            <div className="label">Excluir</div>
                         </Link>
+                        <div className="label">Excluir</div>
+
                     </li>
                 </ul>
                 <h2>

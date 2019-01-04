@@ -1,5 +1,5 @@
 import { fetchingData, fetchingDataFinished, alert } from './CommonActions';
-import { loadCases, loadUseCase, setCases, setUseCase, deleteUseCase, runTest } from '../services/TestService';
+import { loadCases, loadUseCase, setCases, setUseCase, deleteUseCase } from '../services/TestService';
 
 export const loadCaseList = () => async dispatch => {
     dispatch(fetchingData());
@@ -85,13 +85,17 @@ export const saveCase = (useCase, cases) => async dispatch => {
     dispatch(fetchingData());
     try {
         let botKey = localStorage.getItem('botKey');
-        let botId = useCase.id;
-        if (cases[botId] !== useCase.flowTitle) {
-            cases[botId] = useCase.flowTitle;
+        let useCaseId = useCase.id;
+        if (cases[useCaseId] !== useCase.flowTitle) {
+            cases[useCaseId] = useCase.flowTitle;
             await setCases(botKey, cases);
         }
-        console.log()
         await setUseCase(botKey, useCase);
+        dispatch({
+            type: 'SELECT_CASE',
+            id: useCaseId,
+            case: useCase
+        });
     }
     catch (e) {
         alert('Falha ao salvar caso de uso', 'error');
@@ -147,29 +151,25 @@ export const setQueue = (queue) => async dispatch => {
     })
 }
 
-export const runTests = (botKey, queue) => async dispatch => {
-    let log;
+export const runTests = () => async dispatch => {
     dispatch({
         type: 'START_TESTING'
     });
-    for (let i = 0; i < queue.length; i++) {
-        log = await runTest(botKey, queue[i]);
-        let regex = /FAILED/;
-        let testFailed = regex.test(log);
-        dispatch({
-            type: 'SET_LOG',
-            testCaseId: queue[i],
-            log: {
-                value: log,
-                status: testFailed ? 'fail' : 'success'
-            }
-        });
-        dispatch({
-            type: 'REMOVE_FROM_QUEUE',
-            testCaseId: queue[i]
-        })
-    }
+}
+
+export const finishTest = (testId, log) => dispatch => {
+    let regex = /FAILED/;
+    let testFailed = regex.test(log);
     dispatch({
-        type: 'STOP_TESTING'
+        type: 'SET_LOG',
+        testCaseId: testId,
+        log: {
+            value: log,
+            status: testFailed ? 'fail' : 'success'
+        }
     });
+    dispatch({
+        type: 'REMOVE_FROM_QUEUE',
+        testCaseId: testId
+    })
 }

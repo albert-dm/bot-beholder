@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     saveCase: (useCase, cases) => dispatch(saveCase(useCase, cases)),
-    deleteCase: (useCaseId, cases) => dispatch(deleteCase(useCaseId, cases)),
+    deleteCase: (useCaseId, cases) => dispatch(deleteCase(useCaseId, cases))
 });
 
 const guid = () => {
@@ -47,6 +47,17 @@ class Testing extends Component {
         this.state = {
             showConfigurations: false,
             selected: ''
+        }
+    }
+
+    componentWillReceiveProps = (newProps) => {
+        //console.log(newProps);
+        if (newProps.test.selectedId !== this.props.test.selectedId) {
+            console.log('troca');
+            this.setState({
+                showConfigurations: false,
+                selected: ''
+            });
         }
     }
 
@@ -162,19 +173,20 @@ class Testing extends Component {
     };
 
     uploadJson = (json, title) => {
-        let { test, saveCase, bot } = this.props;
+        let { test, saveCase } = this.props;
         let newCase = test.selectedCase;
         //console.log(json);
         try {
             newCase = {
                 ...newCase,
+                id: newCase.id || new Date().getTime(),
                 setUp: json.setUp,
                 userVariables: json.userVariables,
                 testCases: JSON.parse(json.testCases),
                 aiScore: JSON.parse(json.aiScore),
                 flowTitle: title
             };
-            console.log(newCase);
+            //console.log(newCase);
             saveCase(newCase, test.cases);
         } catch (error) {
             newCase.error = 'Arquivo JSON incompatível!';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import { toggleTestQueue, runTests, setQueue } from '../../../actions/TestActions';
+import { toggleTestQueue, runTests, setQueue, finishTest } from '../../../actions/TestActions';
 import Modal from '../../../components/Modal';
 import config from '../../../config';
 
@@ -16,7 +16,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     toggleTestQueue: (testCaseId, queue) => dispatch(toggleTestQueue(testCaseId, queue)),
-    runTests: (botKey, queue) => dispatch(runTests(botKey, queue)),
+    runTests: () => dispatch(runTests()),
+    finishTest: (testId, log) => dispatch(finishTest(testId, log)),
     setQueue: (queue) => dispatch(setQueue(queue))
 });
 
@@ -53,36 +54,22 @@ class Testing extends Component {
             selectedLog: null
         }
 
-        if (props.bot.selected) {
-            hubConnection = new HubConnectionBuilder()
-                .withUrl(server)
-                .configureLogging(LogLevel.Information)
-                .build();
+        hubConnection = new HubConnectionBuilder()
+            .withUrl(server)
+            .configureLogging(LogLevel.Information)
+            .build();
 
-            hubConnection
-                .start()
-                .then(() => console.log('Connection started!'))
-                .catch(err => console.log('Error while establishing connection :('));
-        }
+        hubConnection
+            .start()
+            .then(() => console.log('Connection started!'))
+            .catch(err => console.log('Error while establishing connection :('));
+
+        hubConnection.on('ReceiveMessage', (msg) => {
+            props.finishTest(msg.testId, msg.testResult);
+            props.finishTest();
+        });
     }
 
-    componentWillReceiveProps = (newProps) => {
-        if (newProps.bot.selected) {
-            let currentShortName = this.props.bot.selected ? this.props.bot.selected.shortName : "";
-            if (newProps.bot.selected.shortName !== currentShortName) {
-                if (hubConnection) hubConnection.close();
-                hubConnection = new HubConnectionBuilder()
-                    .withUrl(server)
-                    .configureLogging(LogLevel.Information)
-                    .build();
-
-                hubConnection
-                    .start()
-                    .then(() => console.log('Connection started!'))
-                    .catch(err => console.log('Error while establishing connection :('));
-            }
-        }
-    }
 
     isSelected = (testCaseId) => {
         const { test } = this.props;
@@ -96,7 +83,13 @@ class Testing extends Component {
 
     runTests = () => {
         const { bot, test, runTests } = this.props;
-        runTests(bot.selected.authorization, [...test.queue]);
+        runTests();
+        let payload = {
+            "botAuthorization": `Key ${bot.selected.authorization}`,
+            "testsIds": test.queue
+        }
+        console.log("Enviando payload: ", payload);
+        hubConnection.send('SendTestResultToCaller', payload);
     }
 
     selectAll = () => {
@@ -110,7 +103,7 @@ class Testing extends Component {
     }
 
     render() {
-        const { bot, test, setQueue } = this.props;
+        const { bot, test } = this.props;
         let { selectedLog } = this.state;
         return (
             <div className="tests bp-ff-nunito" style={{ padding: '5px' }}>
@@ -130,12 +123,14 @@ class Testing extends Component {
                             <button
                                 type="button"
                                 onClick={this.selectAll}
+                                disabled={test.testing}
                             >
                                 Todos
                             </button>
                             <button
                                 type="button"
                                 onClick={this.clearQueue}
+                                disabled={test.testing}
                             >
                                 Nenhum
                             </button>
