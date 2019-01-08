@@ -9,15 +9,15 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    overflow: auto;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 10vh;
   }
   .content {
     display: inline-block;
     text-align: left;
     z-index: 1100;
     min-width: 40%;
+    max-width: 90%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 200px;
@@ -31,6 +31,10 @@
     }
     h2 {
       text-align: center;
+    }
+    .text {
+      overflow: auto;
+      max-height: 65vh;
     }
   }
 }

@@ -18,7 +18,9 @@ class Modal extends Component {
                             onClick={this.props.close}
                         />
                         <h2>{this.props.title}</h2>
-                        {this.props.children}
+                        <div className="text">
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
             )
