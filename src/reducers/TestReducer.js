@@ -48,11 +48,13 @@ export default (state = { queue: [], testing: false, log: {} }, action) => {
         queue: [...state.queue, action.testCaseId]
       }
     case 'REMOVE_FROM_QUEUE':
-      let idx = state.queue.indexOf(action.testCaseId);
-      state.queue.splice(idx, 1);
-      let endOfQueue = state.queue.length === 0;
+      let queue = [...state.queue];
+      let idx = queue.indexOf(action.testCaseId);
+      queue.splice(idx, 1);
+      let endOfQueue = queue.length === 0;
       return {
         ...state,
+        queue,
         testing: !endOfQueue
       }
     case 'SET_QUEUE':

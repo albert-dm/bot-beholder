@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { toggleTestQueue, runTests, setQueue, finishTest } from '../../../actions/TestActions';
-import Modal from '../../../components/Modal';
 import config from '../../../config';
 
 import './testList.scss'
+
+import { showModal, fetchingData, fetchingDataFinished } from '../../../actions/CommonActions';
 
 var hubConnection;
 const server = config.pretUrl;
@@ -18,7 +19,10 @@ const mapDispatchToProps = dispatch => ({
     toggleTestQueue: (testCaseId, queue) => dispatch(toggleTestQueue(testCaseId, queue)),
     runTests: () => dispatch(runTests()),
     finishTest: (testId, log) => dispatch(finishTest(testId, log)),
-    setQueue: (queue) => dispatch(setQueue(queue))
+    setQueue: (queue) => dispatch(setQueue(queue)),
+    showModal: (title, content) => dispatch(showModal(title, content)),
+    fetchingData: () => dispatch(fetchingData()),
+    fetchingDataFinished: () => dispatch(fetchingDataFinished()),
 });
 
 const getIconClass = (selected, log) => {
@@ -48,25 +52,21 @@ const TestCase = (props) => {
 }
 
 class Testing extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedLog: null
-        }
-
+    componentDidMount() {
+        let { fetchingData, fetchingDataFinished, finishTest } = this.props;
         hubConnection = new HubConnectionBuilder()
             .withUrl(server)
             .configureLogging(LogLevel.Information)
             .build();
 
         hubConnection
-            .start()
-            .then(() => console.log('Connection started!'))
+            .start(() => fetchingData())
+            .then(() => fetchingDataFinished())
             .catch(err => console.log('Error while establishing connection :('));
 
         hubConnection.on('ReceiveMessage', (msg) => {
-            props.finishTest(msg.testId, msg.testResult);
-            props.finishTest();
+            finishTest(msg.testId, msg.testResult);
+            finishTest();
         });
     }
 
@@ -103,8 +103,7 @@ class Testing extends Component {
     }
 
     render() {
-        const { bot, test } = this.props;
-        let { selectedLog } = this.state;
+        const { bot, test, showModal } = this.props;
         return (
             <div className="tests bp-ff-nunito" style={{ padding: '5px' }}>
                 <header>
@@ -148,21 +147,13 @@ class Testing extends Component {
                                         selected={this.isSelected(testCaseId)}
                                         log={test.log ? test.log[testCaseId] : null}
                                         onClick={() => this.toggleSelect(testCaseId)} caseName={test.cases[testCaseId]}
-                                        showLog={(log) => this.setState({ selectedLog: log })}
+                                        showLog={(log) => showModal(log.title, <div className="breakLines">{log.value}</div>)}
                                     />
                                 )
                             }
                         </div>
 
                         : "É necessário selecionar um bot que teha casos de teste cadastrados"
-                }
-                {
-                    selectedLog &&
-                    <Modal title={selectedLog.title} close={() => this.setState({ selectedLog: null })} show={Boolean(selectedLog)}>
-                        <div className="breakLines">
-                            {selectedLog.value}
-                        </div>
-                    </Modal>
                 }
 
             </div>
