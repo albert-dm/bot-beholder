@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactJson from 'react-json-view';
 
 import State from './State';
+import Contact from '../Contact';
 import './Trace.scss';
 
 class Trace extends Component {
@@ -18,9 +19,7 @@ class Trace extends Component {
                     <p>
                         <i className="fas fa-stopwatch" /> {elapsedMilliseconds}ms
                     </p>
-                    <p>
-                        <i className="fas fa-user" /> {user}
-                    </p>
+                    <Contact id={user} />
                 </header>
                 <div className="states">
                     {states.map(state => (

@@ -1,0 +1,14 @@
+@import "../../globals";
+
+.Contact {
+  display: inline-block;
+  cursor: help;
+  margin-bottom: 15px;
+  i {
+    display: inline;
+    padding-right: 5px;
+  }
+  p {
+    display: inline;
+  }
+}

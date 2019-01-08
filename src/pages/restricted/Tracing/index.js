@@ -6,8 +6,9 @@ import config from '../../../config';
 
 import './Tracing.scss';
 
+import { showModal } from '../../../actions/CommonActions';
+
 import Trace from '../../../components/Trace';
-import Modal from '../../../components/Modal'
 
 const server = config.tracingUrl;
 
@@ -18,6 +19,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    showModal: (title, content) => dispatch(showModal(title, content)),
 });
 
 let id = 0;
@@ -27,8 +29,6 @@ class Tracing extends Component {
         super(props);
         this.state = {
             traces: [],
-            showDetails: false,
-            dataDetails: {}
         };
         if (props.bot.selected) {
             socket = socketIOClient(`${server}?botid=${props.bot.selected.shortName}`);
@@ -60,8 +60,8 @@ class Tracing extends Component {
     }
 
     render() {
-        const { traces, showDetails, dataDetails } = this.state;
-        const { bot } = this.props;
+        const { traces } = this.state;
+        const { bot, showModal } = this.props;
         return (
             <div className="bp-ff-nunito Tracing" style={{ padding: '5px' }}>
                 <h1 className="bp-fs-2">Tracing</h1>
@@ -77,7 +77,7 @@ class Tracing extends Component {
                                         key={trace.timestamp}
                                         data={trace}
                                         showDetails={(data) => {
-                                            this.setState({ dataDetails: data, showDetails: true });
+                                            showModal('Detalhes', <ReactJson src={data} displayDataTypes={false} />);
                                         }}
                                     />
                                 )
@@ -86,9 +86,6 @@ class Tracing extends Component {
                         :
                         <p>Selecione um bot</p>
                 }
-                <Modal title="Detalhes" show={showDetails} close={() => this.setState({ showDetails: false })}>
-                    <ReactJson src={dataDetails} displayDataTypes={false} />
-                </Modal>
             </div>
         );
     }

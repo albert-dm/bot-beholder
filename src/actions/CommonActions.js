@@ -25,3 +25,18 @@ export const popAlert = () => dispatch => {
     })
 
 }
+
+export const showModal = (title, content) => dispatch => {
+    dispatch({
+        type: "SHOW_MODAL",
+        title,
+        content
+    })
+
+}
+export const hideModal = () => dispatch => {
+    dispatch({
+        type: "HIDE_MODAL"
+    })
+
+}

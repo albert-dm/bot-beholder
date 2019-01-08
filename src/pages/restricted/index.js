@@ -11,9 +11,11 @@ import './Restricted.scss'
 
 import { logoutAction } from '../../actions/UserActions'
 import { loadList } from '../../actions/BotActions'
+import { hideModal } from '../../actions/CommonActions';
 
 import BotSideBar from "../../components/BotSideBar/"
 import LoadingOverlay from "../../components/LoadingOverlay/"
+import Modal from "../../components/Modal/"
 import WANotifications from './WANotifications';
 
 const mapStateToProps = state => ({
@@ -22,7 +24,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     logoutAction: () => dispatch(logoutAction()),
-    loadBots: () => dispatch(loadList())
+    loadBots: () => dispatch(loadList()),
+    hideModal: () => dispatch(hideModal()),
 });
 
 const grid = {
@@ -83,7 +86,7 @@ class Restricted extends Component {
         loadBots();
     }
     render() {
-        let { logoutAction, user, common } = this.props;
+        let { logoutAction, user, common, hideModal } = this.props;
         return (
             <React.Fragment>
                 <div style={grid}>
@@ -114,6 +117,9 @@ class Restricted extends Component {
                     common.isLoading &&
                     <LoadingOverlay />
                 }
+                <Modal title={common.modalTitle} close={hideModal} show={common.showModal}>
+                    {common.modalContent}
+                </Modal>
             </React.Fragment>
 
         );

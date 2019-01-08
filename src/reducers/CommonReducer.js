@@ -7,7 +7,7 @@ common: {
 
 */
 
-export default (state = { isLoading: false, alerts: [] }, action) => {
+export default (state = { isLoading: false, alerts: [], showModal: false }, action) => {
   switch (action.type) {
     case 'LOADING_ACTION':
       return {
@@ -25,6 +25,22 @@ export default (state = { isLoading: false, alerts: [] }, action) => {
         ...state,
         alerts: [...state.alerts],
         alert
+      }
+    }
+    case 'SHOW_MODAL': {
+      return {
+        ...state,
+        modalTitle: action.title,
+        modalContent: action.content,
+        showModal: true
+      }
+    }
+    case 'HIDE_MODAL': {
+      return {
+        ...state,
+        modalTitle: '',
+        modalContent: '',
+        showModal: false
       }
     }
     default:
