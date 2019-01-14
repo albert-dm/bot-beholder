@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import './ToolBar.scss';
 import AnswerModels from '../../models/AnswerModels';
 
-import textImg from './text.svg';
-import imageImg from './image.svg';
-import carouselImg from './carousel.svg';
-import menuImg from './menu.svg';
-import quickReplyImg from './quickreply.svg';
-import trackImg from './track.svg';
+import textImg from '../../static/img/Toolbar/text.svg';
+import imageImg from '../../static/img/Toolbar/image.svg';
+import carouselImg from '../../static/img/Toolbar/carousel.svg';
+import menuImg from '../../static/img/Toolbar/menu.svg';
+import quickReplyImg from '../../static/img/Toolbar/quickreply.svg';
+import trackImg from '../../static/img/Toolbar/track.svg';
 import iaImg from './ia.png';
 import jsonImg from './json.png';
 
