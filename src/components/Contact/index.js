@@ -18,7 +18,9 @@ const mapDispatchToProps = dispatch => ({
 class Contact extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            contact: {}
+        };
     }
     async componentDidMount() {
         let { id } = this.props;
@@ -29,7 +31,7 @@ class Contact extends Component {
     }
     render() {
         let { id, showModal } = this.props;
-        let contact = this.state;
+        let { contact } = this.state;
         return (
             <div className="Contact" onClick={() => showModal(contact.name ? contact.name : 'Usuário', <ReactJson src={contact} displayDataTypes={false} />)}>
                 <i className="fas fa-user" />

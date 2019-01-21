@@ -22,6 +22,7 @@ class TextAnswer extends Component {
                                         onChange={this.handleChange}
                                         name="text"
                                         value={this.props.answer.text}
+                                        onClick={e => e.stopPropagation()}
                                         required
                                     />
                                 </React.Fragment>
