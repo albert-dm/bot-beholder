@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SendNotification } from '../../services/ContactService';
+import { SendNotification, ContextVariables, VariableValue } from '../../services/ContactService';
 import { connect } from 'react-redux';
 import './Contact.scss';
 
@@ -18,20 +18,74 @@ const mapDispatchToProps = dispatch => ({
 class Contact extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            contact: {}
+        };
+
+        this.createModal = this.createModal.bind(this);
     }
     async componentDidMount() {
         let { id } = this.props;
-        let res = await SendNotification(id);
-        let contact = res.resource;
-        console.log(contact);
-        this.setState({ contact });
+
+        let contactCommand = await SendNotification(id);
+
+        this.setState({
+            contact: contactCommand.resource
+        });
     }
+
+    async fetchVariableValue(key) {
+        let { id } = this.props;
+
+        let variableValueCommand = await VariableValue(id, key);
+        this.setState({ variable: { key, value: variableValueCommand.resource } })
+        this.createModal();
+    }
+
+    async createModal() {
+        let { id } = this.props;
+        let { contact, variable } = this.state;
+        
+        let contextCommand = await ContextVariables(id);
+        const context = contextCommand.resource;
+
+        let jsonVariable = null;
+        if (variable) {
+            try {
+                jsonVariable = JSON.parse(variable.value);
+                if (typeof jsonVariable !== 'object') {
+                    throw new Error("Not a json object.");
+                }
+            } catch {
+                jsonVariable = false
+            }
+        }
+
+        this.props.showModal(contact.name ? contact.name : 'Usuário',
+            <>
+                <ReactJson src={contact} displayDataTypes={false} />
+                <ul>
+                    {
+                        context.items.map(i => <li className="clicable" key={i} onClick={() => this.fetchVariableValue(i)}>{i}</li>)
+                    }
+                </ul>
+                {
+                    variable && (
+                        <p><strong>{variable.key}: </strong>{
+                            (jsonVariable && <ReactJson src={jsonVariable} displayDataTypes={false} />) || variable.value
+                        }</p>
+                    )
+                }
+            </>
+        )
+    }
+
     render() {
-        let { id, showModal } = this.props;
-        let contact = this.state;
+        let { contact } = this.state;
+        let { id } = this.props;
+
         return (
-            <div className="Contact" onClick={() => showModal(contact.name ? contact.name : 'Usuário', <ReactJson src={contact} displayDataTypes={false} />)}>
+            <div className="Contact" onClick={this.createModal}>
                 <i className="fas fa-user" />
                 <p>{contact.name ? contact.name : id}</p>
             </div>
