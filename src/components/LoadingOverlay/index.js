@@ -1,6 +1,6 @@
 import React from 'react'
 import './LoadingOverlay.scss'
-import Icon from '../../static/img/logo.svg';
+import Icon from './logo.svg';
 
 const LoadingOverlay = () => {
     return (

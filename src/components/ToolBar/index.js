@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import './ToolBar.scss';
 import AnswerModels from '../../models/AnswerModels';
 
-import textImg from '../../static/img/Toolbar/text.svg';
-import imageImg from '../../static/img/Toolbar/image.svg';
-import carouselImg from '../../static/img/Toolbar/carousel.svg';
-import menuImg from '../../static/img/Toolbar/menu.svg';
-import quickReplyImg from '../../static/img/Toolbar/quickreply.svg';
-import trackImg from '../../static/img/Toolbar/track.svg';
-import iaImg from './ia.png';
-import jsonImg from './json.png';
+import textImg from './img/text.svg';
+import imageImg from './img/image.svg';
+import carouselImg from './img/carousel.svg';
+import menuImg from './img/menu.svg';
+import quickReplyImg from './img/quickreply.svg';
+import trackImg from './img/track.svg';
+import iaImg from './img/ia.png';
+import jsonImg from './img/json.png';
 
 class ToolBar extends Component {
     render() {
