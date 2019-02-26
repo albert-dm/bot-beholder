@@ -14,8 +14,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveCase: (useCase, cases) => dispatch(saveCase(useCase, cases)),
-    deleteCase: (useCaseId, cases) => dispatch(deleteCase(useCaseId, cases))
+    saveCase: (useCase, cases, bot) => dispatch(saveCase(useCase, cases, bot)),
+    deleteCase: (useCaseId, cases, bot) => dispatch(deleteCase(useCaseId, cases, bot))
 });
 
 const guid = () => {
@@ -62,21 +62,21 @@ class Testing extends Component {
     }
 
     setTitle = newTitle => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
         newCase.flowTitle = newTitle;
-        saveCase(newCase, test.cases)
+        saveCase(newCase, test.cases, bot.selected)
     };
 
     setConfig = (configKey, configValue) => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
         newCase[configKey] = configValue;
-        saveCase(newCase, test.cases)
+        saveCase(newCase, test.cases, bot.selected)
     };
 
     clearFlow = () => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
         if (window.confirm('Tem certeza que deseja limpar o fluxo?')) {
             newCase = {
@@ -89,26 +89,26 @@ class Testing extends Component {
                 botIdentity: this.props.bot.selected.shortName,
                 botKey: this.props.bot.selected.authorization
             };
-            saveCase(newCase, test.cases)
+            saveCase(newCase, test.cases, bot.selected)
         };
     }
 
     addBlock = block => {
         block.id = guid();
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
         newCase.testCases = [...newCase.testCases, block];
-        saveCase(newCase, test.cases)
+        saveCase(newCase, test.cases, bot.selected);
     };
 
     deleteBlock = index => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
         if (index === this.state.selected) {
             newCase.selected = '';
         }
         newCase.testCases.splice(index, 1);
-        saveCase(newCase, test.cases)
+        saveCase(newCase, test.cases, bot.selected);
     };
 
     selectBlock = index => {
@@ -116,19 +116,19 @@ class Testing extends Component {
     };
 
     setBlock = block => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let { selected } = this.state;
         let newCase = test.selectedCase;
         newCase.testCases[selected] = block;
-        saveCase(newCase, test.cases)
+        saveCase(newCase, test.cases, bot.selected)
     };
 
     swapBlocks = (e) => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
         let { newIndex, oldIndex } = e;
         newCase.testCases[newIndex] = newCase.testCases.splice(oldIndex, 1, newCase.testCases[newIndex])[0];
-        saveCase(newCase, test.cases);
+        saveCase(newCase, test.cases, bot.selected);
     }
 
     downloadJson = () => {
@@ -173,7 +173,7 @@ class Testing extends Component {
     };
 
     uploadJson = (json, title) => {
-        let { test, saveCase } = this.props;
+        let { test, saveCase, bot } = this.props;
         let newCase = test.selectedCase;
         //console.log(json);
         try {
@@ -187,7 +187,7 @@ class Testing extends Component {
                 flowTitle: title
             };
             //console.log(newCase);
-            saveCase(newCase, test.cases);
+            saveCase(newCase, test.cases, bot.selected);
         } catch (error) {
             newCase.error = 'Arquivo JSON incompatível!';
         } finally {
@@ -216,7 +216,7 @@ class Testing extends Component {
                                 uploadJson={this.uploadJson}
                                 clearFlow={this.clearFlow}
                                 openConfig={this.toggleConfigurations}
-                                delete={() => window.confirm('Tem certeza que deseja excluir esse caso de uso?') && deleteCase(test.selectedId, test.cases)}
+                                delete={() => window.confirm('Tem certeza que deseja excluir esse caso de uso?') && deleteCase(test.selectedId, test.cases, bot.selected)}
                             >
                                 <ReactCSSTransitionGroup
                                     transitionName="blocks"

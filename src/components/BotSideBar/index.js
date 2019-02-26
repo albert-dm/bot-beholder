@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     selectBot: (bot) => dispatch(selectBot(bot)),
-    selectCase: (slug) => dispatch(selectCase(slug)),
+    selectCase: (slug, bot) => dispatch(selectCase(slug, bot)),
     newCase: (cases, bot) => dispatch(newCase(cases, bot))
 });
 
@@ -84,7 +84,7 @@ class BotSideBar extends Component {
                                     showCases &&
                                     <div className="UseCases">
                                         {
-                                            Object.keys(test.cases).map((useCaseId) => <Link to="/testing/edit" key={useCaseId} onClick={() => selectCase(useCaseId)}>{test.cases[useCaseId]}</Link>)
+                                            Object.keys(test.cases).map((useCaseId) => <Link to="/testing/edit" key={useCaseId} onClick={() => selectCase(useCaseId, bot.selected)}>{test.cases[useCaseId]}</Link>)
                                         }
                                         <div className="navItem" onClick={() => newCase(test.cases, bot)} ><i className="fas fa-plus-circle"></i> Novo</div>
                                     </div>

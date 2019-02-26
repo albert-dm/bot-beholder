@@ -1,11 +1,10 @@
 import { fetchingData, fetchingDataFinished, alert } from './CommonActions';
 import { loadCases, loadUseCase, setCases, setUseCase, deleteUseCase } from '../services/TestService';
 
-export const loadCaseList = () => async dispatch => {
+export const loadCaseList = (bot) => async dispatch => {
     dispatch(fetchingData());
     try {
-        let botKey = localStorage.getItem('botKey');
-        let data = await loadCases(botKey);
+        let data = await loadCases(bot.authorization);
         if (data.status === 'success') {
             dispatch({
                 type: 'LOAD_CASES',
@@ -26,11 +25,10 @@ export const loadCaseList = () => async dispatch => {
     }
 };
 
-export const selectCase = useCaseId => async dispatch => {
+export const selectCase = (useCaseId, bot) => async dispatch => {
     dispatch(fetchingData());
     try {
-        let botKey = localStorage.getItem('botKey');
-        let data = await loadUseCase(botKey, useCaseId);
+        let data = await loadUseCase(bot.authorization, useCaseId);
         let useCase = data.resource;
         useCase.testCases = JSON.parse(useCase.testCases);
         console.log(useCase);
@@ -51,7 +49,6 @@ export const selectCase = useCaseId => async dispatch => {
 export const newCase = (cases, bot) => async dispatch => {
     dispatch(fetchingData());
     try {
-        let botKey = localStorage.getItem('botKey');
         let useCaseId = new Date().getTime();
         cases[useCaseId] = "Novo caso de uso";
         let useCase = {
@@ -62,11 +59,11 @@ export const newCase = (cases, bot) => async dispatch => {
             testCases: [],
             aiScore: 6,
             error: '',
-            botIdentity: bot.selected.shortName,
-            botKey: bot.selected.authorization,
+            botIdentity: bot.shortName,
+            botKey: bot.authorization,
         }
-        await setCases(botKey, cases);
-        await setUseCase(botKey, useCase);
+        await setCases(bot.authorization, cases);
+        await setUseCase(bot.authorization, useCase);
         dispatch({
             type: 'NEW_CASE',
             cases,
@@ -81,16 +78,15 @@ export const newCase = (cases, bot) => async dispatch => {
     }
 }
 
-export const saveCase = (useCase, cases) => async dispatch => {
+export const saveCase = (useCase, cases, bot) => async dispatch => {
     dispatch(fetchingData());
     try {
-        let botKey = localStorage.getItem('botKey');
         let useCaseId = useCase.id;
         if (cases[useCaseId] !== useCase.flowTitle) {
             cases[useCaseId] = useCase.flowTitle;
-            await setCases(botKey, cases);
+            await setCases(bot.authorization, cases);
         }
-        await setUseCase(botKey, useCase);
+        await setUseCase(bot.authorization, useCase);
         dispatch({
             type: 'SELECT_CASE',
             id: useCaseId,
@@ -105,14 +101,13 @@ export const saveCase = (useCase, cases) => async dispatch => {
     }
 }
 
-export const deleteCase = (useCaseId, cases) => async dispatch => {
+export const deleteCase = (useCaseId, cases, bot) => async dispatch => {
     dispatch(fetchingData());
     try {
-        let botKey = localStorage.getItem('botKey');
-        let data = await deleteUseCase(botKey, useCaseId);
+        let data = await deleteUseCase(bot.authorization, useCaseId);
         if (data.status === 'success') {
             delete cases[useCaseId];
-            await setCases(botKey, cases);
+            await setCases(bot.authorization, cases);
             /* dispatch({
                 type: 'RESET_ALL'
             }); */

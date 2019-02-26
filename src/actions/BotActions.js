@@ -26,7 +26,6 @@ export const selectBot = (bot) => async dispatch => {
     let botInfo = await loadBotInfo(token, bot.shortName);
     bot.key = botInfo.accessKey;
     bot.authorization = btoa(`${bot.shortName}:${atob(bot.key)}`);
-    localStorage.setItem('botKey', bot.authorization);
     try {
         let entities = await getEntities(bot.authorization);
         if (entities.status === "success") {
@@ -46,7 +45,7 @@ export const selectBot = (bot) => async dispatch => {
         } else {
             bot.users = [];
         }
-        dispatch(loadCaseList(bot.authorization));
+        dispatch(loadCaseList(bot));
         dispatch({
             type: 'SELECT_BOT',
             bot

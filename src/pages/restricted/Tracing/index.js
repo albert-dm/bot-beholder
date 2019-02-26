@@ -29,6 +29,7 @@ class Tracing extends Component {
         super(props);
         this.state = {
             traces: [],
+            filter: ""
         };
         if (props.bot.selected) {
             socket = socketIOClient(`${server}?botid=${props.bot.selected.shortName}`);
@@ -60,7 +61,7 @@ class Tracing extends Component {
     }
 
     render() {
-        const { traces } = this.state;
+        const { traces, filter } = this.state;
         const { bot, showModal } = this.props;
         return (
             <div className="bp-ff-nunito Tracing" style={{ padding: '5px' }}>
@@ -70,9 +71,10 @@ class Tracing extends Component {
                         ?
                         <React.Fragment>
                             <small> ({`${server}tracing/${bot.selected.shortName}`})</small>
+                            <input type="text" name="filter" placeholder="id do usuário" value={filter} onChange={e => { this.setState({ filter: e.target.value }) }} id="" />
                             {
                                 traces &&
-                                traces.map(trace =>
+                                traces.filter(trace => filter ? trace.user === filter : true).map(trace =>
                                     <Trace
                                         key={trace.timestamp}
                                         data={trace}
