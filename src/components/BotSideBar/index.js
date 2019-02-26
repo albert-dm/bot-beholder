@@ -86,7 +86,7 @@ class BotSideBar extends Component {
                                         {
                                             Object.keys(test.cases).map((useCaseId) => <Link to="/testing/edit" key={useCaseId} onClick={() => selectCase(useCaseId, bot.selected)}>{test.cases[useCaseId]}</Link>)
                                         }
-                                        <div className="navItem" onClick={() => newCase(test.cases, bot)} ><i className="fas fa-plus-circle"></i> Novo</div>
+                                        <div className="navItem" onClick={() => newCase(test.cases, bot.selected)} ><i className="fas fa-plus-circle"></i> Novo</div>
                                     </div>
                                 }
                             </React.Fragment>

@@ -1,13 +1,12 @@
 import guid from 'uuid/v1';
 
-export const SendNotification = (contactId) => {
-    let botKey = localStorage.getItem('botKey');
+export const SendNotification = (contactId, bot) => {
     return fetch('https://msging.net/commands', {
         method: 'post',
         mode: "cors",
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Key ${botKey}`
+            Authorization: `Key ${bot.authorization}`
         },
         body: JSON.stringify({
             id: guid(),
@@ -20,14 +19,13 @@ export const SendNotification = (contactId) => {
         });
 }
 
-export const ContextVariables = contactId => {
-    let botKey = localStorage.getItem('botKey');
+export const ContextVariables = (contactId, bot) => {
     return fetch('https://msging.net/commands', {
         method: 'post',
         mode: "cors",
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Key ${botKey}`
+            Authorization: `Key ${bot.authorization}`
         },
         body: JSON.stringify({
             id: guid(),
@@ -37,14 +35,13 @@ export const ContextVariables = contactId => {
     }).then(r => r.json());
 }
 
-export const VariableValue = (contactId, variableKey) => {
-    let botKey = localStorage.getItem('botKey');
+export const VariableValue = (contactId, variableKey, bot) => {
     return fetch('https://msging.net/commands', {
         method: 'post',
         mode: "cors",
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Key ${botKey}`
+            Authorization: `Key ${bot.authorization}`
         },
         body: JSON.stringify({
             id: guid(),

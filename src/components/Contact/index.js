@@ -25,9 +25,9 @@ class Contact extends Component {
         this.createModal = this.createModal.bind(this);
     }
     async componentDidMount() {
-        let { id } = this.props;
+        let { id, bot } = this.props;
 
-        let contactCommand = await SendNotification(id);
+        let contactCommand = await SendNotification(id, bot.selected);
 
         this.setState({
             contact: contactCommand.resource
@@ -35,18 +35,18 @@ class Contact extends Component {
     }
 
     async fetchVariableValue(key) {
-        let { id } = this.props;
+        let { id, bot } = this.props;
 
-        let variableValueCommand = await VariableValue(id, key);
+        let variableValueCommand = await VariableValue(id, key, bot.selected);
         this.setState({ variable: { key, value: variableValueCommand.resource } })
         this.createModal();
     }
 
     async createModal() {
-        let { id } = this.props;
+        let { id, bot } = this.props;
         let { contact, variable } = this.state;
 
-        let contextCommand = await ContextVariables(id);
+        let contextCommand = await ContextVariables(id, bot.selected);
         const context = contextCommand.resource;
 
         let jsonVariable = null;
