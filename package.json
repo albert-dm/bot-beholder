@@ -2,7 +2,7 @@
   "name": "react-boilerplate",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": ".",
   "dependencies": {
     "@aspnet/signalr": "^1.1.0",
     "blip-toolkit": "^3.0.5",
