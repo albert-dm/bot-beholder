@@ -46,7 +46,7 @@ class BotSideBar extends Component {
                                 <img alt="Bot Beholder" src={bot.selected.imageUri} width="40px" height="40px" />
                             }
                         </div>
-                        <h1 title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
+                        <h1 onClick={() => bot.selected || this.setState((prevState) => ({ showBots: !prevState.showBots }))} title={bot.selected ? bot.selected.name : "Selecione o Bot"}>{bot.selected ? bot.selected.name : "Selecione o Bot"}</h1>
                     </Link>
 
                     <i className="BotSelect fas fa-sync" onClick={() => this.setState((prevState) => ({ showBots: !prevState.showBots, filter: '' }))}></i>
