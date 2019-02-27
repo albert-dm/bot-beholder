@@ -81,10 +81,21 @@ const footer = {
 };
 
 class Restricted extends Component {
+    state = {};
+
+    getCurrentYear = () => new Date().getFullYear();
+
+    handleFooterHover = () => {
+        this.setState(prevState => ({
+            isFooterHovered: !prevState.isFooterHovered
+        }));
+    }
+
     componentDidMount = () => {
         let { loadBots } = this.props;
         loadBots();
     }
+
     render() {
         let { logoutAction, user, common, hideModal } = this.props;
         return (
@@ -110,7 +121,9 @@ class Restricted extends Component {
                         <Route exact path="/wanotifications" component={WANotifications} />
                     </div>
                     <div className="bp-bg-offwhite" style={footer}>
-                        <p style={{ textAlign: 'center' }}>Bot Beholder 2018</p>
+                        <p style={{ textAlign: 'center' }} onMouseEnter={this.handleFooterHover} onMouseLeave={this.handleFooterHover}>
+                            {this.state.isFooterHovered ? "Who beholds the beholder?" : `Bot Beholder ${this.getCurrentYear()}`}
+                        </p>
                     </div>
                 </div>
                 {
