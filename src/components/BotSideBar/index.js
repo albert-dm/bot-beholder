@@ -24,6 +24,14 @@ class BotSideBar extends Component {
             filter: ''
         }
     }
+
+    toggleShowCases = () => {
+        this.setState((prevState) => (
+            {
+                showCases: !prevState.showCases
+            }));
+    }
+
     render() {
         let { showCases, showBots, filter } = this.state;
         let { bot, test, selectBot, selectCase, newCase } = this.props;
@@ -72,13 +80,9 @@ class BotSideBar extends Component {
                             test.cases &&
                             <React.Fragment>
                                 <div className="navItem">
-                                    <Link to="/testing" >Testes</Link>
-                                    {
-                                        showCases ?
-                                            <i className="BotSelect fas fa-angle-up" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}></i>
-                                            :
-                                            <i className="BotSelect fas fa-angle-down" onClick={() => this.setState((prevState) => ({ showCases: !prevState.showCases }))}></i>
-                                    }
+                                    <Link to="/testing" onClick={this.toggleShowCases}>Testes
+                                        <i className={`BotSelect fas fa-angle-${showCases ? 'up' : 'down'}`}></i>
+                                    </Link>
                                 </div>
                                 {
                                     showCases &&
