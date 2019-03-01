@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './BotSideBar.scss'
 import { selectBot } from '../../actions/BotActions'
 import { selectCase, newCase } from '../../actions/TestActions'
+import Icon from '../../static/img/logo.svg';
 
 const mapStateToProps = state => ({
     ...state,
@@ -14,6 +15,25 @@ const mapDispatchToProps = dispatch => ({
     selectCase: (slug, bot) => dispatch(selectCase(slug, bot)),
     newCase: (cases, bot) => dispatch(newCase(cases, bot))
 });
+
+const nav = {
+    textAlign: 'center',
+    margin: '8px 0px'
+};
+
+const icon = {
+    display: 'flex',
+    justifyContent: 'center'
+};
+
+const title = {
+    margin: '-20px 0px 0px 0px',
+    textAlign: 'center'
+};
+
+const head = {
+    marginBottom: '10px'
+}
 
 class BotSideBar extends Component {
     constructor(props) {
@@ -34,9 +54,23 @@ class BotSideBar extends Component {
 
     render() {
         let { showCases, showBots, filter } = this.state;
-        let { bot, test, selectBot, selectCase, newCase } = this.props;
+        let { logoutAction, user, bot, test, selectBot, selectCase, newCase } = this.props;
         return (
             <div className="BotSideBar bp-ff-nunito" style={{ padding: '5px' }}>
+                <div style={head}>
+                    <div style={icon}>
+                        <Link to="/">
+                            <img src={Icon} width="150px" height="150px" alt="Bot Beholder" />
+                        </Link>
+                    </div>
+                    <h1 className="bp-c-offwhite" style={title}>
+                        <Link to="/">Bot Beholder</Link>
+                    </h1>
+                    <div style={nav} className="bp-c-offwhite">
+                        Olá {user.data.name} (<div className="link" onClick={logoutAction}>Sair</div>)
+                    </div>
+                    <div class="bp-divider-h bp-divider divider bp-bg-onix"></div>
+                </div>
                 <header>
                     <Link to="">
                         <div className="avatar">
@@ -103,9 +137,6 @@ class BotSideBar extends Component {
                         }
                     </React.Fragment>
                 }
-
-
-
             </div>
         );
     }

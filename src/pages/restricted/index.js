@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Home from './Home';
 import Tracing from './Tracing';
 import Testing from './Testing';
 import EditTesting from './Testing/edit';
-import Icon from '../../static/img/logo.svg';
 
 import './Restricted.scss'
 
@@ -31,39 +30,11 @@ const mapDispatchToProps = dispatch => ({
 const grid = {
     display: 'grid',
     gridTemplateColumns: '250px auto',
-    gridTemplateRows: '125px minmax(calc(100vh - 175px), auto) 50px',
-    gridTemplateAreas: `"header header header header"
+    gridTemplateRows: '0px minmax(calc(100vh - 30px), auto) 30px',
+    gridTemplateAreas: `
+        "header header header header"
         "tools main main main"
         "tools footer footer footer"`,
-};
-
-const header = {
-    gridArea: 'header',
-    textAling: 'center',
-    display: 'grid',
-    gridTemplateColumns: '250px auto',
-    gridTemplateRows: '100px 25px',
-    gridTemplateAreas: `"icon title"
-        "icon nav"`,
-};
-const icon = {
-    padding: '5px',
-    gridArea: 'icon',
-    display: 'block',
-    justifySelf: 'center',
-    alignSelf: 'center',
-    objectFit: 'cover'
-};
-const title = {
-    gridArea: 'title',
-    justifySelf: 'center',
-    alignSelf: 'center',
-};
-
-const nav = {
-    gridArea: 'nav',
-    justifySelf: 'end',
-    paddingRight: '15px'
 };
 
 const tools = {
@@ -76,9 +47,13 @@ const main = {
 };
 
 const footer = {
-    gridArea: 'footer',
-    borderTop: 'solid 2px #8ca0b3'
+    gridArea: 'footer'
 };
+
+const footerText = {
+    textAlign: 'center',
+    margin: '0'
+}
 
 class Restricted extends Component {
     state = {};
@@ -97,19 +72,10 @@ class Restricted extends Component {
     }
 
     render() {
-        let { logoutAction, user, common, hideModal } = this.props;
+        let { common, hideModal } = this.props;
         return (
             <React.Fragment>
                 <div style={grid}>
-                    <header className="bp-bg-onix" style={header}>
-                        <img src={Icon} width="150px" height="150px" alt="Bot Beholder" style={icon} />
-                        <h1 className="bp-c-offwhite" style={title}>
-                            <Link to="/">Bot Beholder</Link>
-                        </h1>
-                        <div style={nav} className="bp-c-offwhite">
-                            Olá {user.data.name} (<div className="link" onClick={logoutAction}>Sair</div>)
-                    </div>
-                    </header>
                     <div className="bp-bg-suit" style={tools}>
                         <BotSideBar />
                     </div>
@@ -121,7 +87,7 @@ class Restricted extends Component {
                         <Route exact path="/wanotifications" component={WANotifications} />
                     </div>
                     <div className="bp-bg-offwhite" style={footer}>
-                        <p style={{ textAlign: 'center' }} onMouseEnter={this.handleFooterHover} onMouseLeave={this.handleFooterHover}>
+                        <p style={footerText} onMouseEnter={this.handleFooterHover} onMouseLeave={this.handleFooterHover}>
                             {this.state.isFooterHovered ? "Who beholds the beholder?" : `Bot Beholder ${this.getCurrentYear()}`}
                         </p>
                     </div>
