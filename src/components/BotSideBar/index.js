@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './BotSideBar.scss'
 import { selectBot } from '../../actions/BotActions'
+import { logoutAction } from '../../actions/UserActions'
 import { selectCase, newCase } from '../../actions/TestActions'
 import Icon from '../../static/img/logo.svg';
 
@@ -13,12 +14,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     selectBot: (bot) => dispatch(selectBot(bot)),
     selectCase: (slug, bot) => dispatch(selectCase(slug, bot)),
+    logoutAction: () => dispatch(logoutAction()),
     newCase: (cases, bot) => dispatch(newCase(cases, bot))
 });
 
 const nav = {
     textAlign: 'center',
-    margin: '8px 0px'
+    margin: '5px 0px'
 };
 
 const icon = {
@@ -63,13 +65,13 @@ class BotSideBar extends Component {
                             <img src={Icon} width="150px" height="150px" alt="Bot Beholder" />
                         </Link>
                     </div>
-                    <h1 className="bp-c-offwhite" style={title}>
+                    <h2 className="bp-c-offwhite" style={title}>
                         <Link to="/">Bot Beholder</Link>
-                    </h1>
+                    </h2>
                     <div style={nav} className="bp-c-offwhite">
                         Olá {user.data.name} (<div className="link" onClick={logoutAction}>Sair</div>)
                     </div>
-                    <div class="bp-divider-h bp-divider divider bp-bg-onix"></div>
+                    <div className="bp-divider-h bp-divider divider bp-bg-suit"></div>
                 </div>
                 <header>
                     <Link to="">
