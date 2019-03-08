@@ -1,14 +1,20 @@
 @import "../../globals";
 
-.ToolBar{
-    display: inline-block;
-    width: calc(100% - 50px);
-    background-color: $primary;
-    color: white;
-    margin-bottom: 10px;
-    border-radius: 6px;
+.ToolBar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: calc(100% - 50px);
+  color: white;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  button,
+  .btn {
+    all: unset;
+    cursor: pointer;
+  }
 }
 
-.ToolBar span{
-    padding: 10px;
+.ToolBar span {
+  padding: 10px;
 }
