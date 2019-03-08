@@ -53,7 +53,6 @@ class Testing extends Component {
     componentWillReceiveProps = (newProps) => {
         //console.log(newProps);
         if (newProps.test.selectedId !== this.props.test.selectedId) {
-            console.log('troca');
             this.setState({
                 showConfigurations: false,
                 selected: ''

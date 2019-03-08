@@ -8,7 +8,6 @@ import EditTesting from './Testing/edit';
 
 import './Restricted.scss'
 
-import { logoutAction } from '../../actions/UserActions'
 import { loadList } from '../../actions/BotActions'
 import { hideModal } from '../../actions/CommonActions';
 
@@ -22,7 +21,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    logoutAction: () => dispatch(logoutAction()),
     loadBots: () => dispatch(loadList()),
     hideModal: () => dispatch(hideModal()),
 });
@@ -39,6 +37,7 @@ const grid = {
 
 const tools = {
     gridArea: 'tools',
+    overflow: 'hidden'
 };
 
 const main = {
@@ -76,7 +75,7 @@ class Restricted extends Component {
         return (
             <React.Fragment>
                 <div style={grid}>
-                    <div className="bp-bg-suit" style={tools}>
+                    <div className="bp-grad-suit" style={tools}>
                         <BotSideBar />
                     </div>
                     <div className="bp-bg-offwhite" style={main}>
