@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './Properties.scss';
 import ToolBar from '../ToolBar';
 import AnswerBlock from '../AnswerBlock';
-import ReactDragList from 'react-drag-list'
+import ReactDragList from 'react-drag-list';
+import InputBlock from '../InputBlock';
 
 class Properties extends Component {
     constructor(props) {
@@ -27,6 +28,11 @@ class Properties extends Component {
         newBlock[name] = value;
         this.props.setBlock(newBlock);
     };
+    setInput = input => {
+        const newBlock = { ...this.props };
+        newBlock.input = input;
+        this.props.setBlock(newBlock);
+    }
 
     addAnswer = answer => {
         const newBlock = { ...this.props };
@@ -86,12 +92,10 @@ class Properties extends Component {
         let { expected } = this.props;
         let { blockName, input } = this.state
         return (
-            <div className="Properties" ref={this.div} style={this.props.style}>
-                <h2>Propriedades</h2>
+            <div className="Properties" ref={this.div}>
                 {this.props.selected !== '' ? (
                     <React.Fragment>
-                        <form>
-                            <b>Nome do bloco:</b>
+                        <h3>
                             <input
                                 onChange={this.handleChange}
                                 onBlur={this.saveChange}
@@ -100,20 +104,15 @@ class Properties extends Component {
                                 value={blockName}
                                 required
                             />
-                            <br />
-                            <br />
-                            <b>Input que leva ao bloco:</b>
-                            <input
-                                onChange={this.handleChange}
-                                onBlur={this.saveChange}
-                                type="text"
-                                name="input"
-                                value={input}
-                                required
-                            />
-                            <br />
-                        </form>
-                        <h3>Mensagens do bloco:</h3>
+                        </h3>
+
+                        <br />
+                        <br />
+                        <InputBlock
+                            input={input}
+                            setInput={this.setInput}
+                        />
+                        <br />
                         {
                             <ReactDragList
                                 handles={false}

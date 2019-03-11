@@ -1,0 +1,55 @@
+@import "../../globals";
+
+.InputBlock {
+  display: flex;
+  position: relative;
+  flex-direction: row-reverse;
+  width: 100%;
+  margin-bottom: 20px;
+  padding-top: 30px;
+  .icon-btn {
+    margin-left: 5px;
+    top: 0px;
+    position: absolute;
+    display: none;
+  }
+  &:hover .icon-btn {
+    display: block;
+    &.delete {
+      background-color: $delete;
+    }
+  }
+
+  .ToolBar {
+    bottom: -50px;
+    right: 0px;
+    position: absolute;
+    width: fit-content;
+  }
+
+  .textLabel {
+    margin-right: 5px;
+    display: inline-block;
+    width: 50px;
+  }
+
+  .card {
+    color: white;
+    background-color: $primary-light;
+    border-radius: 13px 13px 13px 13px;
+    box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    padding-bottom: 3px;
+    overflow: hidden;
+  }
+
+  .card.bubble {
+    border-radius: 13px 2px 13px 13px;
+    min-width: 70%;
+  }
+
+  .bubble .wrap,
+  .card .wrap {
+    padding: 13px;
+  }
+}

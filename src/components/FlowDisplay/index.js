@@ -6,7 +6,7 @@ import InputFile from '../InputFile';
 import crisPretiImg from '../../static/img/crispret.png'
 
 const newBlock = () => ({
-    input: 'Nome do Input',
+    input: { type: 'text', text: 'Nome do Input' },
     blockName: 'Novo Bloco',
     expected: [],
 });
@@ -48,7 +48,7 @@ class FlowDisplay extends Component {
     render() {
         let { title } = this.state;
         return (
-            <div className="FlowDisplay" style={this.props.style}>
+            <div className="FlowDisplay">
                 <ul className="ToolbarBtns">
                     <li>
                         <button title="Novo Bloco" onClick={() => this.props.addBlock(newBlock())}>

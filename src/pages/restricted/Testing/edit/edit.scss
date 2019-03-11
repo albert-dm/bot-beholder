@@ -1,0 +1,9 @@
+@import "../../../../globals";
+
+#test-edit {
+  display: flex;
+  width: 100%;
+  & > * {
+    width: 50%;
+  }
+}

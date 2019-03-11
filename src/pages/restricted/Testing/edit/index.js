@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import FlowDisplay from '../../../components/FlowDisplay';
-import Properties from '../../../components/Properties';
-import Block from '../../../components/Block';
-import Config from '../../../components/Config';
-import { saveCase, deleteCase } from '../../../actions/TestActions'
+import FlowDisplay from '../../../../components/FlowDisplay';
+import Properties from '../../../../components/Properties';
+import Block from '../../../../components/Block';
+import Config from '../../../../components/Config';
+import { saveCase, deleteCase } from '../../../../actions/TestActions'
+
+import './edit.scss';
 
 import ReactDragList from 'react-drag-list'
 
@@ -25,20 +27,6 @@ const guid = () => {
             .substring(1);
     }
     return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-};
-
-const grid = {
-    display: 'grid',
-    gridTemplateColumns: '50% 50%',
-    gridTemplateAreas: '"flow properties"',
-};
-
-const flow = {
-    gridArea: 'flow',
-};
-
-const properties = {
-    gridArea: 'properties',
 };
 
 class Testing extends Component {
@@ -202,12 +190,11 @@ class Testing extends Component {
         let { bot, deleteCase, test } = this.props;
         let { showConfigurations, selected } = this.state;
         return (
-            <div style={grid}>
+            <div id="test-edit">
                 {
                     test.selectedCase ?
                         <React.Fragment>
                             <FlowDisplay
-                                style={flow}
                                 flowTitle={test.selectedCase.flowTitle}
                                 setTitle={this.setTitle}
                                 addBlock={this.addBlock}
@@ -243,7 +230,6 @@ class Testing extends Component {
                                 </ReactCSSTransitionGroup>
                             </FlowDisplay>
                             <Properties
-                                style={properties}
                                 {...test.selectedCase.testCases[selected]}
                                 setBlock={this.setBlock}
                                 selected={selected}
