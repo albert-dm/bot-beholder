@@ -104,10 +104,10 @@ class Tracing extends Component {
                 {
                     bot.selected ? (
                         <>
-                            <input type="text" name="filter" placeholder="id do usuário" value={filter} onChange={e => { this.setState({ filter: e.target.value }) }} className="search-input" />
+                            <input type="text" name="filter" placeholder="Id do usuário" value={filter} onChange={e => { this.setState({ filter: e.target.value }) }} className="search-input" />
                             {
                                 traces &&
-                                traces.filter(trace => filter ? trace.user === filter : true).map(trace =>
+                                traces.filter(trace => !filter || trace.user.includes(filter)).map(trace =>
                                     <Trace
                                         key={trace.timestamp}
                                         data={trace}
