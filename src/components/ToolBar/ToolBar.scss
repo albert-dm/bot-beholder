@@ -8,10 +8,9 @@
   color: white;
   margin-bottom: 10px;
   border-radius: 6px;
-  button,
-  .btn {
-    all: unset;
+  img.action {
     cursor: pointer;
+    padding: 3px;
   }
 }
 
