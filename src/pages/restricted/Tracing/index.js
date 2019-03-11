@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 import ReactJson from 'react-json-view';
 import config from '../../../config';
+import { getBotConfiguration, setBotConfiguration } from '../../../services/BotService';
 
 import './Tracing.scss';
 
@@ -60,18 +61,50 @@ class Tracing extends Component {
         }
     }
 
+    configureBotTracing = async () => {
+        this.setState({
+            configuringLabel: "Configurando..."
+        });
+
+        try {
+            await Promise.all(["working", "published"].map(async v => {
+                let { resource } = await getBotConfiguration(this.props.bot.selected.authorization, v);
+                resource["TraceTargetType"] = "Http";
+                resource["TraceMode"] = "All";
+                resource["TraceTarget"] = `https://pretwebsocketprod.azurewebsites.net/trace/${this.props.bot.selected.shortName}`;
+                return setBotConfiguration(this.props.bot.selected.authorization, v, resource);
+            }));
+
+            this.setState({
+                configuringLabel: "Configurado com sucesso!"
+            });
+        } catch (e) {
+            this.setState({
+                configuringLabel: "Falha ao tentar configurar"
+            });
+        }
+    }
+
     render() {
         const { traces, filter } = this.state;
         const { bot, showModal } = this.props;
         return (
             <div className="bp-ff-nunito Tracing" style={{ padding: '5px' }}>
-                <h1 className="bp-fs-2">Tracing</h1>
+                <div className="tracing-header">
+                    <h1 className="bp-fs-2">Tracing</h1>
+                    {
+                        bot.selected &&
+                        <div>
+                            <button onClick={this.configureBotTracing} disabled={this.state.configuringLabel}>
+                                { this.state.configuringLabel || "Configurar tracing no bot" }
+                            </button>
+                        </div>
+                    }
+                </div>
                 {
-                    bot.selected
-                        ?
-                        <React.Fragment>
-                            <small> ({`${server}tracing/${bot.selected.shortName}`})</small>
-                            <input type="text" name="filter" placeholder="id do usuário" value={filter} onChange={e => { this.setState({ filter: e.target.value }) }} id="" />
+                    bot.selected ? (
+                        <>
+                            <input type="text" name="filter" placeholder="id do usuário" value={filter} onChange={e => { this.setState({ filter: e.target.value }) }} className="search-input" />
                             {
                                 traces &&
                                 traces.filter(trace => filter ? trace.user === filter : true).map(trace =>
@@ -84,9 +117,10 @@ class Tracing extends Component {
                                     />
                                 )
                             }
-                        </React.Fragment>
+                        </>
+                    )
                         :
-                        <p>Selecione um bot</p>
+                    <p>Selecione um bot</p>
                 }
             </div>
         );

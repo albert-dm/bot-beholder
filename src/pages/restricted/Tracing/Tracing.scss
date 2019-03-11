@@ -7,3 +7,13 @@
     padding-bottom: 10px;
   }
 }
+
+.tracing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input.search-input {
+    margin-bottom: 20px;
+}

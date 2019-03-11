@@ -34,5 +34,40 @@ export function loadBotUsers(botKey) {
             uri: "/contacts/"
         }),
     })
-        .then(response => response.json());
+    .then(response => response.json());
+}
+
+export function getBotConfiguration(botKey, version) {
+    return fetch('https://msging.net/commands', {
+        method: 'post',
+        mode: "cors",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Key ${botKey}`
+        },
+        body: JSON.stringify({
+            id: new Date().getTime() + parseInt(Math.random() * 1000),
+            method: "get",
+            uri: `/buckets/blip_portal:builder_${version}_configuration`
+        }),
+    })
+    .then(response => response.json());
+}
+
+export function setBotConfiguration(botKey, version, config) {
+    return fetch('https://msging.net/commands', {
+        method: 'post',
+        mode: "cors",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Key ${botKey}`
+        },
+        body: JSON.stringify({
+            id: new Date().getTime() + parseInt(Math.random() * 1000),
+            method: "set",
+            type: "application/json",
+            uri: `/buckets/blip_portal:builder_${version}_configuration`,
+            resource: config
+        }),
+    });
 }
