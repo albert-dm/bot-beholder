@@ -5,7 +5,7 @@ const dev = {
 
 const prod = {
   env: "prod",
-  basename: "/BotBeholder/"
+  basename: "/"
 };
 
 const config = process.env.NODE_ENV === 'production'
@@ -15,8 +15,6 @@ const config = process.env.NODE_ENV === 'production'
 
 
 export default {
-  // Add common config values here
-  pretUrl: "https://pretwebsockethmg.azurewebsites.net/beholder",
-  //pretUrl: "https://pretwebsocketprod.azurewebsites.net/testhub",
+  pretUrl: process.env.REACT_APP_PRET_API,
   ...config
 };
