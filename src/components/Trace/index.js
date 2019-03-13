@@ -11,11 +11,13 @@ class Trace extends Component {
         let { showDetails } = this.props;
         return (
             <div className="Trace">
-                <span className="date">{new Date(timestamp).toLocaleString()}</span>
                 <header>
-                    <h1 className={error ? 'error' : ''}>
-                        <i className="far fa-comment-dots" /> {input}
-                    </h1>
+                    <div className="trace-header">
+                        <h1 className={error ? 'error' : ''}>
+                            <i className="far fa-comment-dots" /> {input}
+                        </h1>
+                        <span className="date">{new Date(timestamp).toLocaleString()}</span>
+                    </div>
                     <p>
                         <i className="fas fa-stopwatch" /> {elapsedMilliseconds}ms
                     </p>

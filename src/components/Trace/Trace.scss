@@ -9,22 +9,29 @@
   display: block;
   width: 75vw;
   overflow: hidden;
+  transition: box-shadow 0.4s;
 
-  &:hover{
-      @extend %elevateHover;
+  &:hover {
+    @extend %elevateTwo;
   }
 
   h1 {
     font-size: 1.3em;
-    &.error{
+    &.error {
       color: $warning;
     }
+  }
+
+  .trace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .date {
     display: block;
     text-align: right;
-    font-size: 0.6rem;
+    font-size: 1rem;
   }
 
   .states {
@@ -36,9 +43,9 @@
       white-space: pre-wrap;
       width: 300px;
       display: inline-block;
-      &.error{
-          border-color: $warning;
-          border-width: thick;
+      &.error {
+        border-color: $warning;
+        border-width: thick;
       }
       .actions {
         visibility: hidden;
@@ -52,23 +59,23 @@
         margin-bottom: -30%;
         z-index: 1;
 
-        ul{
-            list-style: none;
-            padding-right: 10px;
-            p{
-                position: relative;
-                left: -20px;
+        ul {
+          list-style: none;
+          padding-right: 10px;
+          p {
+            position: relative;
+            left: -20px;
+          }
+          li {
+            position: relative;
+            left: -5px;
+            border-left: solid white;
+            padding-left: 5px;
+            &.error {
+              color: $warning;
+              border-color: $warning;
             }
-            li{
-                position: relative;
-                left: -5px;
-                border-left: solid white;
-                padding-left: 5px;
-                &.error{
-                  color: $warning;
-                  border-color: $warning;
-                }
-            }
+          }
         }
       }
       .elapsedTime {
