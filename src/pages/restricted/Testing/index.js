@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import { toggleTestQueue, runTests, setQueue, finishTest } from '../../../actions/TestActions';
-import config from '../../../config';
 
 import './testList.scss'
 
 import { showModal, fetchingData, fetchingDataFinished } from '../../../actions/CommonActions';
-
-var hubConnection;
-const server = config.pretUrl;
 
 const mapStateToProps = state => ({
     ...state,
@@ -52,25 +47,6 @@ const TestCase = (props) => {
 }
 
 class Testing extends Component {
-    componentDidMount() {
-        let { fetchingData, fetchingDataFinished, finishTest } = this.props;
-        hubConnection = new HubConnectionBuilder()
-            .withUrl(server)
-            .configureLogging(LogLevel.Information)
-            .build();
-
-        hubConnection
-            .start(() => fetchingData())
-            .then(() => fetchingDataFinished())
-            .catch(err => console.log('Error while establishing connection :('));
-
-        hubConnection.on('ReceiveMessage', (msg) => {
-            finishTest(msg.testId, msg.testResult);
-            finishTest();
-        });
-    }
-
-
     isSelected = (testCaseId) => {
         const { test } = this.props;
         return test.queue.indexOf(testCaseId) !== -1;
@@ -89,7 +65,6 @@ class Testing extends Component {
             "testsIds": test.queue
         }
         console.log("Enviando payload: ", payload);
-        hubConnection.send('SendTestResultToCaller', payload);
     }
 
     selectAll = () => {

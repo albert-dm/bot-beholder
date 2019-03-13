@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import socketIOClient from 'socket.io-client';
 import ReactJson from 'react-json-view';
-import config from '../../../config';
+import { hubConnection } from '../../../services/SocketService';
 
 import './Tracing.scss';
 
 import { showModal } from '../../../actions/CommonActions';
 
 import Trace from '../../../components/Trace';
-
-const server = config.tracingUrl;
-
-var socket;
 
 const mapStateToProps = state => ({
     ...state,
@@ -31,31 +26,27 @@ class Tracing extends Component {
             traces: [],
             filter: ""
         };
+        hubConnection.on('AnswerCommand', (id, route, value) => this.setState({ traces: value }));
+        hubConnection.on('trace', (trace) => this.setState(prevState => ({ traces: [trace, ...prevState.traces] })));
+        //hubConnection.on('trace', (traces) => console.log(traces));
+
         if (props.bot.selected) {
-            socket = socketIOClient(`${server}?botid=${props.bot.selected.shortName}`);
-            socket.on("tracing", trace => {
-                trace.id = id++;
-                this.setState(state => ({ traces: [trace, ...state.traces] }));
-            });
-            socket.on("start", traces => {
-                this.setState(() => ({ traces: [...traces] }));
-            });
+            hubConnection.send('SendCommand', 'id', '/trace', [props.bot.selected.shortName]);
         }
+    }
+
+    componentWillUnmount = () => {
+        hubConnection.send('SendCommand', 'id', '/trace/remove', [this.props.bot.selected.shortName]);
+        hubConnection.off('AnswerCommand');
+        hubConnection.off('trace');
     }
 
     componentWillReceiveProps = (newProps) => {
         if (newProps.bot.selected) {
             let currentShortName = this.props.bot.selected ? this.props.bot.selected.shortName : "";
             if (newProps.bot.selected.shortName !== currentShortName) {
-                if (socket) socket.close();
-                socket = socketIOClient(`${server}?botid=${newProps.bot.selected.shortName}`);
-                socket.on("tracing", trace => {
-                    trace.id = id++;
-                    this.setState(state => ({ traces: [trace, ...state.traces] }));
-                });
-                socket.on("start", traces => {
-                    this.setState(() => ({ traces: [...traces] }));
-                });
+                this.props.bot.selected && hubConnection.send('SendCommand', 'id', '/trace/remove', [this.props.bot.selected.shortName]);
+                hubConnection.send('SendCommand', 'id', '/trace', [newProps.bot.selected.shortName]);
             }
         }
     }
@@ -70,13 +61,12 @@ class Tracing extends Component {
                     bot.selected
                         ?
                         <React.Fragment>
-                            <small> ({`${server}tracing/${bot.selected.shortName}`})</small>
                             <input type="text" name="filter" placeholder="id do usuário" value={filter} onChange={e => { this.setState({ filter: e.target.value }) }} id="" />
                             {
                                 traces &&
                                 traces.filter(trace => filter ? trace.user === filter : true).map(trace =>
                                     <Trace
-                                        key={trace.timestamp}
+                                        key={trace.id}
                                         data={trace}
                                         showDetails={(data) => {
                                             showModal('Detalhes', <ReactJson src={data} displayDataTypes={false} />);

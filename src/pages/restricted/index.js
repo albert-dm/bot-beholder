@@ -5,6 +5,9 @@ import Home from './Home';
 import Tracing from './Tracing';
 import Testing from './Testing';
 import EditTesting from './Testing/edit';
+import { hubConnection } from '../../services/SocketService';
+
+import { showModal, fetchingData, fetchingDataFinished } from '../../actions/CommonActions';
 
 import './Restricted.scss'
 
@@ -15,6 +18,8 @@ import BotSideBar from "../../components/BotSideBar/"
 import LoadingOverlay from "../../components/LoadingOverlay/"
 import Modal from "../../components/Modal/"
 import WANotifications from './WANotifications';
+
+
 
 const mapStateToProps = state => ({
     ...state,
@@ -57,17 +62,28 @@ const footerText = {
 class Restricted extends Component {
     state = {};
 
+    componentDidMount() {
+        let { loadBots, finishTest } = this.props;
+
+        loadBots();
+
+        hubConnection
+            .start()
+            .then()
+            .catch(err => console.log('Error while establishing connection :(', err));
+
+        hubConnection.on('ReceiveMessage', (msg) => {
+            finishTest(msg.testId, msg.testResult);
+            finishTest();
+        });
+    }
+
     getCurrentYear = () => new Date().getFullYear();
 
     handleFooterHover = () => {
         this.setState(prevState => ({
             isFooterHovered: !prevState.isFooterHovered
         }));
-    }
-
-    componentDidMount = () => {
-        let { loadBots } = this.props;
-        loadBots();
     }
 
     render() {
