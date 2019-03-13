@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleTestQueue, runTests, setQueue, finishTest } from '../../../actions/TestActions';
+import { toggleTestQueue, setQueue, finishTest } from '../../../actions/TestActions';
+import { hubConnection } from '../../../services/SocketService';
 
 import './testList.scss'
 
@@ -12,7 +13,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     toggleTestQueue: (testCaseId, queue) => dispatch(toggleTestQueue(testCaseId, queue)),
-    runTests: () => dispatch(runTests()),
     finishTest: (testId, log) => dispatch(finishTest(testId, log)),
     setQueue: (queue) => dispatch(setQueue(queue)),
     showModal: (title, content) => dispatch(showModal(title, content)),
@@ -47,6 +47,10 @@ const TestCase = (props) => {
 }
 
 class Testing extends Component {
+    componentDidMount = () => {
+        hubConnection.on('AnswerCommand', (id, route, value) => this.setState({ traces: value }));
+        //hubConnection.on('trace', (trace) => this.setState(prevState => ({ traces: [trace, ...prevState.traces] })));
+    }
     isSelected = (testCaseId) => {
         const { test } = this.props;
         return test.queue.indexOf(testCaseId) !== -1;
@@ -58,13 +62,10 @@ class Testing extends Component {
     }
 
     runTests = () => {
-        const { bot, test, runTests } = this.props;
-        runTests();
-        let payload = {
-            "botAuthorization": `Key ${bot.selected.authorization}`,
-            "testsIds": test.queue
-        }
-        console.log("Enviando payload: ", payload);
+        const { bot, test } = this.props;
+        test.queue.forEach(testId => {
+            hubConnection.send('SendCommand', 'id', '/test', bot.selected.authorization, testId)
+        })
     }
 
     selectAll = () => {
