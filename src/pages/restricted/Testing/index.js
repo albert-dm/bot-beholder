@@ -64,7 +64,7 @@ class Testing extends Component {
     runTests = () => {
         const { bot, test } = this.props;
         test.queue.forEach(testId => {
-            hubConnection.send('SendCommand', 'id', '/test', bot.selected.authorization, testId)
+            hubConnection.send('SendCommand', 'id', '/test', [bot.selected.authorization, testId])
         })
     }
 
