@@ -9,6 +9,7 @@ import './Tracing.scss';
 import { showModal } from '../../../actions/CommonActions';
 
 import Trace from '../../../components/Trace';
+import config from '../../../config';
 
 const mapStateToProps = state => ({
     ...state,
@@ -62,7 +63,7 @@ class Tracing extends Component {
                 let { resource } = await getBotConfiguration(this.props.bot.selected.authorization, v);
                 resource["TraceTargetType"] = "Http";
                 resource["TraceMode"] = "All";
-                resource["TraceTarget"] = `https://pretwebsocketprod.azurewebsites.net/trace/${this.props.bot.selected.shortName}`;
+                resource["TraceTarget"] = `${config.pretUrl}/trace/${this.props.bot.selected.shortName}`;
                 return setBotConfiguration(this.props.bot.selected.authorization, v, resource);
             }));
 
