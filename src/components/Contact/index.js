@@ -87,7 +87,7 @@ class Contact extends Component {
         return (
             <div className="Contact" onClick={this.createModal}>
                 <i className="fas fa-user" />
-                <p>{contact.name ? contact.name : id}</p>
+                <p>{contact && contact.name ? contact.name : id}</p>
             </div>
         );
     }

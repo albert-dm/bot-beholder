@@ -8,6 +8,7 @@ import './Trace.scss';
 class Trace extends Component {
     render() {
         const { input, timestamp, elapsedMilliseconds, states, error, user } = this.props.data;
+
         let { showDetails } = this.props;
         return (
             <div className="Trace">
@@ -25,7 +26,7 @@ class Trace extends Component {
                 </header>
                 <div className="states">
                     {states.map(state => (
-                        <State data={state} key={state.id} showDetails={() => showDetails(state)} />
+                        <State data={state} key={`${state.id}_${state.timestamp}`} showDetails={() => showDetails(state)} />
                     ))}
                 </div>
                 <ReactJson src={this.props.data} collapsed displayDataTypes={false} />
