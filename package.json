@@ -4,22 +4,21 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@aspnet/signalr": "^1.1.0",
+    "@aspnet/signalr": "^1.1.4",
     "blip-toolkit": "^3.0.5",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.8.6",
     "react-drag-list": "^1.1.0",
     "react-inlinesvg": "^0.8.4",
     "react-json-view": "^1.19.1",
-    "react-redux": "^5.0.7",
+    "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.5",
-    "react-select": "^2.1.1",
+    "react-scripts": "^2.1.8",
+    "react-select": "^2.4.4",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "socket.io-client": "^2.1.1",
     "sweetalert2-react": "^0.7.2",
     "uuid": "^3.3.2"
   },
@@ -40,8 +39,8 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
     "jest": "^23.6.0",
-    "node-sass": "^4.9.4",
-    "prettier": "^1.14.3",
-    "regenerator-runtime": "^0.13.1"
+    "node-sass": "^4.12.0",
+    "prettier": "^1.17.1",
+    "regenerator-runtime": "^0.13.2"
   }
 }
