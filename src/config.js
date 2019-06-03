@@ -5,7 +5,7 @@ const dev = {
 
 const prod = {
   env: "prod",
-  basename: "/"
+  basename: "/BotBeholder"
 };
 
 const config = process.env.NODE_ENV === 'production'
